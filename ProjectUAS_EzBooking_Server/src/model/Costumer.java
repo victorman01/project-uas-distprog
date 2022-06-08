@@ -19,6 +19,9 @@ public class Costumer{
     int id;
     String username;
     String password;
+    String nama;
+    String alamat;
+    String email;
     Connection connect;
     
     Statement stat;
@@ -48,11 +51,49 @@ public class Costumer{
         this.password = password;
     }
 
-    public Costumer(String username, String password) {
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Costumer(String username, String password, String nama, String alamat, String email) {
         this.username = username;
         this.password = password;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.email = email;
         getConnection();
     }
+
+    public Costumer(int id, String username, String password, String nama, String alamat, String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.email = email;
+        getConnection();
+    }
+    
     
     public Connection getConnection(){
         try {
@@ -68,10 +109,13 @@ public class Costumer{
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("INSERT INTO pelanggans"
-                        + "(username, password) "
-                        + "VALUES (?,?)");
+                        + "(username, password, nama, alamat, email) "
+                        + "VALUES (?,?,?,?,?)");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
+                sql.setString(3, this.nama);
+                sql.setString(4, this.alamat);
+                sql.setString(5, this.email);
                 sql.executeUpdate();
                 sql.close();
             }
@@ -84,11 +128,14 @@ public class Costumer{
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("UPDATE pelanggans "
-                        + "SET username = ?, password = ? "
+                        + "SET username = ?, password = ?, nama = ?, alamat = ?, email = ? "
                         + "WHERE id = ? ");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
-                sql.setInt(4, this.id);
+                sql.setString(3, this.nama);
+                sql.setString(4, this.alamat);
+                sql.setString(5, this.email);
+                sql.setInt(6, this.id);
                 sql.executeUpdate();
                 sql.close();
             }
