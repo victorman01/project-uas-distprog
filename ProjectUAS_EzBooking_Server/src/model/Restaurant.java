@@ -162,6 +162,36 @@ public class Restaurant {
             System.out.println("Error" + e.getMessage());
         }
     }
+    public void updateMeja(int jumlah,int id) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
+                        + "SET jumlah_meja = ?"
+                        + "WHERE id = ? ");
+                sql.setInt(1,jumlah);
+                sql.setInt(2, id);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
+    public void updateJumlahMeja(int jumlah,int id) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
+                        + "SET jumlah_meja -= ?"
+                        + "WHERE id = ? ");
+                sql.setInt(1,jumlah);
+                sql.setInt(2, id);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
 
     public void deleteData() {
         try {
