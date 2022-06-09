@@ -154,7 +154,7 @@ public class Restaurant {
                         + "WHERE id = ? ");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
-                sql.setInt(4, this.id);
+                sql.setInt(3, this.id);
                 sql.executeUpdate();
                 sql.close();
             }
