@@ -10,13 +10,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Muhammad Ikhsan
  */
 public class Restaurant {
-     public Restaurant(String pemilik, String nama, int jumlahMeja, boolean preOrder, String username, String password, String alamat, String no_telepon) {
+
+    public Restaurant(String pemilik, String nama, int jumlahMeja, boolean preOrder, String username, String password, String alamat, String no_telepon) {
         this.pemilik = pemilik;
         this.nama = nama;
         this.jumlahMeja = jumlahMeja;
@@ -25,10 +28,8 @@ public class Restaurant {
         this.password = password;
         this.alamat = alamat;
         this.no_telepon = no_telepon;
-        this.conn=getConnection();
+        this.conn = getConnection();
     }
-
-    
 
     public String getPemilik() {
         return pemilik;
@@ -97,8 +98,7 @@ public class Restaurant {
     protected static Connection conn;
     protected static Statement stat;
     protected static ResultSet result;
-    
-    
+
     public String getAlamat() {
         return alamat;
     }
@@ -114,16 +114,35 @@ public class Restaurant {
     public void setNo_telepon(String no_telepon) {
         this.no_telepon = no_telepon;
     }
-     public Connection getConnection(){
+
+    public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/projectdisprog","root","");
+            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/projectdisprog", "root", "");
         } catch (Exception e) {
-            System.out.println("Error di getconnection = "+ e.getMessage());
+            System.out.println("Error di getconnection = " + e.getMessage());
         }
         return conn;
     }
-    
+
+    public boolean CheckLogin(String username, String password) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restorants where username=? and password=?");
+                sql.setString(1, username);
+                sql.setString(2, password);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Restaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public void insertData() {
         try {
             if (!conn.isClosed()) {
@@ -162,13 +181,14 @@ public class Restaurant {
             System.out.println("Error" + e.getMessage());
         }
     }
-    public void updateMeja(int jumlah,int id) {
+
+    public void updateMeja(int jumlah, int id) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
                         + "SET jumlah_meja = ?"
                         + "WHERE id = ? ");
-                sql.setInt(1,jumlah);
+                sql.setInt(1, jumlah);
                 sql.setInt(2, id);
                 sql.executeUpdate();
                 sql.close();
@@ -177,13 +197,14 @@ public class Restaurant {
             System.out.println("Error" + e.getMessage());
         }
     }
-    public void updateJumlahMeja(int jumlah,int id) {
+
+    public void updateJumlahMeja(int jumlah, int id) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
                         + "SET jumlah_meja -= ?"
                         + "WHERE id = ? ");
-                sql.setInt(1,jumlah);
+                sql.setInt(1, jumlah);
                 sql.setInt(2, id);
                 sql.executeUpdate();
                 sql.close();
@@ -206,5 +227,5 @@ public class Restaurant {
             System.out.println("Error" + e.getMessage());
         }
     }
-    
+
 }
