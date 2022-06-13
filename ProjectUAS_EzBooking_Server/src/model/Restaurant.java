@@ -30,6 +30,17 @@ public class Restaurant {
         this.no_telepon = no_telepon;
         this.conn = getConnection();
     }
+    public Restaurant() {
+        this.pemilik = null;
+        this.nama = "";
+        this.jumlahMeja = 0;
+        this.preOrder = false;
+        this.username = "";
+        this.password = "";
+        this.alamat = "";
+        this.no_telepon = "";
+        this.conn = getConnection();
+    }
 
     public String getPemilik() {
         return pemilik;
