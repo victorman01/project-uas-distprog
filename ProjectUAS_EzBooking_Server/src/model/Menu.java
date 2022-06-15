@@ -14,10 +14,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import static model.Restaurant.conn;
 public class Menu {
 
     public Menu(String nama, int harga, Restaurant restoran) {
+        this.nama = nama;
+        this.harga = harga;
+        this.restoran = restoran;
+        this.conn=getConnection();
+    }
+    public Menu(int id,String nama, int harga, Restaurant restoran) {
+        this.id=id;
         this.nama = nama;
         this.harga = harga;
         this.restoran = restoran;
@@ -122,6 +130,29 @@ public class Menu {
         } catch (SQLException e) {
             System.out.println("Error" + e.getMessage());
         }
+    }
+     public ArrayList<Object> viewListData(Restaurant resto){
+        ArrayList<Object> collections = new ArrayList<>();
+        try{
+            stat=(java.sql.Statement)conn.createStatement();
+            this.result=stat.executeQuery("select *from menus where restaurants_id="+resto.getId());
+            while (this.result.next())
+            {
+                
+                Menu menu = new Menu(this.result.getInt("id"),
+                        this.result.getString("nama"),
+                        this.result.getInt("harga"),
+                        resto);
+                        
+                       
+                collections.add(menu);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return collections;
+
     }
     
 }

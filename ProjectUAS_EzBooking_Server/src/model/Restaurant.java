@@ -10,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static model.Menu.conn;
+import static model.Menu.stat;
 
 /**
  *
@@ -30,6 +33,20 @@ public class Restaurant {
         this.no_telepon = no_telepon;
         this.conn = getConnection();
     }
+
+    public Restaurant(int id, String pemilik, String nama, int jumlahMeja, boolean preOrder, String username, String password, String alamat, String no_telepon) {
+        this.id = id;
+        this.pemilik = pemilik;
+        this.nama = nama;
+        this.jumlahMeja = jumlahMeja;
+        this.preOrder = preOrder;
+        this.username = username;
+        this.password = password;
+        this.alamat = alamat;
+        this.no_telepon = no_telepon;
+        this.conn = getConnection();
+    }
+
     public Restaurant() {
         this.pemilik = null;
         this.nama = "";
@@ -239,4 +256,48 @@ public class Restaurant {
         }
     }
 
+    public ArrayList<Object> viewListDataRestoran(int id) {
+        ArrayList<Object> collections = new ArrayList<>();
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select *from restaurants where id=" + id);
+            while (this.result.next()) {
+
+                Restaurant resto = new Restaurant(this.result.getInt("id"),
+                        this.result.getString("owner"), this.result.getString("name"),
+                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                        this.result.getString("username"), this.result.getString("password"),
+                        this.result.getString("address"), this.result.getString("phone_number"));
+
+                collections.add(resto);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return collections;
+
+    }
+     public ArrayList<Object> viewListData(){
+        ArrayList<Object> collections = new ArrayList<>();
+        try{
+            stat=(java.sql.Statement)conn.createStatement();
+            this.result=stat.executeQuery("select *from restaurants");
+            while (this.result.next())
+            {
+                
+                Restaurant resto = new Restaurant(this.result.getInt("id"),
+                                    this.result.getString("owner"),this.result.getString("name"),
+                                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
+                                    this.result.getString("username"),this.result.getString("password"),
+                                    this.result.getString("address"),this.result.getString("phone_number"));
+                       
+                collections.add(resto);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return collections;
+
+}
 }
