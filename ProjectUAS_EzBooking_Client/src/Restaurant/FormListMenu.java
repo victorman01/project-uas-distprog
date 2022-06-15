@@ -44,7 +44,7 @@ public class FormListMenu extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Harga", "Restaurant"
+                "ID", "Name", "Price", "Restaurant"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
