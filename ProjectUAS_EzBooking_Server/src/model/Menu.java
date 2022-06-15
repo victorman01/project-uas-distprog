@@ -18,16 +18,25 @@ import java.util.ArrayList;
 import static model.Restaurant.conn;
 public class Menu {
 
-    public Menu(String nama, int harga, Restaurant restoran) {
+    public Menu(String nama, int harga, String detail, Restaurant restoran) {
         this.nama = nama;
         this.harga = harga;
+        this.detail=detail;
         this.restoran = restoran;
         this.conn=getConnection();
     }
-    public Menu(int id,String nama, int harga, Restaurant restoran) {
+    public Menu(String nama, int harga, String detail, int id) {
+        this.nama = nama;
+        this.harga = harga;
+        this.detail=detail;
+        //this.restoran = restoran;
+        this.conn=getConnection();
+    }
+    public Menu(int id,String nama, int harga, String detail, Restaurant restoran) {
         this.id=id;
         this.nama = nama;
         this.harga = harga;
+        this.detail=detail;
         this.restoran = restoran;
         this.conn=getConnection();
     }
@@ -37,9 +46,13 @@ public class Menu {
         this.restoran = null;
         this.conn=getConnection();
     }
+    
     private int id;
     private String nama;
     private int harga;
+
+    
+    private String detail;
     private Restaurant restoran;
     protected static Connection conn;
     protected static Statement stat;
@@ -75,6 +88,13 @@ public class Menu {
     public void setRestoran(Restaurant restoran) {
         this.restoran = restoran;
     }
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
      public Connection getConnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -84,15 +104,35 @@ public class Menu {
         }
         return conn;
     }
-     public void insertData() {
+     public void insertData(int id) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO menus"
-                        + "(name, price, restorants_id) "
+                        + "(name, price, detail , restorants_id) "
                         + "VALUES (?,?,?,?)");
                 sql.setString(1, this.nama);
                 sql.setInt(2, this.harga);
-                sql.setInt(3, this.restoran.getId());
+                sql.setString(3,this.detail);
+                sql.setInt(4, this.id);
+                
+                
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
+      public void insertData() {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO menus"
+                        + "(name, price, detail , restorants_id) "
+                        + "VALUES (?,?,?,?)");
+                sql.setString(1, this.nama);
+                sql.setInt(2, this.harga);
+                sql.setString(3,this.detail);
+                sql.setInt(4, this.restoran.getId());
                 
                 
                 sql.executeUpdate();
@@ -142,7 +182,8 @@ public class Menu {
                 Menu menu = new Menu(this.result.getInt("id"),
                         this.result.getString("nama"),
                         this.result.getInt("harga"),
-                        resto);
+                        this.result.getString("detail")
+                        ,resto);
                         
                        
                 collections.add(menu);

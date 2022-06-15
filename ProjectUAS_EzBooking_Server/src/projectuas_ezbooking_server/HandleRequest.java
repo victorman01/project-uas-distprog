@@ -29,7 +29,8 @@ public class HandleRequest extends Thread {
     MainServer parent;
     Socket s;
     String pesan;
-    Restaurant restoran;
+    public static Restaurant restoran;
+    public static Restaurant rest;
     Customer customer;
     Administrator administrator;
 
@@ -59,6 +60,7 @@ public class HandleRequest extends Thread {
 
     public void action(String command, String value) {
         String[] values = value.split(",");
+        int idresto;
         switch (command) {
 
             case "REGISTER_RESTO":
@@ -71,9 +73,11 @@ public class HandleRequest extends Thread {
             case "LOGIN_RESTO":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
-                boolean login = restoran.CheckLogin(values[0], values[1]);
-                if (login == true) {
-                    this.SendMessage("BERHASIL_LOGIN_RESTAURANT");
+                restoran = restoran.CheckLogin(values[0], values[1]);
+                rest=restoran;
+
+                if (!(restoran == null)) {
+                    this.SendMessage("BERHASIL_LOGIN_RESTAURANT" + "," + restoran.getId());
                 } else {
                     this.SendMessage("GAGAL_LOGIN_RESTAURANT");
                 }
@@ -109,6 +113,18 @@ public class HandleRequest extends Thread {
 
                 break;
             case "ADD_MENU":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                System.out.println(values[2]);
+                System.out.println(values[3]);
+                int id=Integer.parseInt(values[3]);
+                System.out.println("ID YG LOGIN ADALAH" + id);
+                System.out.println(rest.getId());
+                Menu menu= new Menu(values[0],Integer.valueOf(values[1]),values[2],rest);
+                menu.insertData();
+                
+                this.SendMessage("BERHASIL_ADD_MENU");
+                
                 break;
             case "UPDATE_MEJA":
                 break;
@@ -132,7 +148,7 @@ public class HandleRequest extends Thread {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);
-                    
+
                 } else if (pesan.contains("REGISTER_CUSTOMER;")) {
                     String[] p = pesan.split(";");
 
@@ -142,8 +158,14 @@ public class HandleRequest extends Thread {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);
-                    
+
                 } else if (pesan.contains("LOGIN_ADMIN;")) {
+                    String[] p = pesan.split(";");
+
+                    this.action(p[0], p[1]);
+                }
+                else if(pesan.contains("ADD_MENU;"))
+                {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);

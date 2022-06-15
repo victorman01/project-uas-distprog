@@ -153,22 +153,29 @@ public class Restaurant {
         return conn;
     }
 
-    public boolean CheckLogin(String username, String password) {
+    public Restaurant CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restaurants where username=? and password=?");
                 sql.setString(1, username);
                 sql.setString(2, password);
                 result = sql.executeQuery();
-                if (result.next()) {
-                    return true;
+                while(result.next()) {
+                    Restaurant resto= new Restaurant(this.result.getInt("id"),
+                    this.result.getString("owner"),this.result.getString("name"),
+                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
+                    this.result.getString("username"),this.result.getString("password"),this.result.getString("address"),
+                    this.result.getString("phone_number"));
+                    return resto;
                 }
+                
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Restaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
+        
     }
 
     public void insertData() {

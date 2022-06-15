@@ -4,19 +4,43 @@
  */
 package Restaurant;
 
+import MainForm.FormRegisterCustomer;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Alvin Fernando
  */
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 public class FormAddMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form FormAddMenu
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    public static int idcheck;
     public FormAddMenu() {
         initComponents();
+        try {
+            s = new Socket("localhost",3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            System.out.println(idcheck);
+        } catch (IOException ex) {
+            Logger.getLogger(FormAddMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -34,7 +58,7 @@ public class FormAddMenu extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDetail = new javax.swing.JTextArea();
         btnAdd = new javax.swing.JButton();
-        txtPriceTotal = new javax.swing.JTextField();
+        txtNamaMakanan = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtPriceTotal1 = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
@@ -66,7 +90,7 @@ public class FormAddMenu extends javax.swing.JFrame {
             }
         });
 
-        txtPriceTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtNamaMakanan.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Price :");
@@ -105,7 +129,7 @@ public class FormAddMenu extends javax.swing.JFrame {
                         .addComponent(btnCancel))
                     .addComponent(txtPriceTotal1)
                     .addComponent(jScrollPane1)
-                    .addComponent(txtPriceTotal))
+                    .addComponent(txtNamaMakanan))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +140,7 @@ public class FormAddMenu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtPriceTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNamaMakanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -136,6 +160,26 @@ public class FormAddMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String namaMakanan=txtNamaMakanan.getText();
+        int harga=Integer.parseInt(txtPriceTotal1.getText());
+        String detail=txtDetail.getText();
+        
+        try {
+            out.writeBytes("ADD_MENU;" + namaMakanan+ "," + harga + "," + detail + ","+ idcheck +"\n");
+            message=in.readLine();
+            
+            if(message.equals("BERHASIL_ADD_MENU"))
+            {
+                JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Menu", "INFO", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "gagal menambahkan menu", "INFO", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormAddMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         JOptionPane.showMessageDialog(this, "Menu Added");
         this.setVisible(false);
     }//GEN-LAST:event_btnAddActionPerformed
@@ -188,7 +232,7 @@ public class FormAddMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtDetail;
-    private javax.swing.JTextField txtPriceTotal;
+    private javax.swing.JTextField txtNamaMakanan;
     private javax.swing.JTextField txtPriceTotal1;
     // End of variables declaration//GEN-END:variables
 }
