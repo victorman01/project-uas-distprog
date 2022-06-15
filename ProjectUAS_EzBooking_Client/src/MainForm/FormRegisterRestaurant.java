@@ -77,24 +77,24 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("-------RESTAURANT-------");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Pre-Order :");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Amount of Table :");
         jLabel7.setToolTipText("");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Password :");
 
-        txtAmountTable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtAmountTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Re-Password :");
 
-        btnRegister.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegister.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRegister.setText("REGISTER");
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,40 +102,40 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
             }
         });
 
-        txtRePassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtRePassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Owner Name :");
         jLabel5.setToolTipText("");
 
-        txtOwnerName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtOwnerName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Restaurant Name :");
         jLabel6.setToolTipText("");
 
-        txtRestName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtRestName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel9.setText("Username :");
 
-        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        rdnYes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        rdnYes.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         rdnYes.setText("Yes");
 
-        rdnNo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        rdnNo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         rdnNo.setText("No");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel10.setText("Phone Number :");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel11.setText("Address :");
 
-        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,12 +153,12 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(txtRePassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPhoneNumber)
-                            .addComponent(txtAddress)))
+                            .addComponent(txtAddress)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jLabel5)
@@ -177,7 +177,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                                     .addComponent(rdnYes)
                                     .addGap(18, 18, 18)
                                     .addComponent(rdnNo))))))
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -213,7 +213,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -229,9 +229,9 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnRegister)
-                .addGap(24, 24, 24))
+                .addGap(16, 16, 16))
         );
 
         pack();
