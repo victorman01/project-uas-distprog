@@ -259,6 +259,9 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 if(message.equals("BERHASIL_REGISTER"))
                 {
                     JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+//                    
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);

@@ -198,9 +198,17 @@ public class FormLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
-        // TODO add your handling code here:
-        FormRegisterCustomer frm = new FormRegisterCustomer();
-        frm.setVisible(true);
+        if (check.equals("restaurant")) {
+            FormRegisterRestaurant frm = new FormRegisterRestaurant();
+            frm.setVisible(true);
+            //this.dispose();
+        } else if (check.equals("customer")) {
+            FormRegisterCustomer frm = new FormRegisterCustomer();
+            frm.setVisible(true);
+            //this.dispose();
+        }
+
+
     }//GEN-LAST:event_lblRegisterMouseClicked
 
     /**

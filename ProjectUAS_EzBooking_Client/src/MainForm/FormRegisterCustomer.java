@@ -203,6 +203,8 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
                 message = in.readLine();
                 if (message.equals("BERHASIL_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    
                 }
             } catch (IOException ex) {
                 Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
