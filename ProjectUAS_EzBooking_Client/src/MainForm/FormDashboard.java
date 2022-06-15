@@ -145,13 +145,6 @@ public class FormDashboard extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_btnRestaurantActionPerformed
 
-    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
-        Check="customer";
-        FormLogin login= new FormLogin();
-        login.check = Check;
-        login.setVisible(true);
-    }//GEN-LAST:event_btnCustomerActionPerformed
-
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
         Check = "admin";
@@ -159,6 +152,14 @@ public class FormDashboard extends javax.swing.JFrame {
         login.check = Check;
         login.setVisible(true);
     }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        // TODO add your handling code here:
+        Check = "customer";
+        FormLogin login = new FormLogin();
+        login.check = Check;
+        login.setVisible(true);
+    }//GEN-LAST:event_btnCustomerActionPerformed
 
     /**
      * @param args the command line arguments
