@@ -8,6 +8,7 @@ package projectuas_ezbooking_server;
  *
  * @author Muhammad Ikhsan
  */
+import java.beans.Customizer;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Administrator;
-import model.Costumer;
+import model.Customer;
 import model.Menu;
 import model.Preorder;
 import model.Restaurant;
@@ -29,11 +30,15 @@ public class HandleRequest extends Thread {
     Socket s;
     String pesan;
     Restaurant restoran;
+    Customer customer;
+    Administrator administrator;
 
     public HandleRequest(MainServer parent, Socket s) {
         this.parent = parent;
         this.s = s;
         this.restoran = new Restaurant();
+        this.customer = new Customer();
+        this.administrator = new Administrator();
 
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -74,6 +79,35 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
+            case "REGISTER_CUSTOMER":
+
+                Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4]);
+                cust.insertData();
+
+                this.SendMessage("BERHASIL_REGISTER");
+                break;
+            case "LOGIN_CUSTOMER":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                boolean loginCustomer = customer.CheckLogin(values[0], values[1]);
+                if (loginCustomer == true) {
+                    this.SendMessage("BERHASIL_LOGIN_CUSTOMER");
+                } else {
+                    this.SendMessage("GAGAL_LOGIN_CUSTOMER");
+                }
+
+                break;
+            case "LOGIN_ADMIN":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                boolean loginAdmin = administrator.CheckLogin(values[0], values[1]);
+                if (loginAdmin == true) {
+                    this.SendMessage("BERHASIL_LOGIN_ADMIN");
+                } else {
+                    this.SendMessage("GAGAL_LOGIN_ADMIN");
+                }
+
+                break;
             case "ADD_MENU":
                 break;
             case "UPDATE_MEJA":
@@ -95,6 +129,21 @@ public class HandleRequest extends Thread {
                     this.action(p[0], p[1]);
 
                 } else if (pesan.contains("LOGIN_RESTO;")) {
+                    String[] p = pesan.split(";");
+
+                    this.action(p[0], p[1]);
+                    
+                } else if (pesan.contains("REGISTER_CUSTOMER;")) {
+                    String[] p = pesan.split(";");
+
+                    this.action(p[0], p[1]);
+
+                } else if (pesan.contains("LOGIN_CUSTOMER;")) {
+                    String[] p = pesan.split(";");
+
+                    this.action(p[0], p[1]);
+                    
+                } else if (pesan.contains("LOGIN_ADMIN;")) {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);

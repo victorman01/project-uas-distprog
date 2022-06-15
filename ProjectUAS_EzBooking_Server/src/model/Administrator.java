@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static model.Restaurant.conn;
 
 /**
  *
@@ -20,7 +23,7 @@ public class Administrator {
     int id;
     String username;
     String password;
-    String nama;
+    String name;
     Connection connect;
 
     Statement stat;
@@ -50,18 +53,25 @@ public class Administrator {
         this.password = password;
     }
 
-    public String getNama() {
-        return nama;
+    public String getName() {
+        return name;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Administrator(String username, String password, String nama) {
         this.username = username;
         this.password = password;
-        this.nama = nama;
+        this.name = nama;
+        getConnection();
+    }
+
+    public Administrator() {
+        this.username = "";
+        this.password = "";
+        this.name = "";
         getConnection();
     }
 
@@ -69,7 +79,7 @@ public class Administrator {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.nama = nama;
+        this.name = nama;
         getConnection();
     }
 
@@ -87,11 +97,11 @@ public class Administrator {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("INSERT INTO administrators"
-                        + "(username, password, nama) "
+                        + "(username, password, name) "
                         + "VALUES (?,?,?)");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
-                sql.setString(3, this.nama);
+                sql.setString(3, this.name);
                 sql.executeUpdate();
                 sql.close();
             }
@@ -104,11 +114,11 @@ public class Administrator {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("UPDATE administrators "
-                        + "SET username = ?, password = ?, nama = ? "
+                        + "SET username = ?, password = ?, name = ? "
                         + "WHERE id = ? ");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
-                sql.setString(3, this.nama);
+                sql.setString(3, this.name);
                 sql.setInt(4, this.id);
                 sql.executeUpdate();
                 sql.close();
@@ -130,5 +140,24 @@ public class Administrator {
         } catch (SQLException e) {
             System.out.println("Error" + e.getMessage());
         }
+
+    }
+
+    public boolean CheckLogin(String username, String password) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from administrators where username=? and password=?");
+                sql.setString(1, username);
+                sql.setString(2, password);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Administrator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

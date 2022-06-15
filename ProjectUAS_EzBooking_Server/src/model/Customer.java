@@ -10,12 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static model.Restaurant.conn;
+import static model.Restaurant.result;
 
 /**
  *
  * @author Rony H.I
  */
-public class Costumer{
+public class Customer {
+
     int id;
     String username;
     String password;
@@ -23,9 +28,18 @@ public class Costumer{
     String alamat;
     String email;
     Connection connect;
-    
+
     Statement stat;
     ResultSet result;
+
+    public Customer() {
+        this.username = "";
+        this.password = "";
+        this.nama = "";
+        this.alamat = "";
+        this.email = "";
+        getConnection();
+    }
 
     public int getId() {
         return id;
@@ -34,7 +48,7 @@ public class Costumer{
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -75,7 +89,7 @@ public class Costumer{
         this.email = email;
     }
 
-    public Costumer(String username, String password, String nama, String alamat, String email) {
+    public Customer(String username, String password, String nama, String alamat, String email) {
         this.username = username;
         this.password = password;
         this.nama = nama;
@@ -84,7 +98,7 @@ public class Costumer{
         getConnection();
     }
 
-    public Costumer(int id, String username, String password, String nama, String alamat, String email) {
+    public Customer(int id, String username, String password, String nama, String alamat, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -93,18 +107,17 @@ public class Costumer{
         this.email = email;
         getConnection();
     }
-    
-    
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/projectdisprog","root","");
+            connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/projectdisprog", "root", "");
         } catch (Exception e) {
-            System.out.println("Error di getconnection = "+ e.getMessage());
+            System.out.println("Error di getconnection = " + e.getMessage());
         }
         return connect;
     }
-    
+
     public void insertData() {
         try {
             if (!connect.isClosed()) {
@@ -157,7 +170,23 @@ public class Costumer{
             System.out.println("Error" + e.getMessage());
         }
     }
-    
-    
-    
+
+    public boolean CheckLogin(String username, String password) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from customers where username=? and password=?");
+                sql.setString(1, username);
+                sql.setString(2, password);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

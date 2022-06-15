@@ -8,13 +8,34 @@ package MainForm;
  *
  * @author Alvin Fernando
  */
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class FormRegisterCustomer extends javax.swing.JFrame {
 
     /**
      * Creates new form FormRegister
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+
     public FormRegisterCustomer() {
         initComponents();
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -168,6 +189,27 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        String name = txtName.getText();
+        String telephone = txtTelephone.getText();
+        String email = txtEmail.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        String rePassword = txtRePassword.getText();
+        String alamat = "";
+
+        if (rePassword.equals(password)) {
+            try {
+                out.writeBytes("REGISTER_CUSTOMER;" + username + "," + password + "," + name + "," + alamat + "," + email + "," + "\n");
+                message = in.readLine();
+                if (message.equals("BERHASIL_CUSTOMER")) {
+                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
