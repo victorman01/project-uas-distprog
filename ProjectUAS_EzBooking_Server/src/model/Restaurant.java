@@ -157,8 +157,8 @@ public class Restaurant {
     public void insertData() {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO restorants"
-                        + "(pemilik, nama, jumlah_meja, preorder, username, password, alamat, no_telepon) "
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO restaurants"
+                        + "(owner, name, number_of_tables, preorder, username, password, address, phone_number) "
                         + "VALUES (?,?,?,?,?,?,?,?)");
                 sql.setString(1, this.pemilik);
                 sql.setString(2, this.nama);
@@ -179,7 +179,7 @@ public class Restaurant {
     public void updateData() {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restaurants "
                         + "SET username = ?, password = ? "
                         + "WHERE id = ? ");
                 sql.setString(1, this.username);
@@ -196,8 +196,8 @@ public class Restaurant {
     public void updateMeja(int jumlah, int id) {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
-                        + "SET jumlah_meja = ?"
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restaurants "
+                        + "SET number_of_tables = ?"
                         + "WHERE id = ? ");
                 sql.setInt(1, jumlah);
                 sql.setInt(2, id);
@@ -212,8 +212,8 @@ public class Restaurant {
     public void updateJumlahMeja(int jumlah, int id) {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restorants "
-                        + "SET jumlah_meja -= ?"
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restaurants "
+                        + "SET number_of_tables -= ?"
                         + "WHERE id = ? ");
                 sql.setInt(1, jumlah);
                 sql.setInt(2, id);
@@ -228,7 +228,7 @@ public class Restaurant {
     public void deleteData() {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM restorants "
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM restaurants "
                         + "WHERE id = ?");
                 sql.setInt(1, this.id);
                 sql.executeUpdate();
