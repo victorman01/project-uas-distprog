@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
  *
  * @author Alvin Fernando
  */
-
 public class FormLogin extends javax.swing.JFrame {
 
     /**
@@ -32,11 +31,11 @@ public class FormLogin extends javax.swing.JFrame {
     DataOutputStream out;
     String message;
     String check;
-    
+
     public FormLogin() {
         initComponents();
         try {
-            s = new Socket("localhost",3233);
+            s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
         } catch (IOException ex) {
@@ -90,6 +89,11 @@ public class FormLogin extends javax.swing.JFrame {
 
         lblRegister.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblRegister.setText("Register");
+        lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegisterMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,38 +150,58 @@ public class FormLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String username=txtUsername.getText();
-        String password=txtPassword.getText();
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
         System.out.println(check);
-        if(check.equals("restaurant"))
-        {
-             try {
-                out.writeBytes("LOGIN_RESTO;" + username + "," + password +"\n");
-                message=in.readLine();
-                if(message.equals("BERHASIL_LOGIN_RESTAURANT"))
-                {
+        if (check.equals("restaurant")) {
+            try {
+                out.writeBytes("LOGIN_RESTO;" + username + "," + password + "\n");
+                message = in.readLine();
+                if (message.equals("BERHASIL_LOGIN_RESTAURANT")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if(message.equals("GAGAL_LOGIN_RESTAURANT"))
-                {
+                } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
+
+            } catch (IOException ex) {
+                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (check.equals("customer")) {
+            try {
+                out.writeBytes("LOGIN_CUSTOMER;" + username + "," + password + "\n");
+                message = in.readLine();
+                if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
+                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
+                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (check.equals("admin")) {
+            try {
+                out.writeBytes("LOGIN_ADMIN;" + username + "," + password + "\n");
+                message = in.readLine();
+                if (message.equals("BERHASIL_LOGIN_ADMIN")) {
+                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
+                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             } catch (IOException ex) {
                 Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if(check.equals("customer"))
-        {
-            
-        }
-        else if(check.equals("admin"))
-        {
-            
-        }
-           
-        
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
+        // TODO add your handling code here:
+        FormRegisterCustomer frm = new FormRegisterCustomer();
+        frm.setVisible(true);
+    }//GEN-LAST:event_lblRegisterMouseClicked
 
     /**
      * @param args the command line arguments

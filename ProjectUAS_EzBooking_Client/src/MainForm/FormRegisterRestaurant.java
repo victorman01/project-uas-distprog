@@ -32,7 +32,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
         } catch (IOException ex) {
-            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
             
     }

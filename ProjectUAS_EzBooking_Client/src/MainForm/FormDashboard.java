@@ -8,13 +8,13 @@ package MainForm;
  *
  * @author Alvin Fernando
  */
-
 public class FormDashboard extends javax.swing.JFrame {
-    public  String Check;
+
+    public String Check;
+
     /**
      * Creates new form FormDashboard
      */
-    
     public FormDashboard() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -139,25 +139,27 @@ public class FormDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantActionPerformed
-        Check="restaurant";
-        FormLogin login= new FormLogin();
+        Check = "restaurant";
+        FormLogin login = new FormLogin();
         login.check = Check;
         login.setVisible(true);
     }//GEN-LAST:event_btnRestaurantActionPerformed
 
-    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
-        Check="customer";
-        FormLogin login= new FormLogin();
-        login.check = Check;
-        login.setVisible(true);
-    }//GEN-LAST:event_btnCustomerActionPerformed
-
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        Check="restaurant";
-        FormLogin login= new FormLogin();
+        // TODO add your handling code here:
+        Check = "admin";
+        FormLogin login = new FormLogin();
         login.check = Check;
         login.setVisible(true);
     }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        // TODO add your handling code here:
+        Check = "customer";
+        FormLogin login = new FormLogin();
+        login.check = Check;
+        login.setVisible(true);
+    }//GEN-LAST:event_btnCustomerActionPerformed
 
     /**
      * @param args the command line arguments
