@@ -153,12 +153,6 @@ public class FormDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCustomerActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        Check="restaurant";
-        FormLogin login= new FormLogin();
-        login.check = Check;
-        login.setVisible(true);
-    }//GEN-LAST:event_btnAdminActionPerformed
-    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
         Check = "admin";
         FormLogin login = new FormLogin();
