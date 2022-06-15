@@ -136,6 +136,7 @@ CREATE TABLE `reservasis` (
   `number_of_tables` int(11) NOT NULL,
   `restorants_id` int(11) NOT NULL,
   `customers_id` int(11) NOT NULL,
+  `status` varchar(45) NOT NULL,
   `total_price` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_reservasis_restorants1_idx` (`restorants_id`),
@@ -193,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-15 11:38:49
+-- Dump completed on 2022-06-15 16:05:17
