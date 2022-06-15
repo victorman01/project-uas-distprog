@@ -131,6 +131,7 @@ public class FormDashboard extends javax.swing.JFrame {
     private void btnRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantActionPerformed
         Check="restaurant";
         FormLogin login= new FormLogin();
+        login.check = Check;
         login.setVisible(true);
     }//GEN-LAST:event_btnRestaurantActionPerformed
 

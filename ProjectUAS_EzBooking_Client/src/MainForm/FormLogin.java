@@ -12,6 +12,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.security.acl.Owner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,7 +31,7 @@ public class FormLogin extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String message;
-    FormDashboard dashboard;
+    String check;
     
     public FormLogin() {
         initComponents();
@@ -147,9 +148,10 @@ public class FormLogin extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username=txtUsername.getText();
         String password=txtPassword.getText();
-        
-        
-            try {
+        System.out.println(check);
+        if(check.equals("restaurant"))
+        {
+             try {
                 out.writeBytes("LOGIN_RESTO;" + username + "," + password +"\n");
                 message=in.readLine();
                 if(message.equals("BERHASIL_LOGIN_RESTAURANT"))
@@ -164,6 +166,16 @@ public class FormLogin extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else if(check.equals("customer"))
+        {
+            
+        }
+        else if(check.equals("admin"))
+        {
+            
+        }
+           
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
