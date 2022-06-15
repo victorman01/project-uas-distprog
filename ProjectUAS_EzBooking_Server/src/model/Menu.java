@@ -80,7 +80,7 @@ public class Menu {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO menus"
-                        + "(nama, harga, restorants_id) "
+                        + "(name, price, restorants_id) "
                         + "VALUES (?,?,?,?)");
                 sql.setString(1, this.nama);
                 sql.setInt(2, this.harga);
@@ -98,7 +98,7 @@ public class Menu {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE menus "
-                        + "SET nama = ?, harga = ? "
+                        + "SET name = ?, price = ? "
                         + "WHERE id = ? ");
                 sql.setString(1, this.nama);
                 sql.setInt(2, this.harga);

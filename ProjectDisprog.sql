@@ -1,217 +1,196 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 12 Jun 2022 pada 18.07
--- Versi server: 10.4.20-MariaDB
--- Versi PHP: 8.0.9
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: 127.0.0.1    Database: projectdisprog
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.24-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Database: `projectdisprog`
+-- Table structure for table `administrators`
 --
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `administrators`
---
-
+DROP TABLE IF EXISTS `administrators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `administrators` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `nama` varchar(45) NOT NULL
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Struktur dari tabel `menus`
+-- Dumping data for table `administrators`
 --
 
+LOCK TABLES `administrators` WRITE;
+/*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
+/*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customers`
+--
+
+DROP TABLE IF EXISTS `customers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `address` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customers`
+--
+
+LOCK TABLES `customers` WRITE;
+/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menus`
+--
+
+DROP TABLE IF EXISTS `menus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `menus` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(45) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `restorants_id` int(11) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `price` int(11) NOT NULL,
+  `restorants_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menus_restorants1_idx` (`restorants_id`),
+  CONSTRAINT `fk_menus_restorants1` FOREIGN KEY (`restorants_id`) REFERENCES `restaurants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `pelanggans`
---
-
-CREATE TABLE `pelanggans` (
-  `id` int(11) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `nama` varchar(45) NOT NULL,
-  `alamat` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Struktur dari tabel `preorders`
+-- Dumping data for table `menus`
 --
 
+LOCK TABLES `menus` WRITE;
+/*!40000 ALTER TABLE `menus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `preorders`
+--
+
+DROP TABLE IF EXISTS `preorders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `preorders` (
   `reservasis_id` int(11) NOT NULL,
   `menus_id` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL
+  `amount` int(11) NOT NULL,
+  PRIMARY KEY (`reservasis_id`,`menus_id`),
+  KEY `fk_reservasis_has_menus_menus1_idx` (`menus_id`),
+  KEY `fk_reservasis_has_menus_reservasis1_idx` (`reservasis_id`),
+  CONSTRAINT `fk_reservasis_has_menus_menus1` FOREIGN KEY (`menus_id`) REFERENCES `menus` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservasis_has_menus_reservasis1` FOREIGN KEY (`reservasis_id`) REFERENCES `reservasis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Struktur dari tabel `reservasis`
+-- Dumping data for table `preorders`
 --
 
+LOCK TABLES `preorders` WRITE;
+/*!40000 ALTER TABLE `preorders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `preorders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reservasis`
+--
+
+DROP TABLE IF EXISTS `reservasis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reservasis` (
-  `id` int(11) NOT NULL,
-  `tanggal_booking` date NOT NULL,
-  `jumlah_orang` int(11) NOT NULL,
-  `jumlah_meja` int(11) NOT NULL,
-  `pelanggans_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `booking_date` date NOT NULL,
+  `number_of_peoples` int(11) NOT NULL,
+  `number_of_tables` int(11) NOT NULL,
   `restorants_id` int(11) NOT NULL,
-  `total_harga` int(11) NOT NULL
+  `customers_id` int(11) NOT NULL,
+  `total_price` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_reservasis_restorants1_idx` (`restorants_id`),
+  KEY `fk_reservasis_customers1_idx` (`customers_id`),
+  CONSTRAINT `fk_reservasis_customers1` FOREIGN KEY (`customers_id`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservasis_restorants1` FOREIGN KEY (`restorants_id`) REFERENCES `restaurants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Struktur dari tabel `restorants`
+-- Dumping data for table `reservasis`
 --
 
-CREATE TABLE `restorants` (
-  `id` int(11) NOT NULL,
-  `pemilik` varchar(45) NOT NULL,
-  `nama` varchar(45) NOT NULL,
-  `jumlah_meja` int(11) NOT NULL,
+LOCK TABLES `reservasis` WRITE;
+/*!40000 ALTER TABLE `reservasis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reservasis` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `restaurants`
+--
+
+DROP TABLE IF EXISTS `restaurants`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `restaurants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `number_of_tables` int(11) NOT NULL,
   `preorder` tinyint(4) NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `alamat` varchar(45) NOT NULL,
-  `no_telepon` varchar(45) NOT NULL
+  `address` varchar(45) NOT NULL,
+  `phone_number` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `restaurants`
 --
 
---
--- Indeks untuk tabel `administrators`
---
-ALTER TABLE `administrators`
-  ADD PRIMARY KEY (`id`);
+LOCK TABLES `restaurants` WRITE;
+/*!40000 ALTER TABLE `restaurants` DISABLE KEYS */;
+/*!40000 ALTER TABLE `restaurants` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Indeks untuk tabel `menus`
---
-ALTER TABLE `menus`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_menus_restorants1_idx` (`restorants_id`);
-
---
--- Indeks untuk tabel `pelanggans`
---
-ALTER TABLE `pelanggans`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `preorders`
---
-ALTER TABLE `preorders`
-  ADD PRIMARY KEY (`reservasis_id`,`menus_id`),
-  ADD KEY `fk_reservasis_has_menus_menus1_idx` (`menus_id`),
-  ADD KEY `fk_reservasis_has_menus_reservasis1_idx` (`reservasis_id`);
-
---
--- Indeks untuk tabel `reservasis`
---
-ALTER TABLE `reservasis`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_reservasis_pelanggans1_idx` (`pelanggans_id`),
-  ADD KEY `fk_reservasis_restorants1_idx` (`restorants_id`);
-
---
--- Indeks untuk tabel `restorants`
---
-ALTER TABLE `restorants`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `administrators`
---
-ALTER TABLE `administrators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `menus`
---
-ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `pelanggans`
---
-ALTER TABLE `pelanggans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `reservasis`
---
-ALTER TABLE `reservasis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `restorants`
---
-ALTER TABLE `restorants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `menus`
---
-ALTER TABLE `menus`
-  ADD CONSTRAINT `fk_menus_restorants1` FOREIGN KEY (`restorants_id`) REFERENCES `restorants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `preorders`
---
-ALTER TABLE `preorders`
-  ADD CONSTRAINT `fk_reservasis_has_menus_menus1` FOREIGN KEY (`menus_id`) REFERENCES `menus` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reservasis_has_menus_reservasis1` FOREIGN KEY (`reservasis_id`) REFERENCES `reservasis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `reservasis`
---
-ALTER TABLE `reservasis`
-  ADD CONSTRAINT `fk_reservasis_pelanggans1` FOREIGN KEY (`pelanggans_id`) REFERENCES `pelanggans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reservasis_restorants1` FOREIGN KEY (`restorants_id`) REFERENCES `restorants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-06-15 11:38:49

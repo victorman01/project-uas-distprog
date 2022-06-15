@@ -51,4 +51,54 @@ public class HandleRequest extends Thread {
         }
     }
     
+    public void action(String command, String value)
+    {
+        switch(command){
+            case "REGISTER_RESTO":
+                String[] values = value.split(",");
+                
+                
+                Restaurant resto=new Restaurant(values[0],values[1],Integer.valueOf(values[2]),Boolean.valueOf(values[3]),values[4],values[5],values[6],values[7]);
+                resto.insertData();
+                
+                this.SendMessage("BERHASIL_REGISTER");
+                break;
+            case "LOGIN_RESTO":
+                break;
+            case "ADD_MENU":
+                break;
+            case "UPDATE_MEJA":
+                break;
+            
+                
+        }
+    }
+    @Override
+    public void run() {
+        super.run();
+        while (true) {
+            try {
+                pesan = in.readLine();
+                System.out.println(pesan);
+                if(pesan.contains("REGISTER_RESTO;"))
+                {
+                 String[] p = pesan.split(";");
+               
+                
+                 this.action(p[0],p[1]);
+                
+                }
+              
+                
+                
+
+            } catch (IOException ex) {
+                Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+    
+    
 }
