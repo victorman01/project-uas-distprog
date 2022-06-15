@@ -8,11 +8,13 @@ package MainForm;
  *
  * @author Alvin Fernando
  */
-public class FormDashboard extends javax.swing.JFrame {
 
+public class FormDashboard extends javax.swing.JFrame {
+    public  String Check;
     /**
      * Creates new form FormDashboard
      */
+    
     public FormDashboard() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -53,6 +55,11 @@ public class FormDashboard extends javax.swing.JFrame {
         btnRestaurant.setBackground(new java.awt.Color(51, 204, 255));
         btnRestaurant.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnRestaurant.setText("Restaurant");
+        btnRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurantActionPerformed(evt);
+            }
+        });
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
         btnExit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -88,8 +95,6 @@ public class FormDashboard extends javax.swing.JFrame {
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alvin Fernando\\Downloads\\hai-removebg-preview-removebg-preview.png")); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,7 +117,7 @@ public class FormDashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(34, 34, 34)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -122,6 +127,12 @@ public class FormDashboard extends javax.swing.JFrame {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantActionPerformed
+        Check="restaurant";
+        FormLogin login= new FormLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_btnRestaurantActionPerformed
 
     /**
      * @param args the command line arguments

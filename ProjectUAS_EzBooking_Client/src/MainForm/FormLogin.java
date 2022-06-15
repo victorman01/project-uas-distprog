@@ -4,17 +4,43 @@
  */
 package MainForm;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alvin Fernando
  */
+
 public class FormLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form FormLogin
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    FormDashboard dashboard;
+    
     public FormLogin() {
         initComponents();
+        try {
+            s = new Socket("localhost",3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -52,6 +78,11 @@ public class FormLogin extends javax.swing.JFrame {
 
         btnLogin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnLogin.setText("LOGIN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Don't have any account?");
@@ -112,6 +143,29 @@ public class FormLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username=txtUsername.getText();
+        String password=txtPassword.getText();
+        
+        
+            try {
+                out.writeBytes("LOGIN_RESTO;" + username + "," + password +"\n");
+                message=in.readLine();
+                if(message.equals("BERHASIL_LOGIN_RESTAURANT"))
+                {
+                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if(message.equals("GAGAL_LOGIN_RESTAURANT"))
+                {
+                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments

@@ -139,7 +139,7 @@ public class Restaurant {
     public boolean CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restorants where username=? and password=?");
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restaurants where username=? and password=?");
                 sql.setString(1, username);
                 sql.setString(2, password);
                 result = sql.executeQuery();
