@@ -78,6 +78,7 @@ CREATE TABLE `menus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `price` int(11) NOT NULL,
+  `detail` varchar(245) NOT NULL,
   `restorants_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_menus_restorants1_idx` (`restorants_id`),
@@ -194,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-15 16:05:17
+-- Dump completed on 2022-06-15 16:19:27
