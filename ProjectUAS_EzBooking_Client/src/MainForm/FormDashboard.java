@@ -51,6 +51,11 @@ public class FormDashboard extends javax.swing.JFrame {
         btnCustomer.setBackground(new java.awt.Color(51, 204, 255));
         btnCustomer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCustomer.setText("Customer");
+        btnCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerActionPerformed(evt);
+            }
+        });
 
         btnRestaurant.setBackground(new java.awt.Color(51, 204, 255));
         btnRestaurant.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -73,6 +78,11 @@ public class FormDashboard extends javax.swing.JFrame {
         btnAdmin.setBackground(new java.awt.Color(51, 204, 255));
         btnAdmin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAdmin.setText("Admin");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,6 +144,20 @@ public class FormDashboard extends javax.swing.JFrame {
         login.check = Check;
         login.setVisible(true);
     }//GEN-LAST:event_btnRestaurantActionPerformed
+
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        Check="customer";
+        FormLogin login= new FormLogin();
+        login.check = Check;
+        login.setVisible(true);
+    }//GEN-LAST:event_btnCustomerActionPerformed
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        Check="restaurant";
+        FormLogin login= new FormLogin();
+        login.check = Check;
+        login.setVisible(true);
+    }//GEN-LAST:event_btnAdminActionPerformed
 
     /**
      * @param args the command line arguments
