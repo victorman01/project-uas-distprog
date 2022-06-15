@@ -4,6 +4,8 @@
  */
 package Restaurant;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alvin Fernando
@@ -58,6 +60,11 @@ public class FormAddMenu extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setText("ADD");
         btnAdd.setToolTipText("");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         txtPriceTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
@@ -70,6 +77,11 @@ public class FormAddMenu extends javax.swing.JFrame {
         btnCancel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancel.setText("CANCEL");
         btnCancel.setToolTipText("");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,6 +134,15 @@ public class FormAddMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        JOptionPane.showMessageDialog(this, "Menu Added");
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
