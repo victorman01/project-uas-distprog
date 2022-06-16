@@ -46,20 +46,23 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
 
         btnListReservation.setBackground(new java.awt.Color(254, 249, 167));
-        btnListReservation.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnListReservation.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnListReservation.setForeground(new java.awt.Color(255, 202, 3));
         btnListReservation.setText("LIST RESERVATION");
 
         btnExit.setBackground(new java.awt.Color(204, 0, 51));
-        btnExit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("EXIT");
 
         btnMenu.setBackground(new java.awt.Color(254, 249, 167));
-        btnMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMenu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMenu.setForeground(new java.awt.Color(255, 202, 3));
         btnMenu.setText("LIST MENU");
 
         btnProfile.setBackground(new java.awt.Color(254, 249, 167));
-        btnProfile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnProfile.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnProfile.setForeground(new java.awt.Color(255, 202, 3));
         btnProfile.setText("PROFILE");
 
         lblApplicationName.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -111,9 +114,9 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(93, 93, 93)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +179,6 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
 
         lblRestaurantName.setBackground(new java.awt.Color(255, 102, 0));
         lblRestaurantName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblRestaurantName.setForeground(new java.awt.Color(255, 255, 255));
         lblRestaurantName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRestaurantName.setText("RESTAURANT NAME");
 
@@ -266,17 +268,13 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnProfile;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblApplicationName;
     private javax.swing.JLabel lblRestaurantName;
     // End of variables declaration//GEN-END:variables
