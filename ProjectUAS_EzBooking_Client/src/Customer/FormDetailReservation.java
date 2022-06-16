@@ -29,9 +29,10 @@ public class FormDetailReservation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDetail = new javax.swing.JTextArea();
-        btnExit = new javax.swing.JButton();
+        btnOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("FORM DETAIL RESERVATION");
@@ -40,9 +41,9 @@ public class FormDetailReservation extends javax.swing.JFrame {
         txtDetail.setRows(5);
         jScrollPane1.setViewportView(txtDetail);
 
-        btnExit.setBackground(new java.awt.Color(255, 0, 0));
-        btnExit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnExit.setText("EXIT");
+        btnOrder.setBackground(new java.awt.Color(255, 255, 255));
+        btnOrder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnOrder.setText("ORDER");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,7 +59,7 @@ public class FormDetailReservation extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -69,7 +70,7 @@ public class FormDetailReservation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExit)
+                .addComponent(btnOrder)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -113,7 +114,7 @@ public class FormDetailReservation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnOrder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtDetail;

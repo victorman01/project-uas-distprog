@@ -68,9 +68,19 @@ public class FormReservation extends javax.swing.JFrame {
 
         btnFoodOrder.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFoodOrder.setText("FOODS ORDER");
+        btnFoodOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFoodOrderActionPerformed(evt);
+            }
+        });
 
         btnBook.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBook.setText("BOOKING");
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,6 +137,16 @@ public class FormReservation extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFoodOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoodOrderActionPerformed
+        FormPreOrder frm = new FormPreOrder();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnFoodOrderActionPerformed
+
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
+        FormDetailReservation frm = new FormDetailReservation();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnBookActionPerformed
 
     /**
      * @param args the command line arguments
