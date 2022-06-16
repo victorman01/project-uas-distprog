@@ -6,14 +6,14 @@ package administrator;
 
 /**
  *
- * @author Jeremy
+ * @author Asus
  */
-public class FormListRestaurant extends javax.swing.JFrame {
+public class FormListCustomers extends javax.swing.JFrame {
 
     /**
-     * Creates new form FormRestaurant
+     * Creates new form FormListCostumers
      */
-    public FormListRestaurant() {
+    public FormListCustomers() {
         initComponents();
     }
 
@@ -28,45 +28,41 @@ public class FormListRestaurant extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableRestaurant = new javax.swing.JTable();
-        btnClose = new javax.swing.JButton();
+        tableAdmin = new javax.swing.JTable();
         btnDelete = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("LIST RESTAURANT");
+        jLabel1.setText("LIST CUSTOMERS");
 
-        tableRestaurant.setModel(new javax.swing.table.DefaultTableModel(
+        tableAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Owner's Name", "Restaurant's Name", "Number of Table(s)", "Pre-Order", "Restaurant's Address", "Restaurant's Phone Number"
+                "ID", "Username", "Customer's Name", "Customer's Address", "Customer's Email"
             }
         ));
-        jScrollPane1.setViewportView(tableRestaurant);
-        if (tableRestaurant.getColumnModel().getColumnCount() > 0) {
-            tableRestaurant.getColumnModel().getColumn(0).setHeaderValue("ID");
-            tableRestaurant.getColumnModel().getColumn(1).setHeaderValue("Owner's Name");
-            tableRestaurant.getColumnModel().getColumn(2).setHeaderValue("Restaurant's Name");
-            tableRestaurant.getColumnModel().getColumn(3).setHeaderValue("Number of Table(s)");
-            tableRestaurant.getColumnModel().getColumn(4).setHeaderValue("Pre-Order");
-            tableRestaurant.getColumnModel().getColumn(5).setHeaderValue("Restaurant's Address");
-            tableRestaurant.getColumnModel().getColumn(6).setHeaderValue("Restaurant's Phone Number");
-        }
-
-        btnClose.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnClose.setText("CLOSE");
+        jScrollPane1.setViewportView(tableAdmin);
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnDelete.setText("DELETE RESTAURANT");
+        btnDelete.setText("DELETE CUSTOMERS");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnClose.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnClose.setText("CLOSE");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
             }
         });
 
@@ -75,34 +71,31 @@ public class FormListRestaurant extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1093, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(204, 204, 204)
                 .addComponent(jLabel1)
-                .addGap(464, 464, 464))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
                     .addComponent(btnDelete))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -110,9 +103,14 @@ public class FormListRestaurant extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        FormDeleteRestaurant frm = new FormDeleteRestaurant();
+        FormDeleteCustomers frm = new FormDeleteCustomers();
         frm.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,13 +129,13 @@ public class FormListRestaurant extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormListRestaurant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormListRestaurant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormListRestaurant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormListRestaurant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormListCustomers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -145,7 +143,7 @@ public class FormListRestaurant extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormListRestaurant().setVisible(true);
+                new FormListCustomers().setVisible(true);
             }
         });
     }
@@ -155,6 +153,6 @@ public class FormListRestaurant extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableRestaurant;
+    private javax.swing.JTable tableAdmin;
     // End of variables declaration//GEN-END:variables
 }

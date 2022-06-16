@@ -47,6 +47,11 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         btnRestaurant.setBackground(new java.awt.Color(254, 249, 167));
         btnRestaurant.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRestaurant.setText("RESTAURANT");
+        btnRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurantActionPerformed(evt);
+            }
+        });
 
         btnExit.setBackground(new java.awt.Color(204, 0, 51));
         btnExit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -56,10 +61,20 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         btnCustomer.setBackground(new java.awt.Color(254, 249, 167));
         btnCustomer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCustomer.setText("CUSTOMER");
+        btnCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCustomerActionPerformed(evt);
+            }
+        });
 
         btnAdministrator.setBackground(new java.awt.Color(254, 249, 167));
         btnAdministrator.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdministrator.setText("ADMINISTRATOR");
+        btnAdministrator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministratorActionPerformed(evt);
+            }
+        });
 
         lblApplicationName.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblApplicationName.setForeground(new java.awt.Color(255, 255, 255));
@@ -212,6 +227,24 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+        // TODO add your handling code here:
+        FormListCustomers frm = new FormListCustomers();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnCustomerActionPerformed
+
+    private void btnRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantActionPerformed
+        // TODO add your handling code here:
+        FormListRestaurant frm = new FormListRestaurant();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnRestaurantActionPerformed
+
+    private void btnAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministratorActionPerformed
+
+        FormListAdmin frm = new FormListAdmin();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnAdministratorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,15 +286,12 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRestaurant;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblApplicationName;
     // End of variables declaration//GEN-END:variables
