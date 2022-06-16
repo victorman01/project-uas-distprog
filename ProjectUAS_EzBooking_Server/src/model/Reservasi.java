@@ -196,22 +196,22 @@ public class Reservasi {
         ArrayList<Object> collections = new ArrayList<>();
         try{
             stat=(java.sql.Statement)conn.createStatement();
-            this.result=stat.executeQuery("SELECT * FROM reservasis WHERE restaurants_id= "+ resto.getId());
+            this.result=stat.executeQuery("SELECT * FROM reservasis INNER JOIN "
+                    + "costumers as cs ON costumers_id = cs.id "
+                    + "WHERE restaurants_id= "+ resto.getId());
             while (this.result.next())
-            {
-                
-                Reservasi reservasi = new Reservasi();
-                        
-//                        this.result.getInt("id"),
-//                        this.result.getDate("booking_date"),
-//                        this.result.getInt("number_of_peoples"),
-//                        this.result.getInt("number_of_tables"),
-//                        this.result.getObject("restorants_id", restaurant),
-//                        this.result.getInt("customers_id"),
-//                        this.result.getInt("harga"),
-//                        resto);
-                        
-                       
+            {                        
+                int id = this.result.getInt("id");
+                Date bookingDate = this.result.getDate("booking_date");
+                int numOfPeople = this.result.getInt("number_of_peoples");
+                int numOfTable = this.result.getInt("number_of_tables");
+                Customer costumer = new Customer(result.getInt("cs.id"), 
+                        result.getString("cs.username"), result.getString
+                        ("cs.password"), result.getString("cs.name"), result.getString("cs.address"), 
+                        result.getString("cs.email"));
+                String status = this.result.getString("status");
+                float totalPrice = this.result.getFloat("total_price");    
+                Reservasi reservasi = new Reservasi(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
                 collections.add(reservasi);
             }
         }

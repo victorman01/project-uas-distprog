@@ -4,6 +4,15 @@
  */
 package Restaurant;
 
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author skyclyve
@@ -13,8 +22,24 @@ public class FormListReservation extends javax.swing.JFrame {
     /**
      * Creates new form FormListReservation
      */
+    
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+    
     public FormListReservation() {
         initComponents();
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
