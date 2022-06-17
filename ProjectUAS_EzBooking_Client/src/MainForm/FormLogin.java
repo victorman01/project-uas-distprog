@@ -6,6 +6,8 @@ package MainForm;
 
 import Customer.FormReservation;
 import Restaurant.FormAddMenu;
+import Restaurant.FormDashboardRestaurant;
+import administrator.FormDashboardAdministrator;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -18,7 +20,6 @@ import java.security.acl.Owner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -35,12 +36,14 @@ public class FormLogin extends javax.swing.JFrame {
     String message;
     String check;
     FormAddMenu menu;
+
     public FormLogin() {
         initComponents();
         try {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -193,17 +196,17 @@ public class FormLogin extends javax.swing.JFrame {
             try {
                 out.writeBytes("LOGIN_RESTO;" + username + "," + password + "\n");
                 message = in.readLine();
-                String[] value=message.split(",");
-                
+                String[] value = message.split(",");
+
                 System.out.println(message);
                 System.out.println(value[0]);
                 System.out.println(value[1]);
-                menu.idcheck=Integer.parseInt(value[1]);
+                menu.idcheck = Integer.parseInt(value[1]);
                 if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-                    FormAddMenu add= new FormAddMenu();
-                    add.setVisible(true);
+                    FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
+                    frm.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -218,7 +221,7 @@ public class FormLogin extends javax.swing.JFrame {
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-                    FormReservation form= new FormReservation();
+                    FormReservation form = new FormReservation();
                     form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
@@ -233,6 +236,8 @@ public class FormLogin extends javax.swing.JFrame {
                 message = in.readLine();
                 if (message.equals("BERHASIL_LOGIN_ADMIN")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    FormDashboardAdministrator frm = new FormDashboardAdministrator();
+                    frm.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
                 }
