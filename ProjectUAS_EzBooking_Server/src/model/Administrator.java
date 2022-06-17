@@ -160,5 +160,25 @@ public class Administrator {
         }
         return false;
     }
-    
+
+    public Administrator TakeUsr(String username) {
+        Administrator usr = null;
+        try {
+
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from administrators where username=? and password=?");
+                sql.setString(1, username);
+                sql.setString(2, password);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    usr = new Administrator(result.getString("username"), result.getString("password"), result.getString("name"));
+                    return usr;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error, " + e.getMessage());
+        }
+        return usr;
+    }
 }

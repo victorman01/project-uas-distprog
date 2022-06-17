@@ -65,6 +65,7 @@ public class FormLogin extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +84,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel4.setText("Don't have any account?");
 
         lblRegister.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblRegister.setForeground(java.awt.Color.black);
         lblRegister.setText("Register");
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -123,6 +125,15 @@ public class FormLogin extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        btnCancel.setBackground(java.awt.Color.red);
+        btnCancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancel.setText("CANCEL");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -131,23 +142,25 @@ public class FormLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(14, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblRegister)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(14, Short.MAX_VALUE))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,7 +176,9 @@ public class FormLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLogin)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnCancel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -193,19 +208,22 @@ public class FormLogin extends javax.swing.JFrame {
             try {
                 out.writeBytes("LOGIN_RESTO;" + username + "," + password + "\n");
                 message = in.readLine();
-                String[] value = message.split(",");
-
+                String[] value;
+                if (message.equals("BERHASIL_LOGIN_RESTAURANT")) {
+                    value = message.split(",");
+//                    System.out.println(value[0]);
+//                    System.out.println(value[1]);
+                    menu.idcheck = Integer.parseInt(value[1]);
+                }
                 System.out.println(message);
-                System.out.println(value[0]);
-                System.out.println(value[1]);
-                menu.idcheck = Integer.parseInt(value[1]);
+
                 if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Login Success. Welcome,"+username , "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
+                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
                     FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
+                    this.dispose();
                     frm.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Login Failed, Username or Password wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (IOException ex) {
@@ -215,13 +233,19 @@ public class FormLogin extends javax.swing.JFrame {
             try {
                 out.writeBytes("LOGIN_CUSTOMER;" + username + "," + password + "\n");
                 message = in.readLine();
+                String[] value;
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
-                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-                    FormDashboardCustomer form = new FormDashboardCustomer(username);
+                    value = message.split(",");
+//                    System.out.println(value[0]);
+//                    System.out.println(value[1]);
+                }
+
+                if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
+                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    FormDashboardCustomer form = new FormDashboardCustomer(username);                    
                     form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
-                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (IOException ex) {
@@ -231,12 +255,20 @@ public class FormLogin extends javax.swing.JFrame {
             try {
                 out.writeBytes("LOGIN_ADMIN;" + username + "," + password + "\n");
                 message = in.readLine();
+                String[] value;
                 if (message.equals("BERHASIL_LOGIN_ADMIN")) {
-                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    value = message.split(",");
+//                    System.out.println(value[0]);
+//                    System.out.println(value[1]);
+                }
+
+                if (message.equals("BERHASIL_LOGIN_ADMIN")) {
+                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
                     FormDashboardAdministrator frm = new FormDashboardAdministrator();
+                    this.dispose();
                     frm.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
-                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (IOException ex) {
@@ -260,6 +292,12 @@ public class FormLogin extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_lblRegisterMouseClicked
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        FormDashboard frm = new FormDashboard();
+        this.dispose();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +335,7 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

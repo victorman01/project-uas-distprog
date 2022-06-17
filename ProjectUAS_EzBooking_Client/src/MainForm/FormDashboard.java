@@ -172,6 +172,7 @@ public class FormDashboard extends javax.swing.JFrame {
         Check = "admin";
         FormLogin login = new FormLogin();
         login.check = Check;
+        this.dispose();
         login.setVisible(true);
     }//GEN-LAST:event_btnAdminActionPerformed
 
@@ -183,6 +184,7 @@ public class FormDashboard extends javax.swing.JFrame {
         Check = "restaurant";
         FormLogin login = new FormLogin();
         login.check = Check;
+        this.dispose();
         login.setVisible(true);
     }//GEN-LAST:event_btnRestaurantActionPerformed
 
@@ -191,6 +193,7 @@ public class FormDashboard extends javax.swing.JFrame {
         Check = "customer";
         FormLogin login = new FormLogin();
         login.check = Check;
+        this.dispose();
         login.setVisible(true);
     }//GEN-LAST:event_btnCustomerActionPerformed
 

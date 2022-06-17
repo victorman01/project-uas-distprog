@@ -4,6 +4,15 @@
  */
 package Customer;
 
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author skyclyve
@@ -17,12 +26,26 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String usr;
     public String customerName;
+
     public FormDashboardCustomer(String username) {
         initComponents();
-        customerName = username;
-        this.setLocationRelativeTo(null);
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            customerName = username;
+            this.setLocationRelativeTo(null);
+            out.writeBytes("TAKE_USR_CUSTOMER;"+customerName +"\n");
+            usr = in.readLine();
+            
+        } catch (Exception e) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
