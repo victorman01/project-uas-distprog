@@ -23,7 +23,7 @@ import model.Preorder;
 import model.Restaurant;
 
 public class HandleRequest extends Thread {
-    
+
     BufferedReader in;
     DataOutputStream out;
     MainServer parent;
@@ -33,14 +33,14 @@ public class HandleRequest extends Thread {
     public static Restaurant rest;
     Customer customer;
     Administrator administrator;
-    
+
     public HandleRequest(MainServer parent, Socket s) {
         this.parent = parent;
         this.s = s;
         this.restoran = new Restaurant();
         this.customer = new Customer();
         this.administrator = new Administrator();
-        
+
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
@@ -51,7 +51,7 @@ public class HandleRequest extends Thread {
             Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
     public void SendMessage(String s) {
         try {
             out.writeBytes(s + "\n");
@@ -59,18 +59,19 @@ public class HandleRequest extends Thread {
             Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void action(String command, String value) {
 //        try {
         String[] values = value.split(",");
         int idResto;
+        Administrator admin = new Administrator();
         switch (command) {
-            
+
             case "REGISTER_RESTO":
-                
+
                 Restaurant resto = new Restaurant(values[0], values[1], Integer.valueOf(values[2]), Boolean.valueOf(values[3]), values[4], values[5], values[6], values[7], Float.parseFloat(values[8]));
                 resto.insertData();
-                
+
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
             case "LOGIN_RESTO":
@@ -78,19 +79,19 @@ public class HandleRequest extends Thread {
                 System.out.println(values[1]);
                 restoran = restoran.CheckLogin(values[0], values[1]);
                 rest = restoran;
-                
+
                 if (!(restoran == null)) {
                     this.SendMessage("BERHASIL_LOGIN_RESTAURANT" + "," + restoran.getId());
                 } else {
                     this.SendMessage("GAGAL_LOGIN_RESTAURANT");
                 }
-                
+
                 break;
             case "REGISTER_CUSTOMER":
                 
                 Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();
-                
+
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
             case "LOGIN_CUSTOMER":
@@ -102,7 +103,7 @@ public class HandleRequest extends Thread {
                 } else {
                     this.SendMessage("GAGAL_LOGIN_CUSTOMER");
                 }
-                
+
                 break;
             case "LOGIN_ADMIN":
                 System.out.println(values[0]);
@@ -113,7 +114,7 @@ public class HandleRequest extends Thread {
                 } else {
                     this.SendMessage("GAGAL_LOGIN_ADMIN");
                 }
-                
+
                 break;
             case "ADD_MENU":
                 System.out.println(values[0]);
@@ -125,9 +126,9 @@ public class HandleRequest extends Thread {
                 System.out.println(rest.getId());
                 Menu menu = new Menu(values[0], Integer.valueOf(values[1]), values[2], rest);
                 menu.insertData();
-                
+
                 this.SendMessage("BERHASIL_ADD_MENU");
-                
+
                 break;
             case "UPDATE_MEJA":
                 break;
@@ -143,11 +144,11 @@ public class HandleRequest extends Thread {
                 int numPeople = Integer.parseInt(values[2]);
                 restoran = restoran.GetRestoByID(idResto);
                 float hargaReservasi = restoran.getHarga_reservasi();
-                
+
                 //Hitung total harga
-                float totalPrice = numTable*hargaReservasi + (numPeople*hargaReservasi*(float)0.2);
-                
-                this.SendMessage("CONFIRM_RESERVATION;"+ String.valueOf(totalPrice));
+                float totalPrice = numTable * hargaReservasi + (numPeople * hargaReservasi * (float) 0.2);
+
+                this.SendMessage("CONFIRM_RESERVATION;" + String.valueOf(totalPrice));
                 break;
             case "SHOW_LIST_MENU":
                 System.out.println(values[0]);
@@ -164,20 +165,43 @@ public class HandleRequest extends Thread {
                 break;
                 
                 
+
             case "UPDATE_MENU":
                 Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuUpdate.updateData());
                 break;
-            
+
             case "DELETE_MENU":
                 Menu menuDelete = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuDelete.deleteData());
                 break;
-            
+
             case "TAKE_USR_CUSTOMER":
                 Customer usr = new Customer();
                 usr = usr.TakeUsr(values[0], values[1]);
-                this.SendMessage(usr.getId()+","+usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
+                this.SendMessage(usr.getId() + "," + usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
+                break;
+
+            case "LIST_ADMIN":
+                this.SendMessage(admin.viewListAdmin());
+                break;
+
+            case "TAKE_ADMIN":
+                this.SendMessage(admin.TakeUsr(value).getPassword());
+                break;
+
+            case "DELETE_ADMIN":
+                this.SendMessage(admin.deleteData(Integer.parseInt(value)));
+                break;
+
+            case "UPDATE_ADMIN":
+                Administrator admins = new Administrator(Integer.valueOf(values[0]), values[1], values[2], values[3]);
+                this.SendMessage(admins.updateData());
+                break;
+
+            case "ADD_ADMIN":
+                Administrator addAdmin = new Administrator(values[0], values[1], values[2]);
+                this.SendMessage(addAdmin.insertData());
                 break;
             case "DELETE_CUSTOMER":
                 Customer cst=new Customer();
@@ -188,7 +212,7 @@ public class HandleRequest extends Thread {
 //            Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-    
+
     @Override
     public void run() {
         super.run();
@@ -196,66 +220,75 @@ public class HandleRequest extends Thread {
             try {
                 pesan = in.readLine();
                 System.out.println(pesan);
-                if (pesan.contains("REGISTER_RESTO;")) {
-                    String[] p = pesan.split(";");
-                    
-                    this.action(p[0], p[1]);
-                    
-                } else if (pesan.contains("LOGIN_RESTO;")) {
-                    String[] p = pesan.split(";");
-                    
-                    this.action(p[0], p[1]);
-                    
-                } else if (pesan.contains("REGISTER_CUSTOMER;")) {
-                    String[] p = pesan.split(";");
-                    
-                    this.action(p[0], p[1]);
-                    
-                } else if (pesan.contains("LOGIN_CUSTOMER;")) {
-                    String[] p = pesan.split(";");
-                    
-                    this.action(p[0], p[1]);
-                    
-                } else if (pesan.contains("LOGIN_ADMIN;")) {
-                    String[] p = pesan.split(";");
-                    
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("ADD_MENU;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("INIT_RESERVATION;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("CREATE_RESERVATION;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("SHOW_LIST_MENU;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("UPDATE_MENU;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if (pesan.contains("DELETE_MENU;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                } else if(pesan.contains("TAKE_USR_CUSTOMER;")){
-                    String[] p = pesan.split(";");
-                    this.action(p[0],p[1]);
-                }
-                else if (pesan.contains("SHOW_LIST_CUSTOMER;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                }
-                else if (pesan.contains("DELETE_CUSTOMER;")) {
-                    String[] p = pesan.split(";");
-                    this.action(p[0], p[1]);
-                }
+                String[] p = pesan.split(";");
+                this.action(p[0], p[1]);
+//                if (pesan.contains("REGISTER_RESTO;")) {
+//                    String[] p = pesan.split(";");
+//
+//                    this.action(p[0], p[1]);
+//
+//                } else if (pesan.contains("LOGIN_RESTO;")) {
+//                    String[] p = pesan.split(";");
+//
+//                    this.action(p[0], p[1]);
+//
+//                } else if (pesan.contains("REGISTER_CUSTOMER;")) {
+//                    String[] p = pesan.split(";");
+//
+//                    this.action(p[0], p[1]);
+//
+//                } else if (pesan.contains("LOGIN_CUSTOMER;")) {
+//                    String[] p = pesan.split(";");
+//
+//                    this.action(p[0], p[1]);
+//
+//                } else if (pesan.contains("LOGIN_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("ADD_MENU;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("INIT_RESERVATION;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("CREATE_RESERVATION;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("SHOW_LIST_MENU;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("UPDATE_MENU;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("DELETE_MENU;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("TAKE_USR_CUSTOMER;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("LIST_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("TAKE_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("DELETE_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("UPDATE_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                } else if (pesan.contains("ADD_ADMIN;")) {
+//                    String[] p = pesan.split(";");
+//                    this.action(p[0], p[1]);
+//                }
             } catch (IOException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
-        
+
     }
-    
+
 }

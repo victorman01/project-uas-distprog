@@ -4,6 +4,16 @@
  */
 package administrator;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Jeremy
@@ -13,8 +23,35 @@ public class FormListAdmin extends javax.swing.JFrame {
     /**
      * Creates new form FormListAdmin
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+
     public FormListAdmin() {
-        initComponents();
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+
+            out.writeBytes("LIST_ADMIN; \n");
+            message = in.readLine();
+
+            String[] amountAdmin = message.split("/");
+            String[] colNames = {"ID", "Username", "Admin's Name"};
+            DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
+
+            for (int i = 0; i < amountAdmin.length; i++) {
+                String[] valueAdmin = amountAdmin[i].split(",");
+                String[] show = {valueAdmin[0], valueAdmin[1], valueAdmin[3]};
+
+                tblModel.addRow(show);
+            }
+            tblAdmin.setModel(tblModel);
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -27,36 +64,16 @@ public class FormListAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableAdmin = new javax.swing.JTable();
+        tblAdmin = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
-
-        btnUpdate.setBackground(new java.awt.Color(255, 255, 255));
-        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnUpdate.setText("UPDATE");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setBackground(new java.awt.Color(255, 255, 255));
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDelete.setText("DELETE");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
         btnAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -67,8 +84,9 @@ public class FormListAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnClose.setBackground(new java.awt.Color(255, 255, 255));
+        btnClose.setBackground(new java.awt.Color(255, 51, 0));
         btnClose.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("EXIT");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,17 +108,17 @@ public class FormListAdmin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(101, 101, 101))
+                .addGap(173, 173, 173))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(jLabel8)
-                .addGap(19, 19, 19))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        tableAdmin.setModel(new javax.swing.table.DefaultTableModel(
+        tblAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -111,7 +129,12 @@ public class FormListAdmin extends javax.swing.JFrame {
                 "ID", "Username", "Admin's Name"
             }
         ));
-        jScrollPane1.setViewportView(tableAdmin);
+        tblAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAdminMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAdmin);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,15 +144,12 @@ public class FormListAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,12 +158,10 @@ public class FormListAdmin extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnAdd)
-                    .addComponent(btnClose))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClose)
+                    .addComponent(btnAdd))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -161,20 +179,8 @@ public class FormListAdmin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-        FormUpdateAdmin frm = new FormUpdateAdmin();
-        frm.setVisible(true);
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        FormDeleteAdmin frm = new FormDeleteAdmin();
-        frm.setVisible(true);
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        dispose();
         FormAddAdmin frm = new FormAddAdmin();
         frm.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
@@ -183,6 +189,30 @@ public class FormListAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();;
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void tblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminMouseClicked
+        try {
+            FormUpdateAdmin frm = new FormUpdateAdmin();
+            
+            int index = tblAdmin.getSelectedRow();
+            TableModel tbl = tblAdmin.getModel();
+            
+            frm.txtIdAdmin.setText(tbl.getValueAt(index, 0).toString());
+            frm.txtUsername.setText(tbl.getValueAt(index, 1).toString());
+            frm.txtAdminName.setText(tbl.getValueAt(index, 2).toString());
+            
+            out.writeBytes("TAKE_ADMIN;" + tbl.getValueAt(index, 1).toString() + "\n");
+            check = in.readLine();
+            
+            System.out.println(check);
+            frm.txtPassword.setText(check);
+            
+            frm.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(FormListAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblAdminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -222,16 +252,10 @@ public class FormListAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableAdmin;
+    private javax.swing.JTable tblAdmin;
     // End of variables declaration//GEN-END:variables
 }

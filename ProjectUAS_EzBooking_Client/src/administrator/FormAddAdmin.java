@@ -4,6 +4,15 @@
  */
 package administrator;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jeremy
@@ -13,8 +22,21 @@ public class FormAddAdmin extends javax.swing.JFrame {
     /**
      * Creates new form FormAddAdmin
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+
     public FormAddAdmin() {
-        initComponents();
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (Exception e) {
+            System.out.println("Error in initialComponents FormAddAdmin");
+        }
     }
 
     /**
@@ -28,9 +50,9 @@ public class FormAddAdmin extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        txtOwnerName = new javax.swing.JTextField();
+        txtAdminName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtRestName = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
@@ -46,13 +68,13 @@ public class FormAddAdmin extends javax.swing.JFrame {
         jLabel5.setText("Admin Name :");
         jLabel5.setToolTipText("");
 
-        txtOwnerName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtAdminName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Username :");
         jLabel6.setToolTipText("");
 
-        txtRestName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Password :");
@@ -68,7 +90,6 @@ public class FormAddAdmin extends javax.swing.JFrame {
         });
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtPassword.setText("jPasswordField1");
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -116,22 +137,17 @@ public class FormAddAdmin extends javax.swing.JFrame {
                         .addComponent(btnAdd))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jLabel7))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel6)))
-                                .addGap(18, 18, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(11, 11, 11)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addComponent(jLabel7))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtRestName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(txtOwnerName))))
+                            .addComponent(txtAdminName))))
                 .addGap(18, 18, 18))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -142,11 +158,11 @@ public class FormAddAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAdminName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtRestName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -171,36 +187,22 @@ public class FormAddAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //        String owner =txtOwnerName.getText();
-        //        String Restaurant=txtRestName.getText();
-        //        int Table=Integer.parseInt(txtAmountTable.getText());
-        //        boolean PreOrder=false;
-        //        String username=txtUsername.getText();
-        //        String Password=txtPassword.getText();
-        //        String RePassword=txtRePassword.getText();
-        //        String address=txtAddress.getText();
-        //        String PhoneNumber=txtPhoneNumber.getText();
-        //        if(rdnYes.isSelected())
-        //        {
-            //            PreOrder=true;
-            //        }
-        //        if(RePassword.equals(Password))
-        //        {
-            //            try {
-                //                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "\n");
-                //                message=in.readLine();
-                //                if(message.equals("BERHASIL_REGISTER"))
-                //                {
-                    //                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    //                }
-                //            } catch (IOException ex) {
-                //                Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
-                //            }
-            //        }
-        //        else
-        //        {
-            //            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
-            //        }
+        try {
+            out.writeBytes("ADD_ADMIN;" + txtUsername.getText() + "," + txtPassword.getText() + ","
+                    + txtAdminName.getText() + "\n");
+            message = in.readLine();
+
+            if (message.equals("ADD_ADMIN_SUCCESS")) {
+                JOptionPane.showMessageDialog(this, "Add Admin Success.");
+                this.dispose();
+                FormListAdmin frm = new FormListAdmin();
+                frm.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Add Admin Failed.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormAddAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
@@ -247,8 +249,8 @@ public class FormAddAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtOwnerName;
+    private javax.swing.JTextField txtAdminName;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtRestName;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

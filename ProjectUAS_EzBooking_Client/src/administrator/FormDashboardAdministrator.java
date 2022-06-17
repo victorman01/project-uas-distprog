@@ -4,6 +4,8 @@
  */
 package administrator;
 
+import MainForm.FormDashboard;
+
 /**
  *
  * @author Alvin Fernando
@@ -33,7 +35,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnRestaurant = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
+        btnLogOut = new javax.swing.JButton();
         btnCustomer = new javax.swing.JButton();
         btnAdministrator = new javax.swing.JButton();
         lblApplicationName = new javax.swing.JLabel();
@@ -63,10 +65,15 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setBackground(new java.awt.Color(204, 0, 51));
-        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setText("EXIT");
+        btnLogOut.setBackground(new java.awt.Color(204, 0, 51));
+        btnLogOut.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLogOut.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogOut.setText("LOG OUT");
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
 
         btnCustomer.setBackground(new java.awt.Color(254, 249, 167));
         btnCustomer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -97,7 +104,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnRestaurant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnAdministrator, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -117,7 +124,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdministrator, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 243, 35));
@@ -300,6 +307,12 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_btnAdministratorActionPerformed
 
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        this.dispose();
+        FormDashboard frm = new FormDashboard();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -338,7 +351,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministrator;
     private javax.swing.JButton btnCustomer;
-    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnRestaurant;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

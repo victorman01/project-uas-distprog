@@ -93,7 +93,7 @@ public class Administrator {
         return connect;
     }
 
-    public void insertData() {
+    public String insertData() {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("INSERT INTO administrators"
@@ -104,43 +104,48 @@ public class Administrator {
                 sql.setString(3, this.name);
                 sql.executeUpdate();
                 sql.close();
+                return "ADD_ADMIN_SUCCESS";
             }
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "ADD_ADMIN_FAILED";
     }
 
-    public void updateData() {
+    public String updateData() {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("UPDATE administrators "
                         + "SET username = ?, password = ?, name = ? "
-                        + "WHERE id = ? ");
+                        + "WHERE id = ?");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
                 sql.setString(3, this.name);
                 sql.setInt(4, this.id);
                 sql.executeUpdate();
                 sql.close();
+                return "UPDATE_ADMIN_SUCCESS";
             }
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "UPDATE_ADMIN_FAILED";
     }
 
-    public void deleteData() {
+    public String deleteData(int idAdmin) {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE FROM administrators "
                         + "WHERE id = ?");
-                sql.setInt(1, this.id);
+                sql.setInt(1, idAdmin);
                 sql.executeUpdate();
                 sql.close();
+                return "DELETE_ADMIN_SUCCES";
             }
         } catch (SQLException e) {
-            System.out.println("Error" + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
-
+        return "DELETE_ADMIN_FAILED";
     }
 
     public boolean CheckLogin(String username, String password) {
@@ -166,9 +171,8 @@ public class Administrator {
         try {
 
             if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from administrators where username=? and password=?");
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from administrators where username=?");
                 sql.setString(1, username);
-                sql.setString(2, password);
                 result = sql.executeQuery();
                 if (result.next()) {
                     usr = new Administrator(result.getString("username"), result.getString("password"), result.getString("name"));
@@ -180,5 +184,26 @@ public class Administrator {
             System.out.println("Error, " + e.getMessage());
         }
         return usr;
+    }
+
+    public String viewListAdmin() {
+        String listAdmin = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from administrators");
+            while (this.result.next()) {
+
+                Administrator admin = new Administrator(this.result.getInt("id"),
+                        this.result.getString("username"),
+                        this.result.getString("password"),
+                        this.result.getString("name"));
+
+                listAdmin += String.valueOf(admin.getId()) + "," + admin.getUsername() + "," + admin.getPassword()
+                        + "," + admin.getName() + "/";
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return listAdmin;
     }
 }
