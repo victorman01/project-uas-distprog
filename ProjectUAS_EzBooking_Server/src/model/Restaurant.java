@@ -157,6 +157,11 @@ public class Restaurant{
         this.conn = getConnection();
     }
     
+    public Restaurant(int id) {
+        this.id = id;
+        this.conn = getConnection();
+    }
+    
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -288,7 +293,7 @@ public class Restaurant{
         }
     }
 
-    public void deleteData() {
+    public String deleteData() {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM restaurants "
@@ -296,10 +301,12 @@ public class Restaurant{
                 sql.setInt(1, this.id);
                 sql.executeUpdate();
                 sql.close();
+                return "DELETE_SUCCESS";
             }
         } catch (SQLException e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "DELETE_FAILED";
     }
 
     public Restaurant DataRestoran(int id) {
@@ -338,6 +345,31 @@ public class Restaurant{
                                     this.result.getFloat("price_reservation"));
                        
                 listData += resto.id + "/" + resto.nama + ",";
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return listData;
+
+}
+     public String viewListDataAdmin(){
+        String listData = "";
+        try{
+            stat=(java.sql.Statement)conn.createStatement();
+            this.result=stat.executeQuery("select * from restaurants");
+            while (this.result.next())
+            {
+                
+                Restaurant resto = new Restaurant(this.result.getInt("id"),
+                                    this.result.getString("owner"),this.result.getString("name"),
+                                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
+                                    this.result.getString("username"),this.result.getString("password"),
+                                    this.result.getString("address"),this.result.getString("phone_number"), 
+                                    this.result.getFloat("price_reservation"));
+                       
+                listData += resto.id + "," + resto.pemilik + "," + resto.nama + "," + resto.jumlahMeja + "," + resto.preOrder +
+                        "," + resto.alamat + "," + resto.no_telepon + "," + resto.username + "," + resto.harga_reservasi + "/";
             }
         }
         catch(Exception ex){

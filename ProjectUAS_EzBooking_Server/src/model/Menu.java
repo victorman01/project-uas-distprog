@@ -208,5 +208,29 @@ public class Menu {
         return listMenu;
 
     }
+    
+    public String viewListDataAdmin(Restaurant resto) {
+//        ArrayList<Object> collections = new ArrayList<>();
+        String listMenu = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from menus where restorants_id=" + resto.getId());
+            while (this.result.next()) {
+
+                Menu menu = new Menu(this.result.getInt("id"),
+                        this.result.getString("name"),
+                        this.result.getInt("price"),
+                        this.result.getString("detail"),
+                        resto);
+
+                listMenu += String.valueOf(menu.getId()) + "," + menu.getNama() + "," + String.valueOf(menu.getHarga())
+                        + "," + menu.getDetail() + "," + resto.getNama() + "/";
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return listMenu;
+
+    }
 
 }

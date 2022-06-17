@@ -4,17 +4,58 @@
  */
 package administrator;
 
+import MainForm.FormRegisterRestaurant;
+import Restaurant.FormUpdateMenu;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /**
  *
  * @author Jeremy
  */
 public class FormListRestaurant extends javax.swing.JFrame {
 
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+    
     /**
      * Creates new form FormRestaurant
      */
     public FormListRestaurant() {
         initComponents();
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+
+            out.writeBytes("SHOW_LIST_RESTO; \n");
+            message = in.readLine();
+
+            String[] resto = message.split("/");
+
+            String[] colNames = {"ID", "Owner's Name", "Name", "Number of Table(s)", "Pre-Order", "Address", "Phone Number"};
+            DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
+
+            for (int i = 0; i < resto.length; i++) {
+                String[] valueMenu = resto[i].split(",");
+                String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4], valueMenu[5], valueMenu[6]};
+                
+                tblModel.addRow(show);
+            }
+            tbListResto.setModel(tblModel);
+
+        } catch (Exception e) {
+            System.out.println("Error in show list menu");
+        }
     }
 
     /**
@@ -29,8 +70,7 @@ public class FormListRestaurant extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableRestaurant = new javax.swing.JTable();
-        btnDelete = new javax.swing.JButton();
+        tbListResto = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -41,37 +81,29 @@ public class FormListRestaurant extends javax.swing.JFrame {
         btnClose.setBackground(new java.awt.Color(255, 255, 255));
         btnClose.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnClose.setText("CLOSE");
-
-        tableRestaurant.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Owner's Name", "Restaurant's Name", "Number of Table(s)", "Pre-Order", "Restaurant's Address", "Restaurant's Phone Number"
-            }
-        ));
-        jScrollPane1.setViewportView(tableRestaurant);
-        if (tableRestaurant.getColumnModel().getColumnCount() > 0) {
-            tableRestaurant.getColumnModel().getColumn(0).setHeaderValue("ID");
-            tableRestaurant.getColumnModel().getColumn(1).setHeaderValue("Owner's Name");
-            tableRestaurant.getColumnModel().getColumn(2).setHeaderValue("Restaurant's Name");
-            tableRestaurant.getColumnModel().getColumn(3).setHeaderValue("Number of Table(s)");
-            tableRestaurant.getColumnModel().getColumn(4).setHeaderValue("Pre-Order");
-            tableRestaurant.getColumnModel().getColumn(5).setHeaderValue("Restaurant's Address");
-            tableRestaurant.getColumnModel().getColumn(6).setHeaderValue("Restaurant's Phone Number");
-        }
-
-        btnDelete.setBackground(new java.awt.Color(255, 255, 255));
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDelete.setText("DELETE RESTAURANT");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnCloseActionPerformed(evt);
             }
         });
+
+        tbListResto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Owner's Name", "Name", "Number of Table(s)", "Pre-Order", "Address", "Phone Number", "Username", "Price Reservation"
+            }
+        ));
+        tbListResto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbListRestoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbListResto);
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -106,8 +138,7 @@ public class FormListRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1093, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnClose)))
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,9 +150,7 @@ public class FormListRestaurant extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClose)
-                    .addComponent(btnDelete))
+                .addComponent(btnClose)
                 .addContainerGap())
         );
 
@@ -141,11 +170,25 @@ public class FormListRestaurant extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void tbListRestoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListRestoMouseClicked
         // TODO add your handling code here:
         FormDeleteRestaurant frm = new FormDeleteRestaurant();
+        
+        int index = tbListResto.getSelectedRow();
+        TableModel tbl = tbListResto.getModel();
+        
+        frm.txtID.setText(tbl.getValueAt(index, 0).toString());
+        frm.txtOwnerName.setText(tbl.getValueAt(index, 1).toString());
+        frm.txtRestName.setText(tbl.getValueAt(index, 2).toString());
+        
         frm.setVisible(true);
-    }//GEN-LAST:event_btnDeleteActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_tbListRestoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -185,11 +228,10 @@ public class FormListRestaurant extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableRestaurant;
+    private javax.swing.JTable tbListResto;
     // End of variables declaration//GEN-END:variables
 }

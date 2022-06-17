@@ -4,17 +4,34 @@
  */
 package administrator;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jeremy
  */
 public class FormDeleteRestaurant extends javax.swing.JFrame {
 
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    
     /**
      * Creates new form FormDeleteRestaurant
      */
     public FormDeleteRestaurant() {
-        initComponents();
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -37,6 +54,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,12 +72,14 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
         jLabel6.setToolTipText("");
 
         txtRestName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtRestName.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Owner Name :");
         jLabel5.setToolTipText("");
 
         txtOwnerName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtOwnerName.setEnabled(false);
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -90,7 +110,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel8))
-                .addGap(83, 83, 83))
+                .addGap(105, 105, 105))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,42 +122,47 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(11, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtRestName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDelete)))
-                .addContainerGap())
+                                .addComponent(btnDelete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExit))
+                            .addComponent(txtRestName)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,12 +170,14 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtRestName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDelete)
+                    .addComponent(btnExit))
                 .addContainerGap())
         );
 
@@ -158,7 +185,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,37 +198,27 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        //        String owner =txtOwnerName.getText();
-        //        String Restaurant=txtRestName.getText();
-        //        int Table=Integer.parseInt(txtAmountTable.getText());
-        //        boolean PreOrder=false;
-        //        String username=txtUsername.getText();
-        //        String Password=txtPassword.getText();
-        //        String RePassword=txtRePassword.getText();
-        //        String address=txtAddress.getText();
-        //        String PhoneNumber=txtPhoneNumber.getText();
-        //        if(rdnYes.isSelected())
-        //        {
-            //            PreOrder=true;
-            //        }
-        //        if(RePassword.equals(Password))
-        //        {
-            //            try {
-                //                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "\n");
-                //                message=in.readLine();
-                //                if(message.equals("BERHASIL_REGISTER"))
-                //                {
-                    //                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    //                }
-                //            } catch (IOException ex) {
-                //                Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
-                //            }
-            //        }
-        //        else
-        //        {
-            //            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
-            //        }
+        try {
+            out.writeBytes("DELETE_RESTO;" + txtID.getText() + "\n");
+            message = in.readLine();
+
+            if (message.equals("DELETE_SUCCESS")) {
+                JOptionPane.showMessageDialog(this, "Delete Restaurant Success.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Delete Restaurant Failed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error in Delete Menu");
+        }
+        this.dispose();
+        administrator.FormListRestaurant frm = new administrator.FormListRestaurant();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,6 +257,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -247,8 +265,8 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtOwnerName;
-    private javax.swing.JTextField txtRestName;
+    public javax.swing.JTextField txtID;
+    public javax.swing.JTextField txtOwnerName;
+    public javax.swing.JTextField txtRestName;
     // End of variables declaration//GEN-END:variables
 }
