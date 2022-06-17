@@ -16,7 +16,12 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
     public FormDashboardAdministrator() {
         initComponents();
     }
-
+    public String adminName;
+    public FormDashboardAdministrator(String username) {
+        initComponents();
+        adminName = username;
+        this.setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

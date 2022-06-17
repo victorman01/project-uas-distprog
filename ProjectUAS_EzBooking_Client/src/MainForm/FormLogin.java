@@ -4,19 +4,16 @@
  */
 package MainForm;
 
+import Customer.FormDashboardCustomer;
 import Customer.FormReservation;
 import Restaurant.FormAddMenu;
 import Restaurant.FormDashboardRestaurant;
 import administrator.FormDashboardAdministrator;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.net.Socket;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.security.acl.Owner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -203,12 +200,12 @@ public class FormLogin extends javax.swing.JFrame {
                 System.out.println(value[1]);
                 menu.idcheck = Integer.parseInt(value[1]);
                 if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Success. Welcome,"+username , "INFO", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
                     frm.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Login Failed, Username or Password wrong", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (IOException ex) {
@@ -221,7 +218,7 @@ public class FormLogin extends javax.swing.JFrame {
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-                    FormReservation form = new FormReservation();
+                    FormDashboardCustomer form = new FormDashboardCustomer(username);
                     form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);

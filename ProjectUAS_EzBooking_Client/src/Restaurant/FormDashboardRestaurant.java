@@ -17,11 +17,12 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         initComponents();
     }
 
-    public String restoName = "";
+    public String restoName;
     public FormDashboardRestaurant(String name) {
         initComponents();
         restoName = name;
-        lblRestaurantName.setText(restoName);
+        lblRestaurantName.setText(restoName.toUpperCase() +" RESTAURANT");
+        this.setLocationRelativeTo(null);
     }
 
     /**
