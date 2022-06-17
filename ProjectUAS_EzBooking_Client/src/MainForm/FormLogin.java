@@ -242,6 +242,7 @@ public class FormLogin extends javax.swing.JFrame {
 
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
                     FormDashboardCustomer form = new FormDashboardCustomer(username);                    
                     form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
