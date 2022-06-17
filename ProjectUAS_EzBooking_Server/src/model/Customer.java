@@ -121,8 +121,8 @@ public class Customer {
     public void insertData() {
         try {
             if (!connect.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("INSERT INTO pelanggans"
-                        + "(username, password, nama, alamat, email) "
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("INSERT INTO customers"
+                        + "(username, password, name, address, email) "
                         + "VALUES (?,?,?,?,?)");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
@@ -140,8 +140,8 @@ public class Customer {
     public void updateData() {
         try {
             if (!connect.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("UPDATE pelanggans "
-                        + "SET username = ?, password = ?, nama = ?, alamat = ?, email = ? "
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("UPDATE customers "
+                        + "SET username = ?, password = ?, name = ?, address = ?, email = ? "
                         + "WHERE id = ? ");
                 sql.setString(1, this.username);
                 sql.setString(2, this.password);
@@ -160,7 +160,7 @@ public class Customer {
     public void deleteData() {
         try {
             if (!connect.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE FROM pelanggans "
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE FROM customers "
                         + "WHERE id = ?");
                 sql.setInt(1, this.id);
                 sql.executeUpdate();

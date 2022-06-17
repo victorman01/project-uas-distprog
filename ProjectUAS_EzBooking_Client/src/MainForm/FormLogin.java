@@ -4,6 +4,7 @@
  */
 package MainForm;
 
+import Customer.FormReservation;
 import Restaurant.FormAddMenu;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -216,6 +217,9 @@ public class FormLogin extends javax.swing.JFrame {
                 message = in.readLine();
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Berhasil login SELAMAT DATANG", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    FormReservation form= new FormReservation();
+                    form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Gagal Login, password atau username salah", "INFO", JOptionPane.INFORMATION_MESSAGE);
                 }

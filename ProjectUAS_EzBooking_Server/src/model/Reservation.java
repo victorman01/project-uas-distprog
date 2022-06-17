@@ -17,7 +17,7 @@ import static model.Restaurant.conn;
  *
  * @author Rony H.I
  */
-public class Reservasi {
+public class Reservation {
     int id;
     Date bookingDate;
     int numPeoples;
@@ -96,7 +96,7 @@ public class Reservasi {
         this.totalPrice = totalPrice;
     }
 
-    public Reservasi(int id, Date bookingDate, int numPeoples, int numTables, Restaurant restaurant, Customer customer, String status, float totalPrice) {
+    public Reservation(int id, Date bookingDate, int numPeoples, int numTables, Restaurant restaurant, Customer customer, String status, float totalPrice) {
         this.id = id;
         this.bookingDate = bookingDate;
         this.numPeoples = numPeoples;
@@ -108,7 +108,7 @@ public class Reservasi {
         getConnection();
     }
     
-    public Reservasi(Date bookingDate, int numPeoples, int numTables, Restaurant restaurant, Customer customer, String status, float totalPrice) {
+    public Reservation(Date bookingDate, int numPeoples, int numTables, Restaurant restaurant, Customer customer, String status, float totalPrice) {
         this.bookingDate = bookingDate;
         this.numPeoples = numPeoples;
         this.numTables = numTables;
@@ -120,7 +120,7 @@ public class Reservasi {
 
     }
         
-    public Reservasi() {
+    public Reservation() {
          getConnection();
     }
      
@@ -211,7 +211,7 @@ public class Reservasi {
                         result.getString("cs.email"));
                 String status = this.result.getString("status");
                 float totalPrice = this.result.getFloat("total_price");    
-                Reservasi reservasi = new Reservasi(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
+                Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
                 collections.add(reservasi);
             }
         }

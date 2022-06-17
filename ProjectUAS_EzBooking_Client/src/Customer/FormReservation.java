@@ -4,6 +4,17 @@
  */
 package Customer;
 
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.ComboItem;
+
 /**
  *
  * @author Alvin Fernando
@@ -13,8 +24,34 @@ public class FormReservation extends javax.swing.JFrame {
     /**
      * Creates new form FormReservation
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+    int restoId = 0;
+    
     public FormReservation() {
         initComponents();
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            
+            out.writeBytes("INIT_RESERVATION; \n");
+            message = in.readLine();
+            
+            //Masukin Resto Ke combobox
+            String[] valueResto = message.split(",");
+
+            for (int i = 0; i < valueResto.length; i++) {
+                String[] value = valueResto[i].split("/");
+                cbRestaurant.addItem(new ComboItem(value[0], value[1]));
+            }     
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -74,7 +111,11 @@ public class FormReservation extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
 
         cbRestaurant.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        cbRestaurant.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRestaurantActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Booking Date:");
@@ -173,14 +214,30 @@ public class FormReservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFoodOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoodOrderActionPerformed
-        FormPreOrder frm = new FormPreOrder();
-        frm.setVisible(true);
+            
     }//GEN-LAST:event_btnFoodOrderActionPerformed
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
-        FormDetailReservation frm = new FormDetailReservation();
-        frm.setVisible(true);
+        try {
+            String totalPrice = txtPriceTotal.getText();
+            out.writeBytes("INIT_RESERVATION;"+restoId+","+"bookingDate(sek belum)"+","+ numPeople+""+totalPrice+"\n");
+            message = in.readLine();
+            FormDetailReservation frm = new FormDetailReservation();
+            frm.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBookActionPerformed
+
+    private void cbRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRestaurantActionPerformed
+        // Ngambil value dari combobox
+        ComboItem selectedItem = (ComboItem) cbRestaurant.getSelectedItem();
+        if (selectedItem != null) {
+            int selectedRestoID = Integer.parseInt(selectedItem.getValue());
+            restoId = selectedRestoID;
+        }
+        
+    }//GEN-LAST:event_cbRestaurantActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,7 +277,7 @@ public class FormReservation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBook;
     private javax.swing.JButton btnFoodOrder;
-    private javax.swing.JComboBox<String> cbRestaurant;
+    private javax.swing.JComboBox<Object> cbRestaurant;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

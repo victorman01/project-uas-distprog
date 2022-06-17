@@ -70,6 +70,8 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        spinnerHargaReservasi = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,10 +174,16 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel12.setText("Reservation Price :");
+
+        spinnerHargaReservasi.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -185,15 +193,17 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtRePassword, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPhoneNumber)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(spinnerHargaReservasi)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -213,7 +223,6 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +257,11 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(spinnerHargaReservasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -285,6 +298,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         String RePassword=txtRePassword.getText();
         String address=txtAddress.getText();
         String PhoneNumber=txtPhoneNumber.getText();
+        float reservationPrice= (float) spinnerHargaReservasi.getValue();
         if(rdnYes.isSelected())
         {
             PreOrder=true;
@@ -292,7 +306,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         if(RePassword.equals(Password))
         {
             try {
-                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "\n");
+                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "," + reservationPrice +"\n");
                 message=in.readLine();
                 if(message.equals("BERHASIL_REGISTER"))
                 {
@@ -351,6 +365,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -363,6 +378,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton rdnNo;
     private javax.swing.JRadioButton rdnYes;
+    private javax.swing.JSpinner spinnerHargaReservasi;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAmountTable;
     private javax.swing.JTextField txtOwnerName;

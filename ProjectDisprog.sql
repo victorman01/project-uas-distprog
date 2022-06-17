@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2022 at 03:10 AM
+-- Generation Time: Jun 17, 2022 at 07:03 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -49,6 +49,13 @@ CREATE TABLE `customers` (
   `email` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `username`, `password`, `name`, `address`, `email`) VALUES
+(1, 'test', 'test', 'test', '', 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -89,7 +96,7 @@ CREATE TABLE `reservasis` (
   `restorants_id` int(11) NOT NULL,
   `customers_id` int(11) NOT NULL,
   `status` varchar(45) NOT NULL,
-  `total_price` int(11) NOT NULL
+  `total_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -107,8 +114,18 @@ CREATE TABLE `restaurants` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
-  `phone_number` varchar(45) NOT NULL
+  `phone_number` varchar(45) NOT NULL,
+  `price_reservation` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `restaurants`
+--
+
+INSERT INTO `restaurants` (`id`, `owner`, `name`, `number_of_tables`, `preorder`, `username`, `password`, `address`, `phone_number`, `price_reservation`) VALUES
+(1, 'Yanto', 'Yanto Resto', 6, 1, 'yanto', 'yanto', 'jln yanto', '122121', 10000),
+(2, 'Bagas', 'Bagas Resto', 6, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000),
+(3, 'Budi', 'Budi Resto', 12, 1, 'budi', 'budi', 'Jalan Budiyono', '43141331', 30000);
 
 --
 -- Indexes for dumped tables
@@ -169,7 +186,7 @@ ALTER TABLE `administrators`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -187,7 +204,7 @@ ALTER TABLE `reservasis`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
