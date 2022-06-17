@@ -88,7 +88,7 @@ public class HandleRequest extends Thread {
 
                 break;
             case "REGISTER_CUSTOMER":
-                
+
                 Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();
 
@@ -156,21 +156,21 @@ public class HandleRequest extends Thread {
                 String listDataMenu = menus.viewListData(rest);
                 this.SendMessage(listDataMenu);
                 break;
-            
+
             case "SHOW_LIST_MENU_ADMIN":
                 System.out.println(values[0]);
                 Menu menuAdmins = new Menu();
                 String listDataMenuAdmin = menuAdmins.viewListDataAdmin(rest);
                 this.SendMessage(listDataMenuAdmin);
                 break;
-                
+
             case "SHOW_LIST_RESTO":
                 System.out.println(values[0]);
                 Restaurant restos = new Restaurant();
                 String listDataRestoAdmin = restos.viewListDataAdmin();
                 this.SendMessage(listDataRestoAdmin);
                 break;
-            
+
             case "UPDATE_MENU":
                 Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuUpdate.updateData());
@@ -180,12 +180,12 @@ public class HandleRequest extends Thread {
                 Menu menuDelete = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuDelete.deleteData());
                 break;
-                
+
             case "DELETE_RESTO":
                 Restaurant restoDelete = new Restaurant(Integer.valueOf(values[0]));
                 this.SendMessage(restoDelete.deleteData());
                 break;
-                
+
             case "TAKE_USR_CUSTOMER":
                 Customer usr = new Customer();
                 usr = usr.TakeUsr(values[0], values[1]);
@@ -214,9 +214,17 @@ public class HandleRequest extends Thread {
                 this.SendMessage(addAdmin.insertData());
                 break;
             case "DELETE_CUSTOMER":
-                Customer cst=new Customer();
+                Customer cst = new Customer();
                 cst.deleteData(values[2]);
                 this.SendMessage("DELETE_SUCCESS");
+                break;
+            case "SHOW_LIST_CUSTOMER":
+                Customer lstCst = new Customer();
+                String listCustomer = lstCst.viewListDataCust();
+                this.SendMessage(listCustomer);
+                System.out.println(listCustomer);
+                break;
+
         }
 //        } catch (IOException ex) {
 //            Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);

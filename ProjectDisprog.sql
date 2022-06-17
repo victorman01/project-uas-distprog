@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2022 at 05:39 PM
+-- Generation Time: Jun 17, 2022 at 08:40 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -34,6 +34,16 @@ CREATE TABLE `administrators` (
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `administrators`
+--
+
+INSERT INTO `administrators` (`id`, `username`, `password`, `name`) VALUES
+(1, 'jeremy123', 'jeremy123', 'jeremy'),
+(2, 'alvin123', 'alvin123', 'alvin'),
+(3, 'ikhsan12', 'ikhsan12', 'M. ikhsan'),
+(4, 'fernando1234', 'fernando1234', 'fernandoss');
+
 -- --------------------------------------------------------
 
 --
@@ -54,7 +64,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `username`, `password`, `name`, `address`, `email`) VALUES
-(1, 'test', 'test', 'test', 'Jalan bambang', 'test');
+(1, 'alvin', 'alvin', 'alvin', 'sidodadi', 'alvin@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -77,7 +87,6 @@ CREATE TABLE `menus` (
 INSERT INTO `menus` (`id`, `name`, `price`, `detail`, `restorants_id`) VALUES
 (1, 'Ayam', 10000, 'Bisa dada atau paha ya kawan', 1),
 (2, 'Bebek', 12000, 'Bisa ayam atau dada', 1),
-(3, 'Burung Dara', 20000, 'Bisa paket lengkap', 1),
 (4, 'Sate Ayam', 20000, 'Isi 10 tusuk', 2);
 
 -- --------------------------------------------------------
@@ -134,8 +143,7 @@ CREATE TABLE `restaurants` (
 
 INSERT INTO `restaurants` (`id`, `owner`, `name`, `number_of_tables`, `preorder`, `username`, `password`, `address`, `phone_number`, `price_reservation`) VALUES
 (1, 'Yanto', 'Yanto Resto', 6, 1, 'yanto', 'yanto', 'jln yanto', '122121', 10000),
-(2, 'Bagas', 'Bagas Resto', 6, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000),
-(3, 'Budi', 'Budi Resto', 12, 1, 'budi', 'budi', 'Jalan Budiyono', '43141331', 30000);
+(2, 'Bagas', 'Bagas Resto', 6, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000);
 
 --
 -- Indexes for dumped tables
@@ -190,19 +198,19 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `administrators`
 --
 ALTER TABLE `administrators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reservasis`

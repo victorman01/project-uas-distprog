@@ -171,6 +171,8 @@ public class FormDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         Check = "admin";
         FormLogin login = new FormLogin();
+        login.lblRegister.setVisible(false);
+        login.lblTitleRegister.setVisible(false);
         login.check = Check;
         this.dispose();
         login.setVisible(true);
