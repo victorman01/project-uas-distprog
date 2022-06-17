@@ -25,7 +25,7 @@ import model.Restaurant;
 public class HandleRequest extends Thread {
 
     BufferedReader in;
-    DataOutputStream out; 
+    DataOutputStream out;
     MainServer parent;
     Socket s;
     String pesan;
@@ -44,10 +44,9 @@ public class HandleRequest extends Thread {
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
-            
+
 //            inObj = new ObjectInputStream(s.getInputStream());
 //            outObj = new ObjectOutputStream(s.getOutputStream());
-            
         } catch (Exception e) {
             Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -63,82 +62,90 @@ public class HandleRequest extends Thread {
 
     public void action(String command, String value) {
 //        try {
-            String[] values = value.split(",");
-            int idresto;
-            switch (command) {
-                
-                case "REGISTER_RESTO":
-                    
-                    Restaurant resto = new Restaurant(values[0], values[1], Integer.valueOf(values[2]), Boolean.valueOf(values[3]), values[4], values[5], values[6], values[7], Float.parseFloat(values[8]));
-                    resto.insertData();
-                    
-                    this.SendMessage("BERHASIL_REGISTER");
-                    break;
-                case "LOGIN_RESTO":
-                    System.out.println(values[0]);
-                    System.out.println(values[1]);
-                    restoran = restoran.CheckLogin(values[0], values[1]);
-                    rest=restoran;
-                    
-                    if (!(restoran == null)) {
-                        this.SendMessage("BERHASIL_LOGIN_RESTAURANT" + "," + restoran.getId());
-                    } else {
-                        this.SendMessage("GAGAL_LOGIN_RESTAURANT");
-                    }
-                    
-                    break;
-                case "REGISTER_CUSTOMER":
-                    
-                    Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4]);
-                    cust.insertData();
-                    
-                    this.SendMessage("BERHASIL_REGISTER");
-                    break;
-                case "LOGIN_CUSTOMER":
-                    System.out.println(values[0]);
-                    System.out.println(values[1]);
-                    boolean loginCustomer = customer.CheckLogin(values[0], values[1]);
-                    if (loginCustomer == true) {
-                        this.SendMessage("BERHASIL_LOGIN_CUSTOMER");
-                    } else {
-                        this.SendMessage("GAGAL_LOGIN_CUSTOMER");
-                    }
-                    
-                    break;
-                case "LOGIN_ADMIN":
-                    System.out.println(values[0]);
-                    System.out.println(values[1]);
-                    boolean loginAdmin = administrator.CheckLogin(values[0], values[1]);
-                    if (loginAdmin == true) {
-                        this.SendMessage("BERHASIL_LOGIN_ADMIN");
-                    } else {
-                        this.SendMessage("GAGAL_LOGIN_ADMIN");
-                    }
-                    
-                    break;
-                case "ADD_MENU":
-                    System.out.println(values[0]);
-                    System.out.println(values[1]);
-                    System.out.println(values[2]);
-                    System.out.println(values[3]);
-                    int id=Integer.parseInt(values[3]);
-                    System.out.println("ID YG LOGIN ADALAH" + id);
-                    System.out.println(rest.getId());
-                    Menu menu= new Menu(values[0],Integer.valueOf(values[1]),values[2],rest);
-                    menu.insertData();
-                    
-                    this.SendMessage("BERHASIL_ADD_MENU");
-                    
-                    break;
-                case "UPDATE_MEJA":
-                    break;
-                case "INIT_RESERVATION":
-                    System.out.println(values[0]);
-                    String listDataResto = restoran.viewListData();
-                    this.SendMessage(listDataResto);
+        String[] values = value.split(",");
+        int idresto;
+        switch (command) {
 
-                    break;
-            }
+            case "REGISTER_RESTO":
+
+                Restaurant resto = new Restaurant(values[0], values[1], Integer.valueOf(values[2]), Boolean.valueOf(values[3]), values[4], values[5], values[6], values[7], Float.parseFloat(values[8]));
+                resto.insertData();
+
+                this.SendMessage("BERHASIL_REGISTER");
+                break;
+            case "LOGIN_RESTO":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                restoran = restoran.CheckLogin(values[0], values[1]);
+                rest = restoran;
+
+                if (!(restoran == null)) {
+                    this.SendMessage("BERHASIL_LOGIN_RESTAURANT" + "," + restoran.getId());
+                } else {
+                    this.SendMessage("GAGAL_LOGIN_RESTAURANT");
+                }
+
+                break;
+            case "REGISTER_CUSTOMER":
+
+                Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4]);
+                cust.insertData();
+
+                this.SendMessage("BERHASIL_REGISTER");
+                break;
+            case "LOGIN_CUSTOMER":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                boolean loginCustomer = customer.CheckLogin(values[0], values[1]);
+                if (loginCustomer == true) {
+                    this.SendMessage("BERHASIL_LOGIN_CUSTOMER");
+                } else {
+                    this.SendMessage("GAGAL_LOGIN_CUSTOMER");
+                }
+
+                break;
+            case "LOGIN_ADMIN":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                boolean loginAdmin = administrator.CheckLogin(values[0], values[1]);
+                if (loginAdmin == true) {
+                    this.SendMessage("BERHASIL_LOGIN_ADMIN");
+                } else {
+                    this.SendMessage("GAGAL_LOGIN_ADMIN");
+                }
+
+                break;
+            case "ADD_MENU":
+                System.out.println(values[0]);
+                System.out.println(values[1]);
+                System.out.println(values[2]);
+                System.out.println(values[3]);
+                int id = Integer.parseInt(values[3]);
+                System.out.println("ID YG LOGIN ADALAH" + id);
+                System.out.println(rest.getId());
+                Menu menu = new Menu(values[0], Integer.valueOf(values[1]), values[2], rest);
+                menu.insertData();
+
+                this.SendMessage("BERHASIL_ADD_MENU");
+
+                break;
+            case "UPDATE_MEJA":
+                break;
+            case "INIT_RESERVATION":
+                System.out.println(values[0]);
+                String listDataResto = restoran.viewListData();
+                this.SendMessage(listDataResto);
+
+                break;
+
+            case "SHOW_LIST_MENU":
+                System.out.println(values[0]);
+                Menu menus = new Menu();
+                String listDataMenu = menus.viewListData(rest);
+                this.SendMessage(listDataMenu);
+
+                break;
+        }
 //        } catch (IOException ex) {
 //            Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -175,18 +182,17 @@ public class HandleRequest extends Thread {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);
-                }
-                else if(pesan.contains("ADD_MENU;"))
-                {
+                } else if (pesan.contains("ADD_MENU;")) {
                     String[] p = pesan.split(";");
 
                     this.action(p[0], p[1]);
-                }
-                else if (pesan.contains("INIT_RESERVATION;")) {
+                } else if (pesan.contains("INIT_RESERVATION;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
+                } else if (pesan.contains("SHOW_LIST_MENU;")) {
                     String[] p = pesan.split(";");
                     this.action(p[0], p[1]);
                 }
-
             } catch (IOException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }

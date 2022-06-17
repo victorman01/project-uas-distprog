@@ -199,7 +199,7 @@ public class FormAddMenu extends javax.swing.JFrame {
         String detail=txtDetail.getText();
         
         try {
-            out.writeBytes("ADD_MENU;" + namaMakanan+ "," + harga + "," + detail + ","+ idcheck +"\n");
+            out.writeBytes("ADD_MENU;" + namaMakanan+ "," + String.valueOf(harga) + "," + detail + ","+ String.valueOf(idcheck) +"\n");
             message=in.readLine();
             
             if(message.equals("BERHASIL_ADD_MENU"))

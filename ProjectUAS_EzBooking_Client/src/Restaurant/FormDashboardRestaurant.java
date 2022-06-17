@@ -57,6 +57,11 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         btnListReservation.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnListReservation.setForeground(new java.awt.Color(255, 202, 3));
         btnListReservation.setText("LIST RESERVATION");
+        btnListReservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListReservationActionPerformed(evt);
+            }
+        });
 
         btnExit.setBackground(new java.awt.Color(204, 0, 51));
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -67,6 +72,11 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         btnMenu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMenu.setForeground(new java.awt.Color(255, 202, 3));
         btnMenu.setText("LIST MENU");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
 
         btnProfile.setBackground(new java.awt.Color(254, 249, 167));
         btnProfile.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -234,6 +244,15 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        FormListMenu frm = new FormListMenu();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void btnListReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListReservationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnListReservationActionPerformed
 
     /**
      * @param args the command line arguments

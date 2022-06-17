@@ -302,7 +302,7 @@ public class Restaurant{
         String listData = "";
         try{
             stat=(java.sql.Statement)conn.createStatement();
-            this.result=stat.executeQuery("select *from restaurants");
+            this.result=stat.executeQuery("select * from restaurants");
             while (this.result.next())
             {
                 
