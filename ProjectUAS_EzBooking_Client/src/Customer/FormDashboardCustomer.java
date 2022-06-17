@@ -30,19 +30,23 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String usr;
-    public String customerName;
+    int idUser;
 
-    public FormDashboardCustomer(String username) {
+    public FormDashboardCustomer(String username,String password) {
         initComponents();
         try {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
-            customerName = username;
             this.setLocationRelativeTo(null);
-            out.writeBytes("TAKE_USR_CUSTOMER;"+customerName +"\n");
+            out.writeBytes("TAKE_USR_CUSTOMER;"+username +","+password+"\n");
             usr = in.readLine();
-            
+            String[] value = usr.split(",");
+            idUser = Integer.parseInt(value[0]);
+            lblName.setText(value[1]);
+            lblUserName.setText(value[2]);
+            lblAddress.setText(value[3]);
+            lblEmail.setText(value[4]);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -66,8 +70,8 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnExits = new javax.swing.JButton();
         lblApplicationName1 = new javax.swing.JLabel();
-        btnMenu2 = new javax.swing.JButton();
-        btnMenu3 = new javax.swing.JButton();
+        btnReservation = new javax.swing.JButton();
+        btnListReserv = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         lblRestaurantName = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
@@ -80,7 +84,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         lblName = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
         lblAddress = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -148,28 +152,30 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         btnExits.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExits.setForeground(new java.awt.Color(255, 255, 255));
         btnExits.setText("EXIT");
-
-        lblApplicationName1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lblApplicationName1.setForeground(java.awt.Color.black);
-        lblApplicationName1.setText("MyApp");
-
-        btnMenu2.setBackground(new java.awt.Color(254, 249, 167));
-        btnMenu2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMenu2.setForeground(java.awt.Color.black);
-        btnMenu2.setText("RESERVATION");
-        btnMenu2.addActionListener(new java.awt.event.ActionListener() {
+        btnExits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenu2ActionPerformed(evt);
+                btnExitsActionPerformed(evt);
             }
         });
 
-        btnMenu3.setBackground(new java.awt.Color(254, 249, 167));
-        btnMenu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMenu3.setForeground(java.awt.Color.black);
-        btnMenu3.setText("LIST RESERVATION");
-        btnMenu3.addActionListener(new java.awt.event.ActionListener() {
+        lblApplicationName1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lblApplicationName1.setText("MyApp");
+
+        btnReservation.setBackground(new java.awt.Color(254, 249, 167));
+        btnReservation.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnReservation.setText("RESERVATION");
+        btnReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMenu3ActionPerformed(evt);
+                btnReservationActionPerformed(evt);
+            }
+        });
+
+        btnListReserv.setBackground(new java.awt.Color(254, 249, 167));
+        btnListReserv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnListReserv.setText("LIST RESERVATION");
+        btnListReserv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListReservActionPerformed(evt);
             }
         });
 
@@ -182,8 +188,8 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
                 .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(lblApplicationName1)
                 .addGap(37, 37, 37))
-            .addComponent(btnMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnMenu3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnReservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnListReserv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,9 +197,9 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(lblApplicationName1)
                 .addGap(18, 18, 18)
-                .addComponent(btnMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnMenu3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnListReserv, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(btnExits, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -202,7 +208,6 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
 
         lblRestaurantName.setBackground(new java.awt.Color(255, 102, 0));
         lblRestaurantName.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        lblRestaurantName.setForeground(java.awt.Color.black);
         lblRestaurantName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRestaurantName.setText("WELCOME!");
 
@@ -228,42 +233,34 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.black);
         jLabel8.setText("NAME");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel9.setForeground(java.awt.Color.black);
         jLabel9.setText("USERNAME");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel10.setForeground(java.awt.Color.black);
         jLabel10.setText("ADDRESS");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel11.setForeground(java.awt.Color.black);
         jLabel11.setText("EMAIL");
 
         lblName.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        lblName.setForeground(java.awt.Color.black);
         lblName.setText("NAME_CUSTOMER");
 
         lblUserName.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        lblUserName.setForeground(java.awt.Color.black);
         lblUserName.setText("NAME_CUSTOMER");
 
         lblAddress.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        lblAddress.setForeground(java.awt.Color.black);
         lblAddress.setText("NAME_CUSTOMER");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel15.setForeground(java.awt.Color.black);
-        jLabel15.setText("NAME_CUSTOMER");
+        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        lblEmail.setText("NAME_CUSTOMER");
 
         jLabel12.setForeground(java.awt.Color.white);
         jLabel12.setText("-");
@@ -304,7 +301,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
                     .addComponent(lblUserName)
                     .addComponent(lblName)
                     .addComponent(lblAddress)
-                    .addComponent(jLabel15))
+                    .addComponent(lblEmail))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
@@ -329,7 +326,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel15)
+                    .addComponent(lblEmail)
                     .addComponent(jLabel16))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -380,13 +377,22 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu2ActionPerformed
+    private void btnReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnMenu2ActionPerformed
+        FormReservation form = new FormReservation(idUser);
+        form.setVisible(true);
+    }//GEN-LAST:event_btnReservationActionPerformed
 
-    private void btnMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu3ActionPerformed
+    private void btnListReservActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListReservActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnMenu3ActionPerformed
+        FormDetailReservation form = new FormDetailReservation();
+        form.setVisible(true);
+    }//GEN-LAST:event_btnListReservActionPerformed
+
+    private void btnExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitsActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnExitsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -426,51 +432,29 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnExits;
+    private javax.swing.JButton btnListReserv;
     private javax.swing.JButton btnListReservation;
     private javax.swing.JButton btnMenu;
-    private javax.swing.JButton btnMenu2;
-    private javax.swing.JButton btnMenu3;
     private javax.swing.JButton btnProfile;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnReservation;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblApplicationName;
     private javax.swing.JLabel lblApplicationName1;
+    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblRestaurantName;
     private javax.swing.JLabel lblUserName;

@@ -233,17 +233,11 @@ public class FormLogin extends javax.swing.JFrame {
             try {
                 out.writeBytes("LOGIN_CUSTOMER;" + username + "," + password + "\n");
                 message = in.readLine();
-                String[] value;
-                if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
-                    value = message.split(",");
-//                    System.out.println(value[0]);
-//                    System.out.println(value[1]);
-                }
-
+                
                 if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    FormDashboardCustomer form = new FormDashboardCustomer(username, password);
                     this.dispose();
-                    FormDashboardCustomer form = new FormDashboardCustomer(username);                    
                     form.setVisible(true);
                 } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
                     JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);

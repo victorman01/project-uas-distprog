@@ -119,6 +119,17 @@ public class Reservation {
         getConnection();
 
     }
+    
+    public Reservation(Date bookingDate, int numPeoples, int numTables, String status, float totalPrice) {
+        this.bookingDate = bookingDate;
+        this.numPeoples = numPeoples;
+        this.numTables = numTables;
+        this.restaurant = restaurant;
+        this.customer = customer;
+        this.status = status;
+        this.totalPrice = totalPrice;
+        getConnection();
+    }
         
     public Reservation() {
          getConnection();
@@ -135,7 +146,7 @@ public class Reservation {
         return conn;
     }
      
-    public void insertData() {
+    public void insertData(int costumerID, int restoID) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO reservasis"

@@ -189,17 +189,16 @@ public class Customer {
         return false;
     }
 
-    public Customer TakeUsr(String username) {
+    public Customer TakeUsr(String username,String password) {
         Customer usr = null;
         try {
-
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from customers where username=? and password=?");
                 sql.setString(1, username);
                 sql.setString(2, password);
                 result = sql.executeQuery();
                 if (result.next()) {
-                    usr = new Customer(result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"));
+                    usr = new Customer(result.getInt("id"),result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"));
                     return usr;
                 }
             }

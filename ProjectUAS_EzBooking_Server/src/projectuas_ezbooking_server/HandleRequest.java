@@ -63,7 +63,7 @@ public class HandleRequest extends Thread {
     public void action(String command, String value) {
 //        try {
         String[] values = value.split(",");
-        int idresto;
+        int idResto;
         switch (command) {
             
             case "REGISTER_RESTO":
@@ -136,14 +136,26 @@ public class HandleRequest extends Thread {
                 String listDataResto = restoran.viewListData();
                 this.SendMessage(listDataResto);
                 break;
-            
+            case "CREATE_RESERVATION":
+                //ambil variabel
+                idResto = Integer.parseInt(values[0]);
+                int numTable = Integer.parseInt(values[1]);
+                int numPeople = Integer.parseInt(values[2]);
+                restoran = restoran.GetRestoByID(idResto);
+                float hargaReservasi = restoran.getHarga_reservasi();
+                
+                //Hitung total harga
+                float totalPrice = numTable*hargaReservasi + (numPeople*hargaReservasi*(float)0.2);
+                
+                this.SendMessage("CONFIRM_RESERVATION;"+ String.valueOf(totalPrice));
+                break;
             case "SHOW_LIST_MENU":
                 System.out.println(values[0]);
                 Menu menus = new Menu();
                 String listDataMenu = menus.viewListData(rest);
                 this.SendMessage(listDataMenu);
                 break;
-            
+                
             case "UPDATE_MENU":
                 Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuUpdate.updateData());
@@ -156,8 +168,8 @@ public class HandleRequest extends Thread {
             
             case "TAKE_USR_CUSTOMER":
                 Customer usr = new Customer();
-                usr = usr.TakeUsr(values[0]);
-                this.SendMessage(usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
+                usr = usr.TakeUsr(values[0], values[1]);
+                this.SendMessage(usr.getId()+","+usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
                 break;
         }
 //        } catch (IOException ex) {
@@ -198,9 +210,11 @@ public class HandleRequest extends Thread {
                     this.action(p[0], p[1]);
                 } else if (pesan.contains("ADD_MENU;")) {
                     String[] p = pesan.split(";");
-                    
                     this.action(p[0], p[1]);
                 } else if (pesan.contains("INIT_RESERVATION;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
+                } else if (pesan.contains("CREATE_RESERVATION;")) {
                     String[] p = pesan.split(";");
                     this.action(p[0], p[1]);
                 } else if (pesan.contains("SHOW_LIST_MENU;")) {
@@ -212,7 +226,7 @@ public class HandleRequest extends Thread {
                 } else if (pesan.contains("DELETE_MENU;")) {
                     String[] p = pesan.split(";");
                     this.action(p[0], p[1]);
-                } else if(pesan.contains("TAKE_USR_CUSTOMER;,")){
+                } else if(pesan.contains("TAKE_USR_CUSTOMER;")){
                     String[] p = pesan.split(";");
                     this.action(p[0],p[1]);
                 }

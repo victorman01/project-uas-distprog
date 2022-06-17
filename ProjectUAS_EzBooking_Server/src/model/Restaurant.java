@@ -167,6 +167,30 @@ public class Restaurant{
         return conn;
     }
 
+    public Restaurant GetRestoByID(int restoId) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restaurants where id=?");
+                sql.setInt(1, restoId);
+                result = sql.executeQuery();
+                while (result.next()) {
+                    Restaurant resto = new Restaurant(this.result.getInt("id"),
+                            this.result.getString("owner"), this.result.getString("name"),
+                            this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                            this.result.getString("username"), this.result.getString("password"), this.result.getString("address"),
+                            this.result.getString("phone_number"), this.result.getFloat("price_reservation"));
+                    return resto;
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Restaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+    
     public Restaurant CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
