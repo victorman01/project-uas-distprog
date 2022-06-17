@@ -135,7 +135,6 @@ public class HandleRequest extends Thread {
                 System.out.println(values[0]);
                 String listDataResto = restoran.viewListData();
                 this.SendMessage(listDataResto);
-
                 break;
 
             case "SHOW_LIST_MENU":
@@ -143,7 +142,16 @@ public class HandleRequest extends Thread {
                 Menu menus = new Menu();
                 String listDataMenu = menus.viewListData(rest);
                 this.SendMessage(listDataMenu);
+                break;
 
+            case "UPDATE_MENU":
+                Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
+                this.SendMessage(menuUpdate.updateData());
+                break;
+                
+            case "DELETE_MENU":
+                Menu menuDelete= new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
+                this.SendMessage(menuDelete.deleteData());
                 break;
         }
 //        } catch (IOException ex) {
@@ -190,6 +198,12 @@ public class HandleRequest extends Thread {
                     String[] p = pesan.split(";");
                     this.action(p[0], p[1]);
                 } else if (pesan.contains("SHOW_LIST_MENU;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
+                } else if (pesan.contains("UPDATE_MENU;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
+                } else if (pesan.contains("DELETE_MENU;")) {
                     String[] p = pesan.split(";");
                     this.action(p[0], p[1]);
                 }

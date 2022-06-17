@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -66,10 +67,9 @@ public class FormListMenu extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListMenu = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
-        btnRemove = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +95,11 @@ public class FormListMenu extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tblListMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListMenuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblListMenu);
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
@@ -105,20 +110,6 @@ public class FormListMenu extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
-
-        btnRemove.setBackground(new java.awt.Color(255, 255, 255));
-        btnRemove.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRemove.setText("REMOVE");
-        btnRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveActionPerformed(evt);
-            }
-        });
-
-        btnEdit.setBackground(new java.awt.Color(255, 255, 255));
-        btnEdit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEdit.setText("EDIT MENU");
-        btnEdit.setToolTipText("");
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -144,22 +135,30 @@ public class FormListMenu extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
+        btnExit.setBackground(new java.awt.Color(255, 0, 0));
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(160, 160, 160)
-                        .addComponent(btnRemove)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,8 +169,7 @@ public class FormListMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
-                    .addComponent(btnRemove)
-                    .addComponent(btnEdit))
+                    .addComponent(btnExit))
                 .addContainerGap())
         );
 
@@ -189,14 +187,29 @@ public class FormListMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRemoveActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         FormAddMenu frm = new FormAddMenu();
         frm.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void tblListMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListMenuMouseClicked
+        FormUpdateMenu frm = new FormUpdateMenu();
+        
+        int index = tblListMenu.getSelectedRow();
+        TableModel tbl = tblListMenu.getModel();
+        
+        frm.txtID.setText(tbl.getValueAt(index, 0).toString());
+        frm.txtName.setText(tbl.getValueAt(index, 1).toString());
+        frm.txtPrice.setText(tbl.getValueAt(index, 2).toString());
+        frm.txtAreaDetails.setText(tbl.getValueAt(index, 3).toString());
+        
+        frm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tblListMenuMouseClicked
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,8 +249,7 @@ public class FormListMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

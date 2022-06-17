@@ -4,6 +4,8 @@
  */
 package Restaurant;
 
+import MainForm.FormDashboard;
+
 /**
  *
  * @author Alvin Fernando
@@ -67,6 +69,11 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         btnMenu.setBackground(new java.awt.Color(254, 249, 167));
         btnMenu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -253,6 +260,12 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     private void btnListReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListReservationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnListReservationActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.dispose();
+        FormDashboard frm = new FormDashboard();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments

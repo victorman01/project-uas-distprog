@@ -149,24 +149,27 @@ public class Menu {
         }
     }
 
-    public void updateData() {
+    public String updateData() {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE menus "
-                        + "SET name = ?, price = ? "
-                        + "WHERE id = ? ");
+                        + "SET name = ?, price = ?, detail = ? "
+                        + "WHERE id = ?");
                 sql.setString(1, this.nama);
                 sql.setInt(2, this.harga);
-                sql.setInt(3, this.id);
+                sql.setString(3, this.detail);
+                sql.setInt(4, this.id);
                 sql.executeUpdate();
                 sql.close();
+                return "UPDATE_SUCCESS";
             }
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "UPDATE_FAILED";
     }
 
-    public void deleteData() {
+    public String deleteData() {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM menus "
@@ -174,10 +177,12 @@ public class Menu {
                 sql.setInt(1, this.id);
                 sql.executeUpdate();
                 sql.close();
+                return "DELETE_SUCCESS";
             }
         } catch (SQLException e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "DELETE_FAILED";
     }
 
     public String viewListData(Restaurant resto) {
@@ -192,7 +197,7 @@ public class Menu {
                         this.result.getString("name"),
                         this.result.getInt("price"),
                         this.result.getString("detail"),
-                         resto);
+                        resto);
 
                 listMenu += String.valueOf(menu.getId()) + "," + menu.getNama() + "," + String.valueOf(menu.getHarga())
                         + "," + menu.getDetail() + "/";

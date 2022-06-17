@@ -4,6 +4,10 @@
  */
 package Restaurant;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +19,19 @@ public class FormUpdateMenu extends javax.swing.JFrame {
     /**
      * Creates new form FormUpdateMenus
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+
     public FormUpdateMenu() {
-        initComponents();
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -44,6 +59,7 @@ public class FormUpdateMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -79,7 +95,7 @@ public class FormUpdateMenu extends javax.swing.JFrame {
             }
         });
 
-        btnCancel.setBackground(new java.awt.Color(255, 255, 255));
+        btnCancel.setBackground(new java.awt.Color(255, 0, 0));
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCancel.setText("CANCEL");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -118,6 +134,15 @@ public class FormUpdateMenu extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
+        btnDelete.setBackground(new java.awt.Color(255, 255, 255));
+        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnDelete.setText("DELETE");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -133,6 +158,8 @@ public class FormUpdateMenu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancel))
                     .addComponent(jScrollPane1)
@@ -164,7 +191,9 @@ public class FormUpdateMenu extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnUpdate)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnDelete))
                     .addComponent(btnCancel))
                 .addContainerGap())
         );
@@ -184,13 +213,48 @@ public class FormUpdateMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        this.setVisible(false);
+        this.dispose();
+        FormListMenu frm = new FormListMenu();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        JOptionPane.showMessageDialog(this, "Update Menu Success.");
-        this.setVisible(false);
+        try {
+            out.writeBytes("UPDATE_MENU;" + txtID.getText() + "," + txtName.getText() + ","
+                    + txtPrice.getText() + "," + txtAreaDetails.getText() + "\n");
+            message = in.readLine();
+
+            if (message.equals("UPDATE_SUCCESS")) {
+                JOptionPane.showMessageDialog(this, "Update Menu Success.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Update Menu Failed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error in Update Menu");
+        }
+        this.dispose();
+        FormListMenu frm = new FormListMenu();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        try {
+            out.writeBytes("DELETE_MENU;" + txtID.getText() + "," + txtName.getText() + ","
+                    + txtPrice.getText() + "," + txtAreaDetails.getText() + "\n");
+            message = in.readLine();
+
+            if (message.equals("DELETE_SUCCESS")) {
+                JOptionPane.showMessageDialog(this, "Delete Menu Success.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Delete Menu Failed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error in Delete Menu");
+        }
+        this.dispose();
+        FormListMenu frm = new FormListMenu();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,6 +294,7 @@ public class FormUpdateMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -241,9 +306,9 @@ public class FormUpdateMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea txtAreaDetails;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPrice;
+    public javax.swing.JTextArea txtAreaDetails;
+    public javax.swing.JTextField txtID;
+    public javax.swing.JTextField txtName;
+    public javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
 }

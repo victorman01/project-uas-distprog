@@ -204,18 +204,17 @@ public class FormAddMenu extends javax.swing.JFrame {
             
             if(message.equals("BERHASIL_ADD_MENU"))
             {
-                JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Menu", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Menu Added", "INFO", JOptionPane.INFORMATION_MESSAGE);
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "gagal menambahkan menu", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Failed Added Menu", "INFO", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException ex) {
             Logger.getLogger(FormAddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        JOptionPane.showMessageDialog(this, "Menu Added");
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
