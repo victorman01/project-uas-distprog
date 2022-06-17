@@ -27,6 +27,15 @@ public class Customer {
     String nama;
     String alamat;
     String email;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    String address;
     Connection connect;
 
     Statement stat;
@@ -89,24 +98,27 @@ public class Customer {
         this.email = email;
     }
 
-    public Customer(String username, String password, String nama, String alamat, String email) {
+    public Customer(String username, String password, String nama, String alamat, String email, String address) {
         this.username = username;
         this.password = password;
         this.nama = nama;
         this.alamat = alamat;
         this.email = email;
+        this.address=address;
         getConnection();
     }
 
-    public Customer(int id, String username, String password, String nama, String alamat, String email) {
+    public Customer(int id, String username, String password, String nama, String alamat, String email, String address) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.nama = nama;
         this.alamat = alamat;
         this.email = email;
+        this.address=address;
         getConnection();
     }
+   
 
     public Connection getConnection() {
         try {
@@ -157,12 +169,12 @@ public class Customer {
         }
     }
 
-    public void deleteData() {
+    public void deleteData(String username) {
         try {
             if (!connect.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE FROM customers "
-                        + "WHERE id = ?");
-                sql.setInt(1, this.id);
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE  FROM customers "
+                        + "WHERE username =?" );
+                sql.setString(1, username);
                 sql.executeUpdate();
                 sql.close();
             }
@@ -198,7 +210,7 @@ public class Customer {
                 sql.setString(2, password);
                 result = sql.executeQuery();
                 if (result.next()) {
-                    usr = new Customer(result.getInt("id"),result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"));
+                    usr = new Customer(result.getInt("id"),result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"), result.getString("address"));
                     return usr;
                 }
             }
@@ -208,4 +220,25 @@ public class Customer {
         }
         return usr;
     }
+    public String viewListDataCust()
+    {
+        String listCust="";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from customers");
+            while (this.result.next()) {
+
+                Customer customer = new Customer(this.result.getInt("id"),this.result.getString("username"),this.result.getString("password"),this.result.getString("name"),
+                this.result.getString("address"),this.result.getString("email"), this.result.getString("address"));
+
+                listCust += String.valueOf(customer.getId()) + "," + customer.username + "," + customer.nama 
+                        + "," + customer.getAlamat()+ "," + customer.getEmail() + "/";
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return listCust;
+        
+    }
+    
 }

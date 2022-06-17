@@ -219,7 +219,7 @@ public class Reservation {
                 Customer costumer = new Customer(result.getInt("cs.id"), 
                         result.getString("cs.username"), result.getString
                         ("cs.password"), result.getString("cs.name"), result.getString("cs.address"), 
-                        result.getString("cs.email"));
+                        result.getString("cs.email"),result.getString("cs.address"));
                 String status = this.result.getString("status");
                 float totalPrice = this.result.getFloat("total_price");    
                 Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
@@ -232,6 +232,38 @@ public class Reservation {
         return collections;
 
     }
+     public String viewListDataResto(Restaurant resto){
+        //ArrayList<Object> collections = new ArrayList<>();
+        String listReservasi="";
+        try{
+            stat=(java.sql.Statement)conn.createStatement();
+            this.result=stat.executeQuery("SELECT * FROM reservasis INNER JOIN "
+                    + "costumers as cs ON costumers_id = cs.id "
+                    + "WHERE restaurants_id= "+ resto.getId());
+            while (this.result.next())
+            {                        
+                int id = this.result.getInt("id");
+                Date bookingDate = this.result.getDate("booking_date");
+                int numOfPeople = this.result.getInt("number_of_peoples");
+                int numOfTable = this.result.getInt("number_of_tables");
+                Customer costumer = new Customer(result.getInt("cs.id"), 
+                        result.getString("cs.username"), result.getString
+                        ("cs.password"), result.getString("cs.name"), result.getString("cs.address"), 
+                        result.getString("cs.email"),result.getString("cs.address"));
+                String status = this.result.getString("status");
+                float totalPrice = this.result.getFloat("total_price");    
+                Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
+                listReservasi+=String.valueOf(reservasi.getId()) + "," + String.valueOf(reservasi.getBookingDate()) + "," + String.valueOf(reservasi.getNumPeoples()) + "," + String.valueOf(reservasi.getNumTables()) +
+                        "," + reservasi.restaurant.getNama() + "," + reservasi.customer.getNama() + "," + reservasi.getStatus() + "," + String.valueOf(reservasi.getTotalPrice());
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return listReservasi;
+        
+
+     }
  
     
 }

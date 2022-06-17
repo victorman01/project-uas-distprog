@@ -88,7 +88,7 @@ public class HandleRequest extends Thread {
                 break;
             case "REGISTER_CUSTOMER":
                 
-                Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4]);
+                Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();
                 
                 this.SendMessage("BERHASIL_REGISTER");
@@ -155,6 +155,14 @@ public class HandleRequest extends Thread {
                 String listDataMenu = menus.viewListData(rest);
                 this.SendMessage(listDataMenu);
                 break;
+            case "SHOW_LIST_CUSTOMER":
+                System.out.println(values[0]);
+                Customer customer= new Customer();
+                String listDataCustomer= customer.viewListDataCust();
+                this.SendMessage(listDataCustomer);
+                System.out.println(listDataCustomer);
+                break;
+                
                 
             case "UPDATE_MENU":
                 Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
@@ -171,6 +179,10 @@ public class HandleRequest extends Thread {
                 usr = usr.TakeUsr(values[0], values[1]);
                 this.SendMessage(usr.getId()+","+usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
                 break;
+            case "DELETE_CUSTOMER":
+                Customer cst=new Customer();
+                cst.deleteData(values[2]);
+                this.SendMessage("DELETE_SUCCESS");
         }
 //        } catch (IOException ex) {
 //            Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,6 +241,14 @@ public class HandleRequest extends Thread {
                 } else if(pesan.contains("TAKE_USR_CUSTOMER;")){
                     String[] p = pesan.split(";");
                     this.action(p[0],p[1]);
+                }
+                else if (pesan.contains("SHOW_LIST_CUSTOMER;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
+                }
+                else if (pesan.contains("DELETE_CUSTOMER;")) {
+                    String[] p = pesan.split(";");
+                    this.action(p[0], p[1]);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);

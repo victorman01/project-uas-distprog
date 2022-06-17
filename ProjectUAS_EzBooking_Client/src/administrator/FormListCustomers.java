@@ -8,13 +8,49 @@ package administrator;
  *
  * @author Asus
  */
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 public class FormListCustomers extends javax.swing.JFrame {
 
     /**
      * Creates new form FormListCostumers
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
     public FormListCustomers() {
         initComponents();
+         try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+
+            out.writeBytes("SHOW_LIST_CUSTOMER; \n");
+            message = in.readLine();
+
+            String[] amountCust = message.split("/");
+
+            String[] colNames = {"ID", "username", "Customer's Name", "Customer's Address", "Customer's Email"};
+            DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
+
+            for (int i = 0; i < amountCust.length; i++) {
+                String[] valueMenu = amountCust[i].split(",");
+                String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4]};
+                
+                tblModel.addRow(show);
+            }
+            tableAdmin.setModel(tblModel);
+
+        } catch (Exception e) {
+            System.out.println("Error in show list menu");
+        }
     }
 
     /**
@@ -49,6 +85,11 @@ public class FormListCustomers extends javax.swing.JFrame {
                 "ID", "Username", "Customer's Name", "Customer's Address", "Customer's Email"
             }
         ));
+        tableAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableAdminMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableAdmin);
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
@@ -100,15 +141,12 @@ public class FormListCustomers extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClose))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
+                .addContainerGap(317, Short.MAX_VALUE)
+                .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClose)
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,6 +185,20 @@ public class FormListCustomers extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void tableAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAdminMouseClicked
+        FormDeleteCustomers frm = new FormDeleteCustomers();
+        
+        int index=tableAdmin.getSelectedRow();
+        TableModel tbl= tableAdmin.getModel();
+        
+        frm.txtName.setText(tbl.getValueAt(index, 2).toString());
+        frm.txtEmail.setText(tbl.getValueAt(index,4).toString());
+        frm.txtUsername.setText(tbl.getValueAt(index,1).toString());
+        
+        frm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tableAdminMouseClicked
 
     /**
      * @param args the command line arguments

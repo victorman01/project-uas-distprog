@@ -8,13 +8,28 @@ package administrator;
  *
  * @author Asus
  */
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import javax.swing.JOptionPane;
 public class FormDeleteCustomers extends javax.swing.JFrame {
 
     /**
      * Creates new form FormDeleteCustomers
      */
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
     public FormDeleteCustomers() {
-        initComponents();
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -163,30 +178,20 @@ public class FormDeleteCustomers extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-//        String name = txtName.getText();
-//        String telephone = txtTelephone.getText();
-//        String email = txtEmail.getText();
-//        String username = txtUsername.getText();
-//        String password = txtPassword.getText();
-//        String rePassword = txtRePassword.getText();
-//        String alamat = "";
-//
-//        if (rePassword.equals(password)) {
-//            try {
-//                out.writeBytes("REGISTER_CUSTOMER;" + username + "," + password + "," + name + "," + alamat + "," + email + "," + "\n");
-//                message = in.readLine();
-//                if (message.equals("BERHASIL_CUSTOMER")) {
-//                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
-//                    this.dispose();
-//
-//                }
-//            } catch (IOException ex) {
-//                Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
-//        }
+        try {
+            out.writeBytes("DELETE_CUSTOMER;" + txtName.getText() + "," + txtEmail.getText() + ","
+                    + txtUsername.getText()+ "\n");
+            message = in.readLine();
+
+            if (message.equals("DELETE_SUCCESS")) {
+                JOptionPane.showMessageDialog(this, "Delete Customer Success.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Delete Customer Failed.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error in Delete Menu");
+        }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
@@ -233,8 +238,8 @@ public class FormDeleteCustomers extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtUsername;
+    public javax.swing.JTextField txtEmail;
+    public javax.swing.JTextField txtName;
+    public javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

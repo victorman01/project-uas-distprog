@@ -251,7 +251,7 @@ public class FormReservation extends javax.swing.JFrame {
                         + "Are you sure want to confirm this reservation ?", "Confirm Reservation",
                         JOptionPane.YES_NO_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
-                    // do something
+                    
                 } 
             }
 

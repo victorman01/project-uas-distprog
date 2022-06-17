@@ -5,7 +5,6 @@
 package MainForm;
 
 import Customer.FormDashboardCustomer;
-import Customer.FormReservation;
 import Restaurant.FormAddMenu;
 import Restaurant.FormDashboardRestaurant;
 import administrator.FormDashboardAdministrator;
@@ -205,70 +204,99 @@ public class FormLogin extends javax.swing.JFrame {
         String password = txtPassword.getText();
         System.out.println(check);
         if (check.equals("restaurant")) {
-            try {
-                out.writeBytes("LOGIN_RESTO;" + username + "," + password + "\n");
-                message = in.readLine();
-                String[] value;
-                if (message.equals("BERHASIL_LOGIN_RESTAURANT")) {
-                    value = message.split(",");
+
+            if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
+                    try {
+                        out.writeBytes("LOGIN_RESTO;" + username + "," + password + "\n");
+                        message = in.readLine();
+                        String[] value;
+                        if (message.equals("BERHASIL_LOGIN_RESTAURANT")) {
+                            value = message.split(",");
 //                    System.out.println(value[0]);
 //                    System.out.println(value[1]);
-                    menu.idcheck = Integer.parseInt(value[1]);
-                }
-                System.out.println(message);
+                            menu.idcheck = Integer.parseInt(value[1]);
+                        }
+                        System.out.println(message);
 
-                if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
-                    this.dispose();
-                    frm.setVisible(true);
-                } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
-                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
-                }
+                        if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
+                            this.dispose();
+                            frm.setVisible(true);
+                        } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
+                            JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-            } catch (IOException ex) {
-                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                }
             }
+
         } else if (check.equals("customer")) {
-            try {
-                out.writeBytes("LOGIN_CUSTOMER;" + username + "," + password + "\n");
-                message = in.readLine();
-                
-                if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
-                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    FormDashboardCustomer form = new FormDashboardCustomer(username, password);
-                    this.dispose();
-                    form.setVisible(true);
-                } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
-                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
-                }
+            if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
+                    try {
+                        out.writeBytes("LOGIN_CUSTOMER;" + username + "," + password + "\n");
+                        message = in.readLine();
 
-            } catch (IOException ex) {
-                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                        if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            FormDashboardCustomer form = new FormDashboardCustomer(username, password);
+                            this.dispose();
+                            form.setVisible(true);
+                        } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
+                            JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                }
             }
+
         } else if (check.equals("admin")) {
-            try {
-                out.writeBytes("LOGIN_ADMIN;" + username + "," + password + "\n");
-                message = in.readLine();
-                String[] value;
-                if (message.equals("BERHASIL_LOGIN_ADMIN")) {
-                    value = message.split(",");
+            if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
+                    try {
+                        out.writeBytes("LOGIN_ADMIN;" + username + "," + password + "\n");
+                        message = in.readLine();
+                        String[] value;
+                        if (message.equals("BERHASIL_LOGIN_ADMIN")) {
+                            value = message.split(",");
 //                    System.out.println(value[0]);
 //                    System.out.println(value[1]);
-                }
+                        }
 
-                if (message.equals("BERHASIL_LOGIN_ADMIN")) {
-                    JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    FormDashboardAdministrator frm = new FormDashboardAdministrator();
-                    this.dispose();
-                    frm.setVisible(true);
-                } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
-                    JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
-                }
+                        if (message.equals("BERHASIL_LOGIN_ADMIN")) {
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            FormDashboardAdministrator frm = new FormDashboardAdministrator();
+                            this.dispose();
+                            frm.setVisible(true);
+                        } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
+                            JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                        }
 
-            } catch (IOException ex) {
-                Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                }
             }
+
         }
 
 
