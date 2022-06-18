@@ -203,6 +203,15 @@ public class HandleRequest extends Thread {
                 usrAd = usrAd.TakeUsr(values[0],values[1]);
                 this.SendMessage(usrAd.getId()+","+usrAd.getUsername()+","+usrAd.getPassword()+","+usrAd.getName());
                 break;
+                
+            case "TAKE_CUST_ADMIN":
+                Restaurant cRest = new Restaurant();
+                Customer cCust = new Customer();
+                String countRest = cRest.countData();
+                String countCust = cCust.countData();
+                this.SendMessage("ADMIN-" + countCust +","+ countRest);
+                break;    
+                
             case "LIST_ADMIN":
                 this.SendMessage(admin.viewListAdmin());
                 break;

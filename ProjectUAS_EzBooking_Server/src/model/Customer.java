@@ -182,7 +182,7 @@ public class Customer {
             System.out.println("Error" + e.getMessage());
         }
     }
-
+    
     public boolean CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
@@ -241,4 +241,17 @@ public class Customer {
         
     }
     
+    public String countData() {
+        String count = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("SELECT COUNT(id) as count FROM customers");
+            while (this.result.next()) {
+                count += this.result.getInt("count");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
 }

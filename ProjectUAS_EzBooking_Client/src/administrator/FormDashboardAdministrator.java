@@ -24,6 +24,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
      */
     public FormDashboardAdministrator() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     Socket s;
     BufferedReader in;
@@ -37,9 +38,15 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             this.setLocationRelativeTo(null);
-            out.writeBytes("TAKE_USR_ADMIN;" + username + "," + password + "\n");
+            out.writeBytes("TAKE_CUST_ADMIN;" + username + password + "\n");
             usr = in.readLine();
-            String[] value = usr.split(",");//isi value sesuai dengan urutan isi constructor yang ada idnya
+            String[] value = usr.split("-");//isi value sesuai dengan urutan isi constructor yang ada idnya
+            String perintah = value[0];
+            String[] pesan = value[1].split(",");
+            String cust = pesan[0];
+            String resto = pesan[1];
+            lblCustomer.setText(cust);
+            lblRestaurant.setText(resto);
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
@@ -172,9 +179,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
         );
 
         jLabel6.setBackground(new java.awt.Color(255, 102, 0));
@@ -232,9 +237,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
         );
 
         lblCustomer.setBackground(new java.awt.Color(255, 102, 0));

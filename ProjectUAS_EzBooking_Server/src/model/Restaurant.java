@@ -400,4 +400,18 @@ public class Restaurant {
         }
         return usr;
     }
+    
+    public String countData() {
+        String count = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("SELECT COUNT(id) as count FROM restaurants");
+            while (this.result.next()) {
+                count += this.result.getInt("count");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
 }
