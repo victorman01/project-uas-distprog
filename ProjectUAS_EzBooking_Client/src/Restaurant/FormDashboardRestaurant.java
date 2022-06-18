@@ -40,7 +40,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
             this.setLocationRelativeTo(null);
             out.writeBytes("TAKE_USR_RESTAURANT;" + username + "," + password + "\n");
             usr = in.readLine();
-            String[] value = usr.split(",");
+            String[] value = usr.split(","); //isi value sesuai dengan urutan isi constructor yang ada idnya
             lblRestaurantName.setText(value[2].toUpperCase());
             this.setLocationRelativeTo(null);
         } catch (Exception e) {

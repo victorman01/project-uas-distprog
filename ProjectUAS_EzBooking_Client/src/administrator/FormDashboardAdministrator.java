@@ -39,7 +39,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
             this.setLocationRelativeTo(null);
             out.writeBytes("TAKE_USR_ADMIN;" + username + "," + password + "\n");
             usr = in.readLine();
-            String[] value = usr.split(",");
+            String[] value = usr.split(",");//isi value sesuai dengan urutan isi constructor yang ada idnya
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
