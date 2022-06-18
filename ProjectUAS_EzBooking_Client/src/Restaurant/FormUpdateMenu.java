@@ -97,6 +97,7 @@ public class FormUpdateMenu extends javax.swing.JFrame {
 
         btnCancel.setBackground(new java.awt.Color(255, 0, 0));
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancel.setForeground(java.awt.Color.white);
         btnCancel.setText("CANCEL");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -72,6 +72,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         spinnerHargaReservasi = new javax.swing.JSpinner();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +180,16 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
 
         spinnerHargaReservasi.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
 
+        btnExit.setBackground(java.awt.Color.red);
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setForeground(java.awt.Color.white);
+        btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,7 +213,6 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                             .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPhoneNumber)
                             .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(spinnerHargaReservasi)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -223,6 +233,12 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRegister)
+                .addGap(20, 20, 20)
+                .addComponent(btnExit)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,9 +285,11 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addComponent(btnRegister)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegister)
+                    .addComponent(btnExit))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,7 +300,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, Short.MAX_VALUE)
         );
 
         pack();
@@ -325,6 +343,11 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -361,6 +384,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

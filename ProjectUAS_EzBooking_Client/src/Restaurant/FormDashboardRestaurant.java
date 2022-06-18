@@ -262,9 +262,9 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListReservationActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        this.dispose();
         FormDashboard frm = new FormDashboard();
         frm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**

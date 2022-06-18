@@ -83,8 +83,9 @@ public class FormListReservation extends javax.swing.JFrame {
             }
         });
 
-        btnClose.setBackground(new java.awt.Color(255, 255, 255));
+        btnClose.setBackground(java.awt.Color.red);
         btnClose.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnClose.setForeground(java.awt.Color.white);
         btnClose.setText("CLOSE");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +167,8 @@ public class FormListReservation extends javax.swing.JFrame {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     /**

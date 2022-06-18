@@ -391,6 +391,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
 
     private void btnExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitsActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnExitsActionPerformed
 

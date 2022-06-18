@@ -137,6 +137,7 @@ public class FormListMenu extends javax.swing.JFrame {
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setForeground(java.awt.Color.white);
         btnExit.setText("EXIT");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +209,7 @@ public class FormListMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_tblListMenuMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 

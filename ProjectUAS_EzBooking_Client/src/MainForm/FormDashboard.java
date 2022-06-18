@@ -179,7 +179,10 @@ public class FormDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        FormDashboard frm = new FormDashboard();  
+        this.setVisible(false);
         this.dispose();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantActionPerformed

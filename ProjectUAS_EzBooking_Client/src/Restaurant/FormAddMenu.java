@@ -71,7 +71,9 @@ public class FormAddMenu extends javax.swing.JFrame {
 
         txtPriceTotal1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
+        btnCancel.setBackground(java.awt.Color.red);
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancel.setForeground(java.awt.Color.white);
         btnCancel.setText("CANCEL");
         btnCancel.setToolTipText("");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -219,6 +221,7 @@ public class FormAddMenu extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**

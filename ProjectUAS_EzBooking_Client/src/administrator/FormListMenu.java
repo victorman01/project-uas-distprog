@@ -74,7 +74,7 @@ public class FormListMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
 
-        btnExit.setBackground(new java.awt.Color(255, 255, 255));
+        btnExit.setBackground(new java.awt.Color(255, 51, 0));
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExit.setText("EXIT");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,7 @@ public class FormListMenu extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(232, 232, 232)
                 .addComponent(jLabel8)
-                .addGap(257, 257, 257))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +159,8 @@ public class FormListMenu extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
-        dispose();
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**

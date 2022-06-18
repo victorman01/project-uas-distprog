@@ -308,6 +308,7 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministratorActionPerformed
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        this.setVisible(false);
         this.dispose();
         FormDashboard frm = new FormDashboard();
         frm.setVisible(true);
