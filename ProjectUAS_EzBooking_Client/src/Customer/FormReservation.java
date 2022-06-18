@@ -127,6 +127,11 @@ public class FormReservation extends javax.swing.JFrame {
 
         numPeople.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         numPeople.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        numPeople.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                numPeopleStateChanged(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -153,6 +158,8 @@ public class FormReservation extends javax.swing.JFrame {
 
         numTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         numTable.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        numTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        numTable.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Number of tables:");
@@ -184,13 +191,9 @@ public class FormReservation extends javax.swing.JFrame {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(jLabel8))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel7)))
-                        .addGap(12, 12, 12)
+                                .addComponent(jLabel8)))
+                        .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(numPeople)
                             .addComponent(numTable)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cbRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,11 +201,17 @@ public class FormReservation extends javax.swing.JFrame {
                             .addComponent(dateBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnFoodOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancel)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnFoodOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancel))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(12, 12, 12)
+                                .addComponent(numPeople)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -219,12 +228,12 @@ public class FormReservation extends javax.swing.JFrame {
                     .addComponent(dateBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(numTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(numPeople, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(numTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBook)
@@ -253,31 +262,47 @@ public class FormReservation extends javax.swing.JFrame {
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         try {
-            Format dateFormatter = new SimpleDateFormat("d MMM YYYY");
-            Format dateFormatServer = new SimpleDateFormat("dd/MM/yyyy");
-            Date bookingDate = dateBooking.getDate();
-            String stringDate = dateFormatter.format(bookingDate);
-            String stringDateServer = dateFormatServer.format(bookingDate);
-            
-            out.writeBytes("CREATE_RESERVATION;"+restoId+","+numTable.getValue().toString()+","+ numPeople.getValue().toString()+"\n");
-            message = in.readLine();
-            
-            String[] messages = message.split(";");
-            if (message.contains("CONFIRM_RESERVATION;")){
-                int answer = JOptionPane.showConfirmDialog(this,
-                        "Restaurant = " + restoName + "\n"
-                        + "Booking Date = " + stringDate + "\n"
-                        + "Number of Tables = " + numTable.getValue() + " Table(s)\n"
-                        + "Number of People = " + numPeople.getValue() + " Person(s)\n"
-                        + "Total Prices = Rp." + messages[1] + "\n\n"
-                        + "Are you sure want to confirm this reservation ?", "Confirm Reservation",
-                        JOptionPane.YES_NO_OPTION);
-                if (answer == JOptionPane.YES_OPTION) {
-                    out.writeBytes("INSERT_RESERVATION;"+stringDateServer+","+numPeople.getValue().toString()+","+ numTable.getValue().toString()+","+restoId+","+customerId+",pending,"+messages[1]+"\n");
+            if(Integer.parseInt(numTable.getValue().toString()) > 0 && dateBooking.getDate() != null){
+                Format dateFormatter = new SimpleDateFormat("d MMM YYYY");
+                Format dateFormatServer = new SimpleDateFormat("dd/MM/yyyy");
+                Date bookingDate = dateBooking.getDate();
+                String stringDate = dateFormatter.format(bookingDate);
+                String stringDateServer = dateFormatServer.format(bookingDate);
+                
+                //Buat reservasi & kalkulasi total pricenya di server
+                out.writeBytes("CREATE_RESERVATION;" + restoId + "," + numTable.getValue().toString() + "," + numPeople.getValue().toString() + "\n");
+                message = in.readLine();
 
-                } 
+                String[] messages = message.split(";");
+                
+                //Detail reservasi ditampilin di confirm dialog
+                if (message.contains("CONFIRM_RESERVATION;")) {
+                    int answer = JOptionPane.showConfirmDialog(this,
+                            "Restaurant = " + restoName + "\n"
+                            + "Booking Date = " + stringDate + "\n"
+                            + "Number of Tables = " + numTable.getValue() + " Table(s)\n"
+                            + "Number of People = " + numPeople.getValue() + " Person(s)\n"
+                            + "Total Prices = Rp." + messages[1] + "\n\n"
+                            + "Are you sure want to confirm this reservation ?", "Confirm Reservation",
+                            JOptionPane.YES_NO_OPTION);
+                    if (answer == JOptionPane.YES_OPTION) {
+                        //Cek ketersediaaan tables di resto
+                        out.writeBytes("CHECK_RESTO_TABLES;" + restoId + "," + numTable.getValue().toString() + "\n");
+                        message = in.readLine();
+                        
+                        if (message.contains("TABLE_OK")){
+                            //insert data kalo tablenya tersedia
+                            out.writeBytes("INSERT_RESERVATION;" + stringDateServer + "," + numPeople.getValue().toString() + "," + numTable.getValue().toString() + "," + restoId + "," + customerId + ",pending," + messages[1] + "\n");
+                            JOptionPane.showMessageDialog(this, "Reservation is successfully created!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Sorry, the table(s) in this restaurant is running out");
+                        }
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Input the date and number of person(s) first");
             }
-
+  
         } catch (IOException ex) {
             Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,6 +323,13 @@ public class FormReservation extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void numPeopleStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numPeopleStateChanged
+        // TODO add your handling code here:
+        int numOfPeople = Integer.parseInt(numPeople.getValue().toString());
+        int numOfTables = (int) Math.ceil(numOfPeople / 4.0);
+        numTable.setValue(numOfTables);
+    }//GEN-LAST:event_numPeopleStateChanged
 
     /**
      * @param args the command line arguments

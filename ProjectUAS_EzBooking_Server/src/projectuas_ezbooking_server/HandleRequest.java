@@ -154,6 +154,38 @@ public class HandleRequest extends Thread {
 
                 this.SendMessage("CONFIRM_RESERVATION;" + String.valueOf(totalPrice));
                 break;
+                
+            case "INSERT_RESERVATION":         
+                try {
+                    // Convert date to sqlDate
+                    String sDate = values[0];
+                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+                    Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
+                    insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
+                } catch (ParseException ex) {
+                    Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;    
+                
+            case "CHECK_RESTO_TABLES":
+                idResto = Integer.parseInt(values[0]);
+                int numTables = Integer.parseInt(values[1]);
+                restoran = restoran.GetRestoByID(idResto);
+                int totalTables = restoran.getJumlahMeja();
+
+                int availableTables = totalTables - numTables;
+                
+                if (availableTables >= 0){
+                    //update jumlah meja
+                    restoran.updateJumlahMeja(numTables, idResto);
+                    this.SendMessage("TABLE_OK");
+                }else {
+                    this.SendMessage("TABLE_NOT_OK");
+                }
+                break;
+                
             case "SHOW_LIST_MENU":
                 System.out.println(values[0]);
                 Menu menus = new Menu();
@@ -242,27 +274,14 @@ public class HandleRequest extends Thread {
                 cst.deleteData(values[2]);
                 this.SendMessage("DELETE_SUCCESS");
                 break;
+                
             case "SHOW_LIST_CUSTOMER":
                 Customer lstCst = new Customer();
                 String listCustomer = lstCst.viewListDataCust();
                 this.SendMessage(listCustomer);
                 System.out.println(listCustomer);
                 break;
-            case "INSERT_RESERVATION":         
-            try {
-                System.out.println(values);
-
-                // Convert date to sqlDate
-                String sDate = values[0];
-                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-
-                Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
-                insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
-            } catch (ParseException ex) {
-                Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
+                
             case "UPDATE_PROFILE_RESTAURANT":
                 boolean preOrder = false;
                 if (values[4].equals("YES")) {
@@ -273,6 +292,7 @@ public class HandleRequest extends Thread {
                 Restaurant restUpdate = new Restaurant(Integer.parseInt(values[0]), values[1], values[2], Integer.parseInt(values[3]), preOrder, values[5],
                         values[6], values[7], values[8], Float.parseFloat(values[9]));
                 this.SendMessage(restUpdate.updateProfile());
+                break;
         }
     }
 
@@ -285,67 +305,6 @@ public class HandleRequest extends Thread {
                 System.out.println(pesan);
                 String[] p = pesan.split(";");
                 this.action(p[0], p[1]);
-//                if (pesan.contains("REGISTER_RESTO;")) {
-//                    String[] p = pesan.split(";");
-//
-//                    this.action(p[0], p[1]);
-//
-//                } else if (pesan.contains("LOGIN_RESTO;")) {
-//                    String[] p = pesan.split(";");
-//
-//                    this.action(p[0], p[1]);
-//
-//                } else if (pesan.contains("REGISTER_CUSTOMER;")) {
-//                    String[] p = pesan.split(";");
-//
-//                    this.action(p[0], p[1]);
-//
-//                } else if (pesan.contains("LOGIN_CUSTOMER;")) {
-//                    String[] p = pesan.split(";");
-//
-//                    this.action(p[0], p[1]);
-//
-//                } else if (pesan.contains("LOGIN_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("ADD_MENU;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("INIT_RESERVATION;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("CREATE_RESERVATION;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("SHOW_LIST_MENU;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("UPDATE_MENU;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("DELETE_MENU;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("TAKE_USR_CUSTOMER;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("LIST_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("TAKE_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("DELETE_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("UPDATE_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                } else if (pesan.contains("ADD_ADMIN;")) {
-//                    String[] p = pesan.split(";");
-//                    this.action(p[0], p[1]);
-//                }
             } catch (IOException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
