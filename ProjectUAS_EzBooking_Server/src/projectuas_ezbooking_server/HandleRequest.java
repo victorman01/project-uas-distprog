@@ -14,12 +14,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Administrator;
 import model.Customer;
 import model.Menu;
 import model.Preorder;
+import model.Reservation;
 import model.Restaurant;
 
 public class HandleRequest extends Thread {
@@ -244,6 +248,25 @@ public class HandleRequest extends Thread {
                 this.SendMessage(listCustomer);
                 System.out.println(listCustomer);
                 break;
+            case "INSERT_RESERVATION":         
+            try {
+                System.out.println(values);
+                
+                // Convert date to sqlDate
+                String sDate = values[0];
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                
+                Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
+                insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
+            } catch (ParseException ex) {
+                Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+
+
+                break;
+
 
         }
 //        } catch (IOException ex) {

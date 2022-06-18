@@ -146,18 +146,18 @@ public class Reservation {
         return conn;
     }
      
-    public void insertData(int costumerID, int restoID) {
+    public void insertData(int restoID, int customerID) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO reservasis"
-                        + "(booking_date, number_of_peoples, number_of_tables, restorants, customres, status, total_price) "
+                        + "(booking_date, number_of_peoples, number_of_tables, restorants_id, customers_id, status, total_price) "
                         + "VALUES (?,?,?,?,?,?,?)");
 
                 sql.setDate(1, this.bookingDate);
                 sql.setInt(2, this.numPeoples);
                 sql.setInt(3, this.numTables);
-                sql.setInt(4, this.restaurant.getId());
-                sql.setInt(5, this.customer.getId());
+                sql.setInt(4, restoID);
+                sql.setInt(5, customerID);
                 sql.setString(6, this.status);
                 sql.setFloat(7, this.totalPrice);
 

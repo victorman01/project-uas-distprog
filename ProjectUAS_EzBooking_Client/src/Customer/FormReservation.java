@@ -10,6 +10,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -251,7 +253,12 @@ public class FormReservation extends javax.swing.JFrame {
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         try {
+            Format dateFormatter = new SimpleDateFormat("d MMM YYYY");
+            Format dateFormatServer = new SimpleDateFormat("dd/MM/yyyy");
             Date bookingDate = dateBooking.getDate();
+            String stringDate = dateFormatter.format(bookingDate);
+            String stringDateServer = dateFormatServer.format(bookingDate);
+            
             out.writeBytes("CREATE_RESERVATION;"+restoId+","+numTable.getValue().toString()+","+ numPeople.getValue().toString()+"\n");
             message = in.readLine();
             
@@ -259,14 +266,15 @@ public class FormReservation extends javax.swing.JFrame {
             if (message.contains("CONFIRM_RESERVATION;")){
                 int answer = JOptionPane.showConfirmDialog(this,
                         "Restaurant = " + restoName + "\n"
-                        + "Booking Date = " + bookingDate.toString() + "\n"
+                        + "Booking Date = " + stringDate + "\n"
                         + "Number of Tables = " + numTable.getValue() + " Table(s)\n"
                         + "Number of People = " + numPeople.getValue() + " Person(s)\n"
                         + "Total Prices = Rp." + messages[1] + "\n\n"
                         + "Are you sure want to confirm this reservation ?", "Confirm Reservation",
                         JOptionPane.YES_NO_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
-                    
+                    out.writeBytes("INSERT_RESERVATION;"+stringDateServer+","+numPeople.getValue().toString()+","+ numTable.getValue().toString()+","+restoId+","+customerId+",pending,"+messages[1]+"\n");
+
                 } 
             }
 
