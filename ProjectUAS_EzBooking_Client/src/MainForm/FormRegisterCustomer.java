@@ -6,7 +6,7 @@ package MainForm;
 
 /**
  *
- * @author Alvin Fernando
+ * @author skyclyve
  */
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -33,6 +33,7 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alvin Fernando
+ * @author skyclyve
  */
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -38,6 +38,7 @@ public class FormAddMenu extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             System.out.println(idcheck);
+            this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormAddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

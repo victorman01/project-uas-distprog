@@ -52,6 +52,7 @@ public class FormListRestaurant extends javax.swing.JFrame {
                 tblModel.addRow(show);
             }
             tbListResto.setModel(tblModel);
+            this.setLocationRelativeTo(null);
 
         } catch (Exception e) {
             System.out.println("Error in show list menu");

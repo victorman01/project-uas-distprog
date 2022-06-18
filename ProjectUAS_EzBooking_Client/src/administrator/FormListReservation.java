@@ -33,8 +33,7 @@ public class FormListReservation extends javax.swing.JFrame {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
-            
-            
+            this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }

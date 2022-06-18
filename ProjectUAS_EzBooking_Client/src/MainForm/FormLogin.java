@@ -40,6 +40,7 @@ public class FormLogin extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             this.setLocationRelativeTo(null);
+            lblRegister.setText("<HTML><u>Register</u></HTML>");
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,6 +66,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
+        cbShowPassword = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +85,7 @@ public class FormLogin extends javax.swing.JFrame {
         lblTitleRegister.setText("Don't have any account?");
 
         lblRegister.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblRegister.setForeground(java.awt.Color.black);
         lblRegister.setText("Register");
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -132,33 +135,43 @@ public class FormLogin extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        cbShowPassword.setForeground(java.awt.Color.black);
+        cbShowPassword.setText("Show Password");
+        cbShowPassword.setSize(new java.awt.Dimension(93, 30));
+        cbShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbShowPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
+                        .addComponent(lblTitleRegister)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblRegister))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                 .addComponent(txtPassword)))
-                        .addContainerGap(14, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTitleRegister)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblRegister)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(96, 96, 96)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbShowPassword, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +185,9 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbShowPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
                     .addComponent(btnCancel))
@@ -180,7 +195,7 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitleRegister)
                     .addComponent(lblRegister))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,7 +219,7 @@ public class FormLogin extends javax.swing.JFrame {
         if (check.equals("restaurant")) {
 
             if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
                     try {
@@ -213,32 +228,31 @@ public class FormLogin extends javax.swing.JFrame {
                         String[] value;
                         if (message.equals("BERHASIL_LOGIN_RESTAURANT")) {
                             value = message.split(",");
-//                    System.out.println(value[0]);
-//                    System.out.println(value[1]);
-                            menu.idcheck = Integer.parseInt(value[1]);
+                            menu.idcheck = Integer.parseInt(value[0]);
                         }
                         System.out.println(message);
 
                         if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
                             JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
-                            FormDashboardRestaurant frm = new FormDashboardRestaurant(username);
+                            FormDashboardRestaurant frm = new FormDashboardRestaurant(username, password);
                             this.dispose();
                             frm.setVisible(true);
                         } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
                             JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                            txtUsername.requestFocus();
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
         } else if (check.equals("customer")) {
             if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
                     try {
@@ -252,6 +266,7 @@ public class FormLogin extends javax.swing.JFrame {
                             form.setVisible(true);
                         } else if (message.equals("GAGAL_LOGIN_CUSTOMER")) {
                             JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                            txtUsername.requestFocus();
                         }
 
                     } catch (IOException ex) {
@@ -259,13 +274,13 @@ public class FormLogin extends javax.swing.JFrame {
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
         } else if (check.equals("admin")) {
             if (txtUsername.getText().equals("") || txtPassword.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Username atau password tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (!(txtUsername.getText().equals("") && txtPassword.getText().equals(""))) {
                     try {
@@ -274,24 +289,24 @@ public class FormLogin extends javax.swing.JFrame {
                         String[] value;
                         if (message.equals("BERHASIL_LOGIN_ADMIN")) {
                             value = message.split(",");
-//                    System.out.println(value[0]);
-//                    System.out.println(value[1]);
                         }
 
                         if (message.equals("BERHASIL_LOGIN_ADMIN")) {
                             JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
-                            FormDashboardAdministrator frm = new FormDashboardAdministrator();
+                            FormDashboardAdministrator frm = new FormDashboardAdministrator(username, password);
                             this.dispose();
                             frm.setVisible(true);
                         } else if (message.equals("GAGAL_LOGIN_ADMIN")) {
                             JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                            txtUsername.requestFocus();
                         }
 
                     } catch (IOException ex) {
                         Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Username atau nama tidak boleh kosong", "INFO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
+                    txtUsername.requestFocus();
                 }
             }
 
@@ -310,8 +325,6 @@ public class FormLogin extends javax.swing.JFrame {
             frm.setVisible(true);
             //this.dispose();
         }
-
-
     }//GEN-LAST:event_lblRegisterMouseClicked
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -319,6 +332,14 @@ public class FormLogin extends javax.swing.JFrame {
         this.dispose();
         frm.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void cbShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShowPasswordActionPerformed
+        if (cbShowPassword.isSelected()) {
+            txtPassword.setEchoChar((char)0);
+        }else{
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_cbShowPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,6 +379,7 @@ public class FormLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JCheckBox cbShowPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

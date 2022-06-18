@@ -47,6 +47,7 @@ public class FormListCustomers extends javax.swing.JFrame {
                 tblModel.addRow(show);
             }
             tableAdmin.setModel(tblModel);
+            this.setLocationRelativeTo(null);
 
         } catch (Exception e) {
             System.out.println("Error in show list menu");

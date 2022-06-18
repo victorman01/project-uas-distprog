@@ -14,6 +14,7 @@ public class FormDeleteReservation extends javax.swing.JFrame {
     /** Creates new form FormDeleteReservation */
     public FormDeleteReservation() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /** This method is called from within the constructor to

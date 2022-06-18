@@ -187,11 +187,22 @@ public class HandleRequest extends Thread {
                 break;
 
             case "TAKE_USR_CUSTOMER":
-                Customer usr = new Customer();
-                usr = usr.TakeUsr(values[0], values[1]);
-                this.SendMessage(usr.getId() + "," + usr.getUsername() + "," + usr.getNama() + "," + usr.getAlamat() + "," + usr.getEmail());
+                Customer usrCus = new Customer();
+                usrCus = usrCus.TakeUsr(values[0], values[1]);
+                this.SendMessage(usrCus.getId() + "," + usrCus.getUsername() + "," + usrCus.getNama() + "," + usrCus.getAlamat() + "," + usrCus.getEmail());
                 break;
 
+            case "TAKE_USR_RESTAURANT":
+                Restaurant usrRes = new Restaurant();
+                usrRes = usrRes.TakeUsr(values[0], values[1]);
+                this.SendMessage(usrRes.getId() + "," + usrRes.getPemilik() + "," + usrRes.getNama() + "," + usrRes.getJumlahMeja() + "," + usrRes.isPreOrder() + "," + usrRes.getUsername() + "," + usrRes.getPassword() + "," + usrRes.getAlamat() + "," + usrRes.getNo_telepon() + "," + usrRes.getHarga_reservasi());
+                break;
+
+            case "TAKE_USR_ADMIN":
+                Administrator usrAd = new Administrator();
+                usrAd = usrAd.TakeUsr(values[0],values[1]);
+                this.SendMessage(usrAd.getId()+","+usrAd.getUsername()+","+usrAd.getPassword()+","+usrAd.getName());
+                break;
             case "LIST_ADMIN":
                 this.SendMessage(admin.viewListAdmin());
                 break;

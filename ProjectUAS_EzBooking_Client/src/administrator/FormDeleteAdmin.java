@@ -15,6 +15,7 @@ public class FormDeleteAdmin extends javax.swing.JFrame {
      */
     public FormDeleteAdmin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

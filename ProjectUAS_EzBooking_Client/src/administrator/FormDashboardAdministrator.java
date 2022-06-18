@@ -5,6 +5,13 @@
 package administrator;
 
 import MainForm.FormDashboard;
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,12 +25,27 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
     public FormDashboardAdministrator() {
         initComponents();
     }
-    public String adminName;
-    public FormDashboardAdministrator(String username) {
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String usr;
+
+    public FormDashboardAdministrator(String username, String password) {
         initComponents();
-        adminName = username;
-        this.setLocationRelativeTo(null);
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
+            out.writeBytes("TAKE_USR_ADMIN;" + username + "," + password + "\n");
+            usr = in.readLine();
+            String[] value = usr.split(",");
+            this.setLocationRelativeTo(null);
+        } catch (Exception e) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

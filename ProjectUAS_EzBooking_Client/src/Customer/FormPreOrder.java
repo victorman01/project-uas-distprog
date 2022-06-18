@@ -15,6 +15,7 @@ public class FormPreOrder extends javax.swing.JFrame {
      */
     public FormPreOrder() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

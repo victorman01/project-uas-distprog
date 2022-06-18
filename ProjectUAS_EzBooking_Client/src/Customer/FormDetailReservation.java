@@ -15,6 +15,7 @@ public class FormDetailReservation extends javax.swing.JFrame {
      */
     public FormDetailReservation() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -30,6 +30,7 @@ public class FormDeleteCustomers extends javax.swing.JFrame {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
         } catch (Exception e) {
         }
     }

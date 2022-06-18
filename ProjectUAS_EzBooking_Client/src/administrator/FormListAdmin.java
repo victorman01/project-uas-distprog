@@ -50,7 +50,9 @@ public class FormListAdmin extends javax.swing.JFrame {
                 tblModel.addRow(show);
             }
             tblAdmin.setModel(tblModel);
+            this.setLocationRelativeTo(null);
         } catch (Exception e) {
+            Logger.getLogger(FormListAdmin.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
