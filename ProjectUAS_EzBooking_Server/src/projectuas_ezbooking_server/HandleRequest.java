@@ -204,18 +204,18 @@ public class HandleRequest extends Thread {
 
             case "TAKE_USR_ADMIN":
                 Administrator usrAd = new Administrator();
-                usrAd = usrAd.TakeUsr(values[0],values[1]);
-                this.SendMessage(usrAd.getId()+","+usrAd.getUsername()+","+usrAd.getPassword()+","+usrAd.getName());
+                usrAd = usrAd.TakeUsr(values[0], values[1]);
+                this.SendMessage(usrAd.getId() + "," + usrAd.getUsername() + "," + usrAd.getPassword() + "," + usrAd.getName());
                 break;
-                
+
             case "TAKE_CUST_ADMIN":
                 Restaurant cRest = new Restaurant();
                 Customer cCust = new Customer();
                 String countRest = cRest.countData();
                 String countCust = cCust.countData();
-                this.SendMessage("ADMIN-" + countCust +","+ countRest);
-                break;    
-                
+                this.SendMessage("ADMIN-" + countCust + "," + countRest);
+                break;
+
             case "LIST_ADMIN":
                 this.SendMessage(admin.viewListAdmin());
                 break;
@@ -251,27 +251,29 @@ public class HandleRequest extends Thread {
             case "INSERT_RESERVATION":         
             try {
                 System.out.println(values);
-                
+
                 // Convert date to sqlDate
                 String sDate = values[0];
                 Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                
+
                 Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
                 insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
             } catch (ParseException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    
-
-
-                break;
-
-
+            break;
+            case "UPDATE_PROFILE_RESTAURANT":
+                boolean preOrder = false;
+                if (values[4].equals("YES")) {
+                    preOrder = true;
+                }
+//                System.out.println(values[0] + values[1] + values[2] + Integer.parseInt(values[4]) + values[6] +
+//                        values[7]+ values[8]+ values[9]+ values[10]);
+                Restaurant restUpdate = new Restaurant(Integer.parseInt(values[0]), values[1], values[2], Integer.parseInt(values[3]), preOrder, values[5],
+                        values[6], values[7], values[8], Float.parseFloat(values[9]));
+                this.SendMessage(restUpdate.updateProfile());
         }
-//        } catch (IOException ex) {
-//            Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     @Override

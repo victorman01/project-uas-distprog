@@ -45,8 +45,23 @@ public class FormDashboardAdministrator extends javax.swing.JFrame {
             String[] pesan = value[1].split(",");
             String cust = pesan[0];
             String resto = pesan[1];
-            lblCustomer.setText(cust);
-            lblRestaurant.setText(resto);
+
+            if (cust.length() == 1) {
+                lblCustomer.setText("00" + cust);
+            } else if (cust.length() == 2) {
+                lblCustomer.setText("0" + cust);
+            } else {
+                lblCustomer.setText(cust);
+            }
+
+            if (resto.length() == 1) {
+                lblRestaurant.setText("00" + resto);
+            } else if (resto.length() == 2) {
+                lblRestaurant.setText("0" + resto);
+            } else {
+                lblRestaurant.setText(resto);
+            }
+
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);

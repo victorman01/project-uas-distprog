@@ -293,6 +293,33 @@ public class Restaurant {
         }
     }
 
+    public String updateProfile() {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE restaurants "
+                        + "SET owner = ?, name = ?, number_of_tables = ?, preorder = ?, username = ?, password = ?, address = ?, "
+                        + "phone_number = ?, price_reservation = ? "
+                        + "WHERE id = ?");
+                sql.setString(1, this.pemilik);
+                sql.setString(2, this.nama);
+                sql.setInt(3, this.jumlahMeja);
+                sql.setBoolean(4, this.preOrder);
+                sql.setString(5, this.username);
+                sql.setString(6, this.password);
+                sql.setString(7, this.alamat);
+                sql.setString(8, this.no_telepon);
+                sql.setFloat(9, this.harga_reservasi);
+                sql.setInt(10, this.id);
+                sql.executeUpdate();
+                sql.close();
+                return "UPDATE_PROFILE_SUCCESS";
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+        return "UPDATE_PROFILE_FAILED";
+    }
+
     public String deleteData() {
         try {
             if (!conn.isClosed()) {
@@ -375,8 +402,8 @@ public class Restaurant {
         }
         return listData;
     }
-    
-    public Restaurant TakeUsr(String username, String password){
+
+    public Restaurant TakeUsr(String username, String password) {
         Restaurant usr = null;
         try {
             if (!conn.isClosed()) {
@@ -386,11 +413,11 @@ public class Restaurant {
                 result = sql.executeQuery();
                 if (result.next()) {
                     usr = new Restaurant(this.result.getInt("id"),
-                        this.result.getString("owner"), this.result.getString("name"),
-                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
-                        this.result.getString("username"), this.result.getString("password"),
-                        this.result.getString("address"), this.result.getString("phone_number"),
-                        this.result.getFloat("price_reservation"));
+                            this.result.getString("owner"), this.result.getString("name"),
+                            this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                            this.result.getString("username"), this.result.getString("password"),
+                            this.result.getString("address"), this.result.getString("phone_number"),
+                            this.result.getFloat("price_reservation"));
                     return usr;
                 }
             }
@@ -400,7 +427,7 @@ public class Restaurant {
         }
         return usr;
     }
-    
+
     public String countData() {
         String count = "";
         try {
