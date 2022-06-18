@@ -47,6 +47,7 @@ public class FormListCustomers extends javax.swing.JFrame {
                 tblModel.addRow(show);
             }
             tableAdmin.setModel(tblModel);
+            this.setLocationRelativeTo(null);
 
         } catch (Exception e) {
             System.out.println("Error in show list menu");
@@ -163,7 +164,8 @@ public class FormListCustomers extends javax.swing.JFrame {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         // TODO add your handling code here:
-        dispose();
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void tableAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAdminMouseClicked

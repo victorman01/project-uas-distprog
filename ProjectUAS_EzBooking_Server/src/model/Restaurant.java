@@ -21,7 +21,8 @@ import static model.Menu.stat;
  *
  * @author Muhammad Ikhsan
  */
-public class Restaurant{
+public class Restaurant {
+
     private int id;
     private String pemilik;
     private String nama;
@@ -35,7 +36,7 @@ public class Restaurant{
     protected static Connection conn;
     protected static Statement stat;
     protected static ResultSet result;
-    
+
     public String getPemilik() {
         return pemilik;
     }
@@ -115,8 +116,7 @@ public class Restaurant{
     public void setHarga_reservasi(float harga_reservasi) {
         this.harga_reservasi = harga_reservasi;
     }
-    
-    
+
     public Restaurant(String pemilik, String nama, int jumlahMeja, boolean preOrder, String username, String password, String alamat, String no_telepon, float harga_reservasi) {
         this.pemilik = pemilik;
         this.nama = nama;
@@ -156,12 +156,12 @@ public class Restaurant{
         this.harga_reservasi = 0;
         this.conn = getConnection();
     }
-    
+
     public Restaurant(int id) {
         this.id = id;
         this.conn = getConnection();
     }
-    
+
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -195,7 +195,7 @@ public class Restaurant{
         return null;
 
     }
-    
+
     public Restaurant CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
@@ -203,22 +203,22 @@ public class Restaurant{
                 sql.setString(1, username);
                 sql.setString(2, password);
                 result = sql.executeQuery();
-                while(result.next()) {
-                    Restaurant resto= new Restaurant(this.result.getInt("id"),
-                    this.result.getString("owner"),this.result.getString("name"),
-                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
-                    this.result.getString("username"),this.result.getString("password"),this.result.getString("address"),
-                    this.result.getString("phone_number"), this.result.getFloat("price_reservation"));
+                while (result.next()) {
+                    Restaurant resto = new Restaurant(this.result.getInt("id"),
+                            this.result.getString("owner"), this.result.getString("name"),
+                            this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                            this.result.getString("username"), this.result.getString("password"), this.result.getString("address"),
+                            this.result.getString("phone_number"), this.result.getFloat("price_reservation"));
                     return resto;
                 }
-                
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Restaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-        
+
     }
 
     public void insertData() {
@@ -319,7 +319,7 @@ public class Restaurant{
                         this.result.getString("owner"), this.result.getString("name"),
                         this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
                         this.result.getString("username"), this.result.getString("password"),
-                        this.result.getString("address"), this.result.getString("phone_number"), 
+                        this.result.getString("address"), this.result.getString("phone_number"),
                         this.result.getFloat("price_reservation"));
 
                 return resto;
@@ -329,53 +329,89 @@ public class Restaurant{
         }
         return resto;
     }
-     public String viewListData(){
+
+    public String viewListData() {
         String listData = "";
-        try{
-            stat=(java.sql.Statement)conn.createStatement();
-            this.result=stat.executeQuery("select * from restaurants");
-            while (this.result.next())
-            {
-                
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from restaurants");
+            while (this.result.next()) {
+
                 Restaurant resto = new Restaurant(this.result.getInt("id"),
-                                    this.result.getString("owner"),this.result.getString("name"),
-                                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
-                                    this.result.getString("username"),this.result.getString("password"),
-                                    this.result.getString("address"),this.result.getString("phone_number"), 
-                                    this.result.getFloat("price_reservation"));
-                       
+                        this.result.getString("owner"), this.result.getString("name"),
+                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                        this.result.getString("username"), this.result.getString("password"),
+                        this.result.getString("address"), this.result.getString("phone_number"),
+                        this.result.getFloat("price_reservation"));
+
                 listData += resto.id + "/" + resto.nama + ",";
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return listData;
 
-}
-     public String viewListDataAdmin(){
+    }
+
+    public String viewListDataAdmin() {
         String listData = "";
-        try{
-            stat=(java.sql.Statement)conn.createStatement();
-            this.result=stat.executeQuery("select * from restaurants");
-            while (this.result.next())
-            {
-                
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from restaurants");
+            while (this.result.next()) {
+
                 Restaurant resto = new Restaurant(this.result.getInt("id"),
-                                    this.result.getString("owner"),this.result.getString("name"),
-                                    this.result.getInt("number_of_tables"),this.result.getBoolean("preorder"),
-                                    this.result.getString("username"),this.result.getString("password"),
-                                    this.result.getString("address"),this.result.getString("phone_number"), 
-                                    this.result.getFloat("price_reservation"));
-                       
-                listData += resto.id + "," + resto.pemilik + "," + resto.nama + "," + resto.jumlahMeja + "," + resto.preOrder +
-                        "," + resto.alamat + "," + resto.no_telepon + "," + resto.username + "," + resto.harga_reservasi + "/";
+                        this.result.getString("owner"), this.result.getString("name"),
+                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                        this.result.getString("username"), this.result.getString("password"),
+                        this.result.getString("address"), this.result.getString("phone_number"),
+                        this.result.getFloat("price_reservation"));
+
+                listData += resto.id + "," + resto.pemilik + "," + resto.nama + "," + resto.jumlahMeja + "," + resto.preOrder
+                        + "," + resto.alamat + "," + resto.no_telepon + "," + resto.username + "," + resto.harga_reservasi + "/";
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return listData;
+    }
+    
+    public Restaurant TakeUsr(String username, String password){
+        Restaurant usr = null;
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from restaurants where username=? and password=?");
+                sql.setString(1, username);
+                sql.setString(2, password);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    usr = new Restaurant(this.result.getInt("id"),
+                        this.result.getString("owner"), this.result.getString("name"),
+                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                        this.result.getString("username"), this.result.getString("password"),
+                        this.result.getString("address"), this.result.getString("phone_number"),
+                        this.result.getFloat("price_reservation"));
+                    return usr;
+                }
+            }
 
-}
+        } catch (Exception e) {
+            System.out.println("Error, " + e.getMessage());
+        }
+        return usr;
+    }
+    
+    public String countData() {
+        String count = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("SELECT COUNT(id) as count FROM restaurants");
+            while (this.result.next()) {
+                count += this.result.getInt("count");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
 }

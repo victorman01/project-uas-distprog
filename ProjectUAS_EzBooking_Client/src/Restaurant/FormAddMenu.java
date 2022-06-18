@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alvin Fernando
+ * @author skyclyve
  */
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -38,6 +38,7 @@ public class FormAddMenu extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             System.out.println(idcheck);
+            this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormAddMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,7 +72,9 @@ public class FormAddMenu extends javax.swing.JFrame {
 
         txtPriceTotal1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
+        btnCancel.setBackground(java.awt.Color.red);
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCancel.setForeground(java.awt.Color.white);
         btnCancel.setText("CANCEL");
         btnCancel.setToolTipText("");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -219,6 +222,7 @@ public class FormAddMenu extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**

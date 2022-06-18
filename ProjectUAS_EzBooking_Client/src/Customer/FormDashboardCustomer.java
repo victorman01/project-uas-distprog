@@ -41,7 +41,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
             this.setLocationRelativeTo(null);
             out.writeBytes("TAKE_USR_CUSTOMER;"+username +","+password+"\n");
             usr = in.readLine();
-            String[] value = usr.split(",");
+            String[] value = usr.split(","); //isi value sesuai dengan urutan isi constructor yang ada idnya
             idUser = Integer.parseInt(value[0]);
             lblName.setText(value[1]);
             lblUserName.setText(value[2]);
@@ -391,6 +391,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
 
     private void btnExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitsActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnExitsActionPerformed
 

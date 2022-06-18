@@ -5,10 +5,17 @@
 package Restaurant;
 
 import MainForm.FormDashboard;
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Alvin Fernando
+ * @author skyclyve
  */
 public class FormDashboardRestaurant extends javax.swing.JFrame {
 
@@ -19,12 +26,26 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         initComponents();
     }
 
-    public String restoName;
-    public FormDashboardRestaurant(String name) {
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String usr;
+
+    public FormDashboardRestaurant(String username, String password) {
         initComponents();
-        restoName = name;
-        lblRestaurantName.setText(restoName.toUpperCase() +" RESTAURANT");
-        this.setLocationRelativeTo(null);
+        try {
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
+            out.writeBytes("TAKE_USR_RESTAURANT;" + username + "," + password + "\n");
+            usr = in.readLine();
+            String[] value = usr.split(","); //isi value sesuai dengan urutan isi constructor yang ada idnya
+            lblRestaurantName.setText(value[2].toUpperCase());
+            this.setLocationRelativeTo(null);
+        } catch (Exception e) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
@@ -262,9 +283,9 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListReservationActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        this.dispose();
         FormDashboard frm = new FormDashboard();
         frm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
     /**

@@ -206,4 +206,22 @@ public class Administrator {
         }
         return listAdmin;
     }
+
+    public Administrator TakeUsr(String username, String password) {
+        Administrator usr = null;
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from administrators");
+            while (this.result.next()) {
+                usr = new Administrator(this.result.getInt("id"),
+                        this.result.getString("username"),
+                        this.result.getString("password"),
+                        this.result.getString("name"));
+                return usr;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR, " + e.getMessage());
+        }
+        return usr;
+    }
 }

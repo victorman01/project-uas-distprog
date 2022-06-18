@@ -30,6 +30,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
         } catch (Exception e) {
         }
     }
@@ -122,8 +123,9 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnExit.setBackground(new java.awt.Color(255, 255, 255));
+        btnExit.setBackground(java.awt.Color.red);
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnExit.setForeground(java.awt.Color.white);
         btnExit.setText("EXIT");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,6 +219,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
