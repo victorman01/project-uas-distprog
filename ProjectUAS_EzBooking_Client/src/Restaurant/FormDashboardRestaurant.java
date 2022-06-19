@@ -24,6 +24,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
      */
     public FormDashboardRestaurant() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     Socket s;
@@ -110,7 +111,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         btnExit.setBackground(new java.awt.Color(204, 0, 51));
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setText("EXIT");
+        btnExit.setText("LOGOUT");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);

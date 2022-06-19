@@ -152,7 +152,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
         btnExits.setBackground(new java.awt.Color(204, 0, 51));
         btnExits.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExits.setForeground(new java.awt.Color(255, 255, 255));
-        btnExits.setText("EXIT");
+        btnExits.setText("LOGOUT");
         btnExits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitsActionPerformed(evt);
