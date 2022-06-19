@@ -93,6 +93,17 @@ public class HandleRequest extends Thread {
 
                 break;
                 
+            case "TAKE_PROFIT":
+                int idProfit=0;
+                String profit="";
+                idProfit=rest.getId();
+                Restaurant restProfit= new Restaurant();
+                profit=restProfit.Profit(idProfit);
+                System.out.println(profit);
+                this.SendMessage(profit);
+                break;
+                
+                
             case "REGISTER_CUSTOMER":
                 Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();

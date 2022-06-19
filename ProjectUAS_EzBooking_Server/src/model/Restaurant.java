@@ -324,7 +324,7 @@ public class Restaurant {
         String jumlah="";
         try {
             stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select SUM (total_price) as total from reservasis where restorant_id=" + id);
+            this.result = stat.executeQuery("select SUM(total_price) as total from reservasis where restorants_id=" + id);
             while (this.result.next()) {
                 
                 jumlah+=this.result.getInt("total"); 

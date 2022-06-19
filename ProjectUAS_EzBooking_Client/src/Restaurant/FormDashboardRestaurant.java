@@ -55,6 +55,11 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
             usr = in.readLine();
             value = usr.split(","); //isi value sesuai dengan urutan isi constructor yang ada idnya
             lblRestaurantName.setText(value[2].toUpperCase());
+            
+            out.writeBytes("TAKE_PROFIT;" + " " + "\n");
+            usr=in.readLine();
+            lblprofit.setText(usr);
+            
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
@@ -85,6 +90,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        lblprofit = new javax.swing.JLabel();
         lblRestaurantName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -252,16 +258,28 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        lblprofit.setBackground(new java.awt.Color(255, 102, 0));
+        lblprofit.setFont(new java.awt.Font("Tahoma", 1, 70)); // NOI18N
+        lblprofit.setForeground(new java.awt.Color(255, 255, 255));
+        lblprofit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblprofit.setText("001");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblprofit)
+                .addGap(72, 72, 72))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -402,5 +420,6 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     private javax.swing.JLabel lblApplicationName;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblRestaurantName;
+    private javax.swing.JLabel lblprofit;
     // End of variables declaration//GEN-END:variables
 }
