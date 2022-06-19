@@ -343,6 +343,8 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
 
     private void btnListReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListReservationActionPerformed
         // TODO add your handling code here:
+        FormListReservation frm = new FormListReservation();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnListReservationActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed

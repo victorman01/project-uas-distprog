@@ -42,12 +42,12 @@ public class FormListReservation extends javax.swing.JFrame {
             
             String[] amountCustResv = message.split("/");
 
-            String[] colNames = {"Booking Date", "Number of People", "Number of Table(s)", "Retaurant's Name", "Total Price"};
+            String[] colNames = {"Booking Date", "Number of People", "Number of Table(s)", "Retaurant's Name","Status" ,"Total Price"};
             DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
 
             for (int i = 0; i < amountCustResv.length; i++) {
                 String[] valueMenu = amountCustResv[i].split(",");
-                String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4]};
+                String[] show = {valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4], valueMenu[6], valueMenu[7]};
 
                 tblModel.addRow(show);
             }

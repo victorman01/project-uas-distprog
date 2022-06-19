@@ -150,14 +150,12 @@ public class HandleRequest extends Thread {
 
                 break;
                 
-            case "UPDATE_MEJA":
-                break;
-                
             case "INIT_RESERVATION":
                 System.out.println(values[0]);
                 String listDataResto = restoran.viewListData();
                 this.SendMessage(listDataResto);
                 break;
+                
             case "CREATE_RESERVATION":
                 //ambil variabel
                 idResto = Integer.parseInt(values[0]);
@@ -205,9 +203,17 @@ public class HandleRequest extends Thread {
             
             case "SHOW_LIST_COSTUMER_RESERVATION":
                 reservation = new Reservation();
+                customer = customer.TakeCustomerById(Integer.parseInt(values[0]));
                 String listReservation = reservation.viewListDataByCustomer(customer);
                 System.out.println(listReservation);
                 this.SendMessage(listReservation);
+                break;
+                
+            case "SHOW_LIST_RESTAURANT_RESERVATION":
+                reservation = new Reservation();
+                String listResv = reservation.viewListDataByResto(rest);
+                System.out.println(listResv);
+                this.SendMessage(listResv);
                 break;
                 
             case "SHOW_LIST_MENU":
@@ -248,7 +254,7 @@ public class HandleRequest extends Thread {
 
             case "TAKE_USR_CUSTOMER":
                 Customer usrCus = new Customer();
-                usrCus = usrCus.TakeUsr(values[0], values[1]);
+                usrCus = usrCus.TakeCustomer(values[0], values[1]);
                 this.SendMessage(usrCus.getId() + "," + usrCus.getUsername() + "," + usrCus.getNama() + "," + usrCus.getAlamat() + "," + usrCus.getEmail());
                 break;
 
@@ -293,6 +299,7 @@ public class HandleRequest extends Thread {
                 Administrator addAdmin = new Administrator(values[0], values[1], values[2]);
                 this.SendMessage(addAdmin.insertData());
                 break;
+                
             case "DELETE_CUSTOMER":
                 Customer cst = new Customer();
                 cst.deleteData(values[2]);

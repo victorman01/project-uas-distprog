@@ -201,7 +201,7 @@ public class Customer {
         return false;
     }
 
-    public Customer TakeUsr(String username,String password) {
+    public Customer TakeCustomer(String username,String password) {
         Customer usr = null;
         try {
             if (!conn.isClosed()) {
@@ -220,6 +220,25 @@ public class Customer {
         }
         return usr;
     }
+    
+    public Customer TakeCustomerById(int customerId) {
+        Customer usr = null;
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("select * from customers where id = ?");
+                sql.setInt(1, customerId);
+                result = sql.executeQuery();
+                if (result.next()) {
+                    usr = new Customer(result.getInt("id"), result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"), result.getString("address"));
+                    return usr;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error, " + e.getMessage());
+        }
+        return usr;
+    }
+    
     public String viewListDataCust()
     {
         String listCust="";

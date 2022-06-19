@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,13 +30,33 @@ public class FormListReservation extends javax.swing.JFrame {
     String message;
     String check;
     
-    public FormListReservation() {
+    public FormListReservation(int restoId) {
         initComponents();
         try {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
+            
+            out.writeBytes("SHOW_LIST_RESTAURANT_RESERVATION; \n");
+            message = in.readLine();
+
+            String[] amountCustResv = message.split("/");
+
+            String[] colNames = {"Booking Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Price"};
+            DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
+
+            for (int i = 0; i < amountCustResv.length; i++) {
+                String[] valueMenu = amountCustResv[i].split(",");
+                String[] show = {valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4], valueMenu[6], valueMenu[7]};
+
+                tblModel.addRow(show);
+            }
+            
+            tableReservation.setModel(tblModel);
             this.setLocationRelativeTo(null);
+            this.setLocationRelativeTo(null);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,7 +73,7 @@ public class FormListReservation extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableReservation = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
@@ -63,19 +84,27 @@ public class FormListReservation extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(255, 202, 3));
         jPanel1.setToolTipText("");
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableReservation.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tableReservation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Date", "Number of People", "Number of Table", "Restaurant", "Customer", "Status", "Total Payment"
+                "Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Payment"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableReservation);
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -120,9 +149,9 @@ public class FormListReservation extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnExit)))
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -196,6 +225,6 @@ public class FormListReservation extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableReservation;
     // End of variables declaration//GEN-END:variables
 }
