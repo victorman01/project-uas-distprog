@@ -37,6 +37,7 @@ public class HandleRequest extends Thread {
     public static Restaurant rest;
     Customer customer;
     Administrator administrator;
+    Reservation reservation;
 
     public HandleRequest(MainServer parent, Socket s) {
         this.parent = parent;
@@ -72,12 +73,12 @@ public class HandleRequest extends Thread {
         switch (command) {
 
             case "REGISTER_RESTO":
-
                 Restaurant resto = new Restaurant(values[0], values[1], Integer.valueOf(values[2]), Boolean.valueOf(values[3]), values[4], values[5], values[6], values[7], Float.parseFloat(values[8]));
                 resto.insertData();
 
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
+                
             case "LOGIN_RESTO":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -91,13 +92,14 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
+                
             case "REGISTER_CUSTOMER":
-
                 Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();
 
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
+                
             case "LOGIN_CUSTOMER":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -109,6 +111,7 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
+                
             case "LOGIN_ADMIN":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -120,6 +123,7 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
+                
             case "ADD_MENU":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -134,8 +138,10 @@ public class HandleRequest extends Thread {
                 this.SendMessage("BERHASIL_ADD_MENU");
 
                 break;
+                
             case "UPDATE_MEJA":
                 break;
+                
             case "INIT_RESERVATION":
                 System.out.println(values[0]);
                 String listDataResto = restoran.viewListData();
@@ -184,6 +190,13 @@ public class HandleRequest extends Thread {
                 }else {
                     this.SendMessage("TABLE_NOT_OK");
                 }
+                break;
+            
+            case "SHOW_LIST_COSTUMER_RESERVATION":
+                reservation = new Reservation();
+                String listReservation = reservation.viewListDataByCustomer(customer);
+                System.out.println(listReservation);
+                this.SendMessage(listReservation);
                 break;
                 
             case "SHOW_LIST_MENU":

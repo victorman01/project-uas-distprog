@@ -203,36 +203,8 @@ public class Reservation {
             System.out.println("Error" + e.getMessage());
         }
     }
-     public ArrayList<Object> viewListData(Restaurant resto){
-        ArrayList<Object> collections = new ArrayList<>();
-        try{
-            stat=(java.sql.Statement)conn.createStatement();
-            this.result=stat.executeQuery("SELECT * FROM reservasis INNER JOIN "
-                    + "costumers as cs ON costumers_id = cs.id "
-                    + "WHERE restaurants_id= "+ resto.getId());
-            while (this.result.next())
-            {                        
-                int id = this.result.getInt("id");
-                Date bookingDate = this.result.getDate("booking_date");
-                int numOfPeople = this.result.getInt("number_of_peoples");
-                int numOfTable = this.result.getInt("number_of_tables");
-                Customer costumer = new Customer(result.getInt("cs.id"), 
-                        result.getString("cs.username"), result.getString
-                        ("cs.password"), result.getString("cs.name"), result.getString("cs.address"), 
-                        result.getString("cs.email"),result.getString("cs.address"));
-                String status = this.result.getString("status");
-                float totalPrice = this.result.getFloat("total_price");    
-                Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
-                collections.add(reservasi);
-            }
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        return collections;
-
-    }
-     public String viewListDataResto(Restaurant resto){
+     
+    public String viewListDataByResto(Restaurant resto){
         //ArrayList<Object> collections = new ArrayList<>();
         String listReservasi="";
         try{
@@ -261,9 +233,37 @@ public class Reservation {
             System.out.println(ex.getMessage());
         }
         return listReservasi;
-        
-
      }
  
-    
+    public String viewListDataByCustomer(Customer customer) {
+        String listReservasi = "";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("SELECT * FROM reservasis INNER JOIN "
+                    + "restaurants as resto ON restorants_id = resto.id "
+                    + "WHERE customers_id = " + customer.getId());
+            while (this.result.next()) {
+                int id = this.result.getInt("id");
+                Date bookingDate = this.result.getDate("booking_date");
+                int numOfPeople = this.result.getInt("number_of_peoples");
+                int numOfTable = this.result.getInt("number_of_tables");
+                
+                Restaurant restaurant = new Restaurant(result.getInt("resto.id"), 
+                        result.getString("resto.owner"), result.getString("resto.name"), 
+                        result.getInt("resto.number_of_tables)"), result.getBoolean("resto.preorder"), 
+                        result.getString("resto.username"), result.getString("resto.password"), 
+                        result.getString("resto.address"), result.getString("resto.phone_number"), 
+                        result.getFloat("resto.price_reservation"));
+                
+                String status = this.result.getString("status");
+                float totalPrice = this.result.getFloat("total_price");
+                Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, restaurant, customer, status, totalPrice);
+                listReservasi += String.valueOf(reservasi.getId()) + "," + String.valueOf(reservasi.getBookingDate()) + "," + String.valueOf(reservasi.getNumPeoples()) + "," + String.valueOf(reservasi.getNumTables())
+                        + "," + reservasi.restaurant.getNama() + "," + reservasi.customer.getNama() + "," + reservasi.getStatus() + "," + String.valueOf(reservasi.getTotalPrice());
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return listReservasi;
+    }
 }

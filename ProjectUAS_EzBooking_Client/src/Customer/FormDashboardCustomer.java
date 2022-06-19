@@ -386,7 +386,7 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
 
     private void btnListReservActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListReservActionPerformed
         // TODO add your handling code here:
-        FormDetailReservation form = new FormDetailReservation();
+        FormListReservation form = new FormListReservation(idUser);
         form.setVisible(true);
     }//GEN-LAST:event_btnListReservActionPerformed
 
