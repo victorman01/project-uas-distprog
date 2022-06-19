@@ -319,6 +319,22 @@ public class Restaurant {
         }
         return "DELETE_FAILED";
     }
+    public String Profit(int id)
+    {
+        String jumlah="";
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select SUM (total_price) as total from reservasis where restorant_id=" + id);
+            while (this.result.next()) {
+                
+                jumlah+=this.result.getInt("total"); 
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return jumlah;
+        
+    }
 
     public Restaurant DataRestoran(int id) {
         Restaurant resto = new Restaurant();
