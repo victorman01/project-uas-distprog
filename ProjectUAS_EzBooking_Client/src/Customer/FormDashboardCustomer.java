@@ -4,6 +4,7 @@
  */
 package Customer;
 
+import MainForm.FormDashboard;
 import MainForm.FormRegisterRestaurant;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -391,8 +392,10 @@ public class FormDashboardCustomer extends javax.swing.JFrame {
 
     private void btnExitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitsActionPerformed
         // TODO add your handling code here:
+        FormDashboard frm = new FormDashboard();
         this.setVisible(false);
         this.dispose();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnExitsActionPerformed
 
     /**
