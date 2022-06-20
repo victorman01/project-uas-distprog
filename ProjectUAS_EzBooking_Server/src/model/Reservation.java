@@ -211,25 +211,25 @@ public class Reservation {
             stat=(java.sql.Statement)conn.createStatement();
             this.result=stat.executeQuery("SELECT reserv.id, reserv.booking_date, "
                     + "reserv.number_of_peoples, reserv.number_of_tables, reserv.status, reserv.total_price, "
-                    + "custo.id, custo.username, custo.password, custo.address, "
-                    + "custo.email FROM customers AS custo INNER JOIN "
-                    + "restaurants AS resto ON customers_id = custo.id "
-                    + "WHERE restorants_id = " + resto.getId());
+                    + "custo.id , custo.username, custo.password, custo.name, custo.address, "
+                    + "custo.email FROM customers AS custo INNER JOIN reservasis AS reserv ON reserv.customers_id = custo.id "
+                    + "INNER JOIN restaurants AS resto ON reserv.restorants_id = resto.id "
+                    + "WHERE resto.id = " + resto.getId());
             while (this.result.next())
             {                        
-                int id = this.result.getInt("id");
-                Date bookingDate = this.result.getDate("booking_date");
-                int numOfPeople = this.result.getInt("number_of_peoples");
-                int numOfTable = this.result.getInt("number_of_tables");
-                Customer costumer = new Customer(result.getInt("custo.id"), 
+                int id = this.result.getInt("reserv.id");
+                Date bookingDate = this.result.getDate("reserv.booking_date");
+                int numOfPeople = this.result.getInt("reserv.number_of_peoples");
+                int numOfTable = this.result.getInt("reserv.number_of_tables");
+                Customer customer = new Customer(result.getInt("custo.id"), 
                         result.getString("custo.username"), result.getString
                         ("custo.password"), result.getString("custo.name"), result.getString("custo.address"), 
                         result.getString("custo.email"),result.getString("custo.address"));
-                String status = this.result.getString("status");
-                float totalPrice = this.result.getFloat("total_price");    
+                String status = this.result.getString("reserv.status");
+                float totalPrice = this.result.getFloat("reserv.total_price");    
                 Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
                 listReservasi+=String.valueOf(reservasi.getId()) + "," + String.valueOf(reservasi.getBookingDate()) + "," + String.valueOf(reservasi.getNumPeoples()) + "," + String.valueOf(reservasi.getNumTables()) +
-                        "," + reservasi.restaurant.getNama() + "," + reservasi.customer.getNama() + "," + reservasi.getStatus() + "," + String.valueOf(reservasi.getTotalPrice());
+                        "," + reservasi.restaurant.getNama() + "," + reservasi.customer.getNama() + "," + reservasi.getStatus() + "," + String.valueOf(reservasi.getTotalPrice()) + "/";
             }
         }
         catch(Exception ex){

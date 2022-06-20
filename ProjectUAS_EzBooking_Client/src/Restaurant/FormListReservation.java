@@ -29,10 +29,13 @@ public class FormListReservation extends javax.swing.JFrame {
     DataOutputStream out;
     String message;
     String check;
+    int restoID;
+    
     
     public FormListReservation(int restoId) {
         initComponents();
         try {
+            restoID = restoId;
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
@@ -42,12 +45,12 @@ public class FormListReservation extends javax.swing.JFrame {
 
             String[] amountCustResv = message.split("/");
 
-            String[] colNames = {"Booking Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Price"};
+            String[] colNames = {"ID", "Booking Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Price"};
             DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
 
             for (int i = 0; i < amountCustResv.length; i++) {
                 String[] valueMenu = amountCustResv[i].split(",");
-                String[] show = {valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[4], valueMenu[6], valueMenu[7]};
+                String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[5], valueMenu[6],valueMenu[7]};
 
                 tblModel.addRow(show);
             }
@@ -214,7 +217,7 @@ public class FormListReservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormListReservation().setVisible(true);
+                new FormListReservation(0).setVisible(true);
             }
         });
     }
