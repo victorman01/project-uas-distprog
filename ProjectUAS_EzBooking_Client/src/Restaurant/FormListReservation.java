@@ -214,7 +214,7 @@ public class FormListReservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormListReservation().setVisible(true);
+                new FormListReservation(0).setVisible(true);
             }
         });
     }
