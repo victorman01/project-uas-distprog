@@ -34,7 +34,7 @@ public class FormReservation extends javax.swing.JFrame {
     String restoName;
     int restoId = 0;
     int customerId = 0;
-    
+
     public FormReservation(int customerID) {
         initComponents();
         try {
@@ -45,15 +45,16 @@ public class FormReservation extends javax.swing.JFrame {
             out.writeBytes("INIT_RESERVATION; \n");
             message = in.readLine();
             this.setLocationRelativeTo(null);
-            
+
             //Masukin Resto Ke combobox
             String[] valueResto = message.split(",");
 
             for (int i = 0; i < valueResto.length; i++) {
                 String[] value = valueResto[i].split("/");
                 cbRestaurant.addItem(new ComboItem(value[0], value[1]));
-            }     
-            
+            }
+            btnFoodOrder.setEnabled(false);
+
         } catch (IOException ex) {
             Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -257,24 +258,25 @@ public class FormReservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFoodOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoodOrderActionPerformed
-            
+        FormPreOrder form = new FormPreOrder(restoId);
+        form.setVisible(true);
     }//GEN-LAST:event_btnFoodOrderActionPerformed
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         try {
-            if(Integer.parseInt(numTable.getValue().toString()) > 0 && dateBooking.getDate() != null){
+            if (Integer.parseInt(numTable.getValue().toString()) > 0 && dateBooking.getDate() != null) {
                 Format dateFormatter = new SimpleDateFormat("d MMM YYYY");
                 Format dateFormatServer = new SimpleDateFormat("dd/MM/yyyy");
                 Date bookingDate = dateBooking.getDate();
                 String stringDate = dateFormatter.format(bookingDate);
                 String stringDateServer = dateFormatServer.format(bookingDate);
-                
+
                 //Buat reservasi & kalkulasi total pricenya di server
                 out.writeBytes("CREATE_RESERVATION;" + restoId + "," + numTable.getValue().toString() + "," + numPeople.getValue().toString() + "\n");
                 message = in.readLine();
 
                 String[] messages = message.split(";");
-                
+
                 //Detail reservasi ditampilin di confirm dialog
                 if (message.contains("CONFIRM_RESERVATION;")) {
                     int answer = JOptionPane.showConfirmDialog(this,
@@ -289,20 +291,21 @@ public class FormReservation extends javax.swing.JFrame {
                         //Cek ketersediaaan tables di resto
                         out.writeBytes("CHECK_RESTO_TABLES;" + restoId + "," + numTable.getValue().toString() + "\n");
                         message = in.readLine();
-                        
-                        if (message.contains("TABLE_OK")){
+
+                        if (message.contains("TABLE_OK")) {
                             //insert data kalo tablenya tersedia
                             out.writeBytes("INSERT_RESERVATION;" + stringDateServer + "," + numPeople.getValue().toString() + "," + numTable.getValue().toString() + "," + restoId + "," + customerId + ",pending," + messages[1] + "\n");
                             JOptionPane.showMessageDialog(this, "Reservation is successfully created!");
                         } else {
                             JOptionPane.showMessageDialog(this, "Sorry, the table(s) in this restaurant is running out");
                         }
+                        btnFoodOrder.setEnabled(true);
                     }
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Input the date and number of person(s) first");
             }
-  
+
         } catch (IOException ex) {
             Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -316,7 +319,7 @@ public class FormReservation extends javax.swing.JFrame {
             restoId = selectedRestoID;
             restoName = selectedItem.getLabel();
         }
-        
+
     }//GEN-LAST:event_cbRestaurantActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

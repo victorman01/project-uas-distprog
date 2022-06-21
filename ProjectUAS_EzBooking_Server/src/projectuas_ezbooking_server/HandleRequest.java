@@ -78,7 +78,7 @@ public class HandleRequest extends Thread {
 
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
-                
+
             case "LOGIN_RESTO":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -92,25 +92,24 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
-                
+
             case "TAKE_PROFIT":
-                int idProfit=0;
-                String profit="";
-                idProfit=rest.getId();
-                Restaurant restProfit= new Restaurant();
-                profit=restProfit.Profit(idProfit);
+                int idProfit = 0;
+                String profit = "";
+                idProfit = rest.getId();
+                Restaurant restProfit = new Restaurant();
+                profit = restProfit.Profit(idProfit);
                 System.out.println(profit);
                 this.SendMessage(profit);
                 break;
-                
-                
+
             case "REGISTER_CUSTOMER":
                 Customer cust = new Customer(values[0], values[1], values[2], values[3], values[4], values[5]);
                 cust.insertData();
 
                 this.SendMessage("BERHASIL_REGISTER");
                 break;
-                
+
             case "LOGIN_CUSTOMER":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -122,7 +121,7 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
-                
+
             case "LOGIN_ADMIN":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -134,7 +133,7 @@ public class HandleRequest extends Thread {
                 }
 
                 break;
-                
+
             case "ADD_MENU":
                 System.out.println(values[0]);
                 System.out.println(values[1]);
@@ -149,13 +148,13 @@ public class HandleRequest extends Thread {
                 this.SendMessage("BERHASIL_ADD_MENU");
 
                 break;
-                
+
             case "INIT_RESERVATION":
                 System.out.println(values[0]);
                 String listDataResto = restoran.viewListData();
                 this.SendMessage(listDataResto);
                 break;
-                
+
             case "CREATE_RESERVATION":
                 //ambil variabel
                 idResto = Integer.parseInt(values[0]);
@@ -169,21 +168,21 @@ public class HandleRequest extends Thread {
 
                 this.SendMessage("CONFIRM_RESERVATION;" + String.valueOf(totalPrice));
                 break;
-                
+
             case "INSERT_RESERVATION":         
                 try {
-                    // Convert date to sqlDate
-                    String sDate = values[0];
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
-                    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                // Convert date to sqlDate
+                String sDate = values[0];
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sDate);
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-                    Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
-                    insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
-                } catch (ParseException ex) {
-                    Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;    
-                
+                Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
+                insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
+            } catch (ParseException ex) {
+                Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
+
             case "CHECK_RESTO_TABLES":
                 idResto = Integer.parseInt(values[0]);
                 int numTables = Integer.parseInt(values[1]);
@@ -191,16 +190,16 @@ public class HandleRequest extends Thread {
                 int totalTables = restoran.getJumlahMeja();
 
                 int availableTables = totalTables - numTables;
-                
-                if (availableTables >= 0){
+
+                if (availableTables >= 0) {
                     //update jumlah meja
                     restoran.updateJumlahMeja(numTables, idResto);
                     this.SendMessage("TABLE_OK");
-                }else {
+                } else {
                     this.SendMessage("TABLE_NOT_OK");
                 }
                 break;
-            
+
             case "SHOW_LIST_COSTUMER_RESERVATION":
                 reservation = new Reservation();
                 customer = customer.TakeCustomerById(Integer.parseInt(values[0]));
@@ -208,7 +207,7 @@ public class HandleRequest extends Thread {
                 System.out.println(listReservation);
                 this.SendMessage(listReservation);
                 break;
-                
+
             case "SHOW_LIST_RESTAURANT_RESERVATION":
                 reservation = new Reservation();
                 String listResv = reservation.viewListDataByResto(rest);
@@ -216,6 +215,16 @@ public class HandleRequest extends Thread {
                 this.SendMessage(listResv);
                 break;
                 
+            case "SHOW_LIST_PREORDER":
+                menu = new Menu();
+                resto = new Restaurant();
+                int restoIdPreOrder = Integer.parseInt(values[1]);
+                resto = rest.DataRestoran(restoIdPreOrder);
+                String listPreorder = menu.viewListDataPreOrder(resto);
+                System.out.println(listPreorder);
+                this.SendMessage(listPreorder);
+                break;
+
             case "SHOW_LIST_MENU":
                 System.out.println(values[0]);
                 Menu menus = new Menu();
@@ -299,23 +308,24 @@ public class HandleRequest extends Thread {
                 Administrator addAdmin = new Administrator(values[0], values[1], values[2]);
                 this.SendMessage(addAdmin.insertData());
                 break;
-                
+
             case "DELETE_CUSTOMER":
                 Customer cst = new Customer();
                 cst.deleteData(values[2]);
                 this.SendMessage("DELETE_SUCCESS");
                 break;
-                
+
             case "SHOW_LIST_CUSTOMER":
                 Customer lstCst = new Customer();
                 String listCustomer = lstCst.viewListDataCust();
                 this.SendMessage(listCustomer);
                 System.out.println(listCustomer);
                 break;
-                
+
             case "UPDATE_PROFILE_RESTAURANT":
                 boolean preOrder = false;
-                if (values[4].equals("YES")) {
+                System.out.println(value);
+                if (values[4].equals("Yes")) {
                     preOrder = true;
                 }
 //                System.out.println(values[0] + values[1] + values[2] + Integer.parseInt(values[4]) + values[6] +

@@ -4,6 +4,16 @@
  */
 package Customer;
 
+import MainForm.FormRegisterRestaurant;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.ComboItem;
+
 /**
  *
  * @author Alvin Fernando
@@ -13,9 +23,37 @@ public class FormPreOrder extends javax.swing.JFrame {
     /**
      * Creates new form FormPreOrder
      */
-    public FormPreOrder() {
+    int restoCheck = 0;
+    Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    String check;
+    int menuId = 0;
+    String menuName;
+
+    public FormPreOrder(int restoId) {
         initComponents();
         this.setLocationRelativeTo(null);
+        try {
+            restoCheck = restoId;
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+
+            out.writeBytes("SHOW_LIST_PREORDER;" + restoCheck + "\n");
+            message = in.readLine();
+
+            String[] listPreorder = message.split("/");
+
+            for (int i = 0; i < listPreorder.length; i++) {
+                String[] value = listPreorder[i].split("/");
+                cbMenu.addItem(new ComboItem(value[0], value[1]));
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -50,6 +88,11 @@ public class FormPreOrder extends javax.swing.JFrame {
 
         cbMenu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         cbMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMenuActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Details :");
@@ -106,7 +149,6 @@ public class FormPreOrder extends javax.swing.JFrame {
         btnCancel.setForeground(java.awt.Color.white);
         btnCancel.setText("CANCEL");
         btnCancel.setToolTipText("");
-        btnCancel.setActionCommand("CANCEL");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -187,6 +229,16 @@ public class FormPreOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void cbMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMenuActionPerformed
+      // Ngambil value dari combobox
+        ComboItem selectedItem = (ComboItem) cbMenu.getSelectedItem();
+        if (selectedItem != null) {
+            int selectedMenuID = Integer.parseInt(selectedItem.getValue());
+            menuId = selectedMenuID;
+            menuName = selectedItem.getLabel();
+        }
+    }//GEN-LAST:event_cbMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -217,7 +269,7 @@ public class FormPreOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormPreOrder().setVisible(true);
+                new FormPreOrder(0).setVisible(true);
             }
         });
     }
@@ -225,7 +277,7 @@ public class FormPreOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JComboBox<String> cbMenu;
+    private javax.swing.JComboBox<Object> cbMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
