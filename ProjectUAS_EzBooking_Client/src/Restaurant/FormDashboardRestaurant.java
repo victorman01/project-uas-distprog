@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +34,9 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     DataOutputStream out;
     String usr;
     String[] value;
+    String userProfile, userPass;
+    DecimalFormat df;
+    DecimalFormatSymbols dfs;
 
     public FormDashboardRestaurant(String username, String password) {
         initComponents();
@@ -46,21 +51,32 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
             String[] listMenu = message.split("/");
             if (String.valueOf(listMenu.length).length() == 1) {
                 lblMenu.setText("00" + String.valueOf(listMenu.length));
-            } else if (String.valueOf(listMenu.length).length() == 2){
+            } else if (String.valueOf(listMenu.length).length() == 2) {
                 lblMenu.setText("0" + String.valueOf(listMenu.length));
             } else {
                 lblMenu.setText(String.valueOf(listMenu.length));
             }
 
+            df = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+            dfs = new DecimalFormatSymbols();
+            dfs.setCurrencySymbol("Rp. ");
+            dfs.setMonetaryDecimalSeparator(',');
+            dfs.setGroupingSeparator('.');
+            df.setDecimalFormatSymbols(dfs);
+            
+            
+
             out.writeBytes("TAKE_USR_RESTAURANT;" + username + "," + password + "\n");
             usr = in.readLine();
             value = usr.split(","); //isi value sesuai dengan urutan isi constructor yang ada idnya
             lblRestaurantName.setText(value[2].toUpperCase());
-            
+            userProfile = username;
+            userPass = password;
             out.writeBytes("TAKE_PROFIT;" + " " + "\n");
-            usr=in.readLine();
-            lblprofit.setText(usr);
-            
+            usr = in.readLine();
+            Double profit = Double.valueOf(usr);
+            lblprofit.setText(df.format(profit));
+
             this.setLocationRelativeTo(null);
         } catch (Exception e) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, e);
@@ -76,6 +92,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnListReservation = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -93,6 +110,8 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lblprofit = new javax.swing.JLabel();
         lblRestaurantName = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -247,10 +266,10 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(113, 113, 113))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +279,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         );
 
         lblprofit.setBackground(new java.awt.Color(255, 102, 0));
-        lblprofit.setFont(new java.awt.Font("Tahoma", 1, 70)); // NOI18N
+        lblprofit.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblprofit.setForeground(new java.awt.Color(255, 255, 255));
         lblprofit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblprofit.setText("001");
@@ -270,18 +289,18 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblprofit)
-                .addGap(72, 72, 72))
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblprofit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblprofit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lblRestaurantName.setBackground(new java.awt.Color(255, 102, 0));
@@ -355,7 +374,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
         this.dispose();
-        FormProfileRestaurant frm = new FormProfileRestaurant();
+        FormProfileRestaurant frm = new FormProfileRestaurant(userProfile, userPass);
 
         frm.txtID.setText(value[0]);
         frm.txtOwnerName.setText(value[1]);
@@ -412,6 +431,7 @@ public class FormDashboardRestaurant extends javax.swing.JFrame {
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnProfile;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
