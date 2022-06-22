@@ -221,7 +221,7 @@ public class Menu {
                         this.result.getString("detail"),
                         resto);
 
-                listMenu += String.valueOf(menu.getId()) + "," + menu.getNama()+ "/";
+                listMenu += String.valueOf(menu.getId()) + "," + menu.getNama()+ "," + String.valueOf(menu.getHarga()) + "," + menu.getDetail() + "/";
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

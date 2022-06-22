@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import model.ComboItem;
 
 /**
@@ -54,6 +55,9 @@ public class FormReservation extends javax.swing.JFrame {
                 cbRestaurant.addItem(new ComboItem(value[0], value[1]));
             }
             btnFoodOrder.setEnabled(false);
+
+            SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 999.0, 1.0);
+            numPeople.setModel(model1);
 
         } catch (IOException ex) {
             Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);

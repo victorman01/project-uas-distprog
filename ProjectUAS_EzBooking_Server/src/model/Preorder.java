@@ -75,23 +75,25 @@ public class Preorder {
         return conn;
     }
 
-    public void insertData() {
+    public String insertData(int reservasiId, int menuId, int amount) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("INSERT INTO preorders"
                         + "(reservasis_id, menus_id, amount) "
                         + "VALUES (?,?,?)");
 
-                sql.setInt(1, this.reservation.getId());
-                sql.setInt(2, this.menu.getId());
-                sql.setInt(3, this.amount);
+                sql.setInt(1, reservasiId);
+                sql.setInt(2, menuId);
+                sql.setInt(3, amount);
 
                 sql.executeUpdate();
                 sql.close();
+                return "INSERT PREORDER SUCCESS";
             }
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "INSERT PREORDER FAILED!";
     }
 
     public void updateData() {
@@ -126,29 +128,4 @@ public class Preorder {
             System.out.println("Error" + e.getMessage());
         }
     }
-
-//    public ArrayList<Object> viewListData(Restaurant resto) {
-//        ArrayList<Object> collections = new ArrayList<>();
-//        try {
-//            stat = (java.sql.Statement) conn.createStatement();
-//            this.result = stat.executeQuery("SELECT * FROM preorders INNER JOIN "
-//                    + "reservasis as rs ON reservasis_id = rs.id INNER JOIN " + "menus as mn ON menus_id = mn.id "
-//                    + "WHERE restaurants_id= " + resto.getId());
-//            while (this.result.next()) {
-//                int amount = this.result.getInt("amount");
-//                Customer costumer = new Customer(result.getInt("cs.id"),
-//                        result.getString("cs.username"), result.getString("cs.password"), result.getString("cs.name"), result.getString("cs.address"),
-//                        result.getString("cs.email"));
-//                String status = this.result.getString("status");
-//                float totalPrice = this.result.getFloat("total_price");
-//                Reservation reservasi = new Reservation(id, bookingDate, numOfPeople, numOfTable, resto, customer, status, totalPrice);
-//                collections.add(reservasi);
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return collections;
-//
-//    }
-
 }

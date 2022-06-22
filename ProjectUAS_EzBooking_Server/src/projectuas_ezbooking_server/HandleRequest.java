@@ -214,12 +214,11 @@ public class HandleRequest extends Thread {
                 System.out.println(listResv);
                 this.SendMessage(listResv);
                 break;
-                
+
             case "SHOW_LIST_PREORDER":
                 menu = new Menu();
                 resto = new Restaurant();
                 int restoIdPreOrder = Integer.parseInt(values[0]);
-                System.out.println("Ini idnya " + restoIdPreOrder);
                 resto = resto.DataRestoran(restoIdPreOrder);
                 String listPreorder = menu.viewListDataPreOrder(resto);
                 System.out.println(listPreorder);
@@ -335,6 +334,19 @@ public class HandleRequest extends Thread {
                         values[6], values[7], values[8], Float.parseFloat(values[9]));
                 this.SendMessage(restUpdate.updateProfile());
                 break;
+            case "ADD_PREORDER":
+                try {
+                reservation = new Reservation();
+                int reservationId = reservation.takeLatestId();
+
+                Preorder insPreorder = new Preorder();
+                String result = insPreorder.insertData(reservationId, Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+                System.out.println(result);
+                this.SendMessage(result);
+            } catch (Exception ex) {
+                Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            break;
         }
     }
 
