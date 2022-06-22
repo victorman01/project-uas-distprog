@@ -23,14 +23,22 @@ public class FormProfileRestaurant extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String message;
+    String userResto, passResto;
+
 
     public FormProfileRestaurant() {
+        initComponents();
+    }
+
+    public FormProfileRestaurant(String username, String password) {
         try {
             initComponents();
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             txtInitPass.setVisible(false);
+            userResto = username;
+            passResto = password;
         } catch (Exception e) {
             System.out.println("Error in InitialComponent FormProfileRestaurant. Message: " + e);
         }
@@ -312,7 +320,7 @@ public class FormProfileRestaurant extends javax.swing.JFrame {
                 if (message.equals("UPDATE_PROFILE_SUCCESS")) {
                     JOptionPane.showMessageDialog(this, "Update Profile Success.");
                     this.dispose();
-                    FormDashboardRestaurant frm = new FormDashboardRestaurant();
+                    FormDashboardRestaurant frm = new FormDashboardRestaurant(userResto,passResto);
                     frm.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Update Profile Failed.");
@@ -327,7 +335,7 @@ public class FormProfileRestaurant extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
-        FormDashboardRestaurant frm = new FormDashboardRestaurant();
+        FormDashboardRestaurant frm = new FormDashboardRestaurant(userResto,passResto);
         frm.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
