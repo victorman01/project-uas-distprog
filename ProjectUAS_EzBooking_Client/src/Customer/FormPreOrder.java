@@ -47,7 +47,7 @@ public class FormPreOrder extends javax.swing.JFrame {
             String[] listPreorder = message.split("/");
 
             for (int i = 0; i < listPreorder.length; i++) {
-                String[] value = listPreorder[i].split("/");
+                String[] value = listPreorder[i].split(",");
                 cbMenu.addItem(new ComboItem(value[0], value[1]));
             }
 
@@ -87,7 +87,6 @@ public class FormPreOrder extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
 
         cbMenu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        cbMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMenuActionPerformed(evt);

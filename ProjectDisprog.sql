@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2022 at 08:40 PM
+-- Generation Time: Jun 22, 2022 at 12:45 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -64,7 +64,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `username`, `password`, `name`, `address`, `email`) VALUES
-(1, 'alvin', 'alvin', 'alvin', 'sidodadi', 'alvin@gmail.com');
+(1, 'alvin', 'alvin', 'alvin', 'sidodadi', 'alvin@gmail.com'),
+(2, 'fernando', 'fernando', 'fernando', 'baru 12', 'fernando@gmai.com');
 
 -- --------------------------------------------------------
 
@@ -118,6 +119,25 @@ CREATE TABLE `reservasis` (
   `total_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `reservasis`
+--
+
+INSERT INTO `reservasis` (`id`, `booking_date`, `number_of_peoples`, `number_of_tables`, `restorants_id`, `customers_id`, `status`, `total_price`) VALUES
+(1, '2022-06-24', 16, 4, 1, 1, 'pending', 734400),
+(2, '2022-06-07', 20, 5, 1, 1, 'pending', 918000),
+(3, '2022-06-30', 20, 5, 1, 1, 'pending', 918000),
+(4, '2022-06-24', 8, 2, 1, 1, 'pending', 367200),
+(5, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(6, '2022-06-24', 2, 1, 1, 2, 'pending', 21000),
+(7, '2022-06-23', 2, 1, 1, 2, 'pending', 21000),
+(8, '2022-06-17', 2, 1, 1, 1, 'pending', 142800),
+(9, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(10, '2022-06-16', 2, 1, 1, 1, 'pending', 142800),
+(11, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(12, '2022-06-01', 2, 1, 1, 1, 'pending', 142800),
+(13, '2022-06-23', 2, 1, 1, 1, 'pending', 142800);
+
 -- --------------------------------------------------------
 
 --
@@ -142,8 +162,8 @@ CREATE TABLE `restaurants` (
 --
 
 INSERT INTO `restaurants` (`id`, `owner`, `name`, `number_of_tables`, `preorder`, `username`, `password`, `address`, `phone_number`, `price_reservation`) VALUES
-(1, 'Yanto', 'Yanto Resto', 6, 1, 'yanto', 'yanto', 'jln yanto', '122121', 10000),
-(2, 'Bagas', 'Bagas Resto', 6, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000);
+(1, 'Yantos', 'Yanto Restos', 10, 1, 'yanto', 'yanto', 'jln yanto', '122121123', 102000),
+(2, 'Bagas', 'Bagas Resto', 10, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000);
 
 --
 -- Indexes for dumped tables
@@ -216,7 +236,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `reservasis`
 --
 ALTER TABLE `reservasis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `restaurants`

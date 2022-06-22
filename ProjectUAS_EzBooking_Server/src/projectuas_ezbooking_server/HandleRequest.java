@@ -218,8 +218,9 @@ public class HandleRequest extends Thread {
             case "SHOW_LIST_PREORDER":
                 menu = new Menu();
                 resto = new Restaurant();
-                int restoIdPreOrder = Integer.parseInt(values[1]);
-                resto = rest.DataRestoran(restoIdPreOrder);
+                int restoIdPreOrder = Integer.parseInt(values[0]);
+                System.out.println("Ini idnya " + restoIdPreOrder);
+                resto = resto.DataRestoran(restoIdPreOrder);
                 String listPreorder = menu.viewListDataPreOrder(resto);
                 System.out.println(listPreorder);
                 this.SendMessage(listPreorder);

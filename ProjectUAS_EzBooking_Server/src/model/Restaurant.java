@@ -340,7 +340,7 @@ public class Restaurant {
         Restaurant resto = new Restaurant();
         try {
             stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select *from restaurants where id=" + id);
+            this.result = stat.executeQuery("select * from restaurants where id = " + id);
             while (this.result.next()) {
                 resto = new Restaurant(this.result.getInt("id"),
                         this.result.getString("owner"), this.result.getString("name"),
