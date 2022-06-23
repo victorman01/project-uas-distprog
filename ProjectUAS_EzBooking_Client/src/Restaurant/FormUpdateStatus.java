@@ -4,17 +4,21 @@
  */
 package Restaurant;
 
+import administrator.FormDeleteReservation;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author skyclyve
  */
-public class FormUpdateMenu extends javax.swing.JFrame {
+public class FormUpdateStatus extends javax.swing.JFrame {
 
     /**
      * Creates new form FormUpdateMenus
@@ -23,9 +27,10 @@ public class FormUpdateMenu extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String message;
-    
+    public String date;
+    public int restoIdCheck;
 
-    public FormUpdateMenu() {
+    public FormUpdateStatus() {
         try {
             initComponents();
             s = new Socket("localhost", 3233);
@@ -48,13 +53,8 @@ public class FormUpdateMenu extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAreaDetails = new javax.swing.JTextArea();
         txtID = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
-        txtPrice = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -62,6 +62,8 @@ public class FormUpdateMenu extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
+        txtID1 = new javax.swing.JTextField();
+        Idtxt = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -71,22 +73,9 @@ public class FormUpdateMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Price :");
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setText("Details :");
-
-        txtAreaDetails.setColumns(20);
-        txtAreaDetails.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtAreaDetails.setRows(5);
-        jScrollPane1.setViewportView(txtAreaDetails);
-
         txtID.setEditable(false);
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        txtPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnUpdate.setBackground(new java.awt.Color(255, 255, 255));
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -108,10 +97,10 @@ public class FormUpdateMenu extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("ID :");
+        jLabel2.setText("Customer Name :");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Name :");
+        jLabel3.setText("Status:");
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -146,30 +135,34 @@ public class FormUpdateMenu extends javax.swing.JFrame {
             }
         });
 
+        txtID1.setEditable(false);
+
+        Idtxt.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Idtxt.setText("ID:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel9)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(Idtxt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                    .addComponent(txtID)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(btnUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancel))
-                    .addComponent(jScrollPane1)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtName)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(txtID1))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -178,34 +171,29 @@ public class FormUpdateMenu extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Idtxt)
+                    .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnUpdate)
-                        .addComponent(btnDelete))
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
                     .addComponent(btnCancel))
-                .addContainerGap())
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,46 +205,40 @@ public class FormUpdateMenu extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
-        FormListMenu frm = new FormListMenu();
+        FormListReservation frm = new FormListReservation(restoIdCheck);
         frm.setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         try {
-            out.writeBytes("UPDATE_MENU;" + txtID.getText() + "," + txtName.getText() + ","
-                    + txtPrice.getText() + "," + txtAreaDetails.getText() + "\n");
-            message = in.readLine();
-
-            if (message.equals("UPDATE_SUCCESS")) {
-                JOptionPane.showMessageDialog(this, "Update Menu Success.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Update Menu Failed.");
+            out.writeBytes("UPDATE_STATUS;" + txtID1.getText() +"," + txtID.getText() +"," +txtName.getText() +"\n");
+            message=in.readLine();
+            
+            if(message.equals("UPDATE_STATUS_BERHASIL"))
+            {
+                JOptionPane.showMessageDialog(this, "Update Status Success.");
+                this.dispose();
+                FormListReservation frm=new FormListReservation(restoIdCheck);
+                frm.setVisible(true);
             }
-        } catch (Exception e) {
-            System.out.println("Error in Update Menu");
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Update Status Failed.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormUpdateStatus.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
-        FormListMenu frm = new FormListMenu();
-        frm.setVisible(true);
+        
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        try {
-            out.writeBytes("DELETE_MENU;" + txtID.getText() + "," + txtName.getText() + ","
-                    + txtPrice.getText() + "," + txtAreaDetails.getText() + "\n");
-            message = in.readLine();
-
-            if (message.equals("DELETE_SUCCESS")) {
-                JOptionPane.showMessageDialog(this, "Delete Menu Success.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Delete Menu Failed.");
-            }
-        } catch (Exception e) {
-            System.out.println("Error in Delete Menu");
-        }
-        this.dispose();
-        FormListMenu frm = new FormListMenu();
-        frm.setVisible(true);
+          
+          FormDeleteReservation frm= new FormDeleteReservation();
+          frm.txtIDdelete.setText(txtID1.getText());
+          frm.txtCustName.setText(txtID.getText());
+          frm.txtBookingDate.setText(date);
+          frm.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
@@ -276,42 +258,41 @@ public class FormUpdateMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormUpdateMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUpdateStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormUpdateMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUpdateStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormUpdateMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUpdateStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormUpdateMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormUpdateStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormUpdateMenu().setVisible(true);
+                new FormUpdateStatus().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Idtxt;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    public javax.swing.JTextArea txtAreaDetails;
     public javax.swing.JTextField txtID;
+    public javax.swing.JTextField txtID1;
     public javax.swing.JTextField txtName;
-    public javax.swing.JTextField txtPrice;
     // End of variables declaration//GEN-END:variables
 }

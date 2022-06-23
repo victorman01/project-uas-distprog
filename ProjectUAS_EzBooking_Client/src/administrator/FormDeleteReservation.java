@@ -5,6 +5,16 @@
 
 package administrator;
 
+import Restaurant.FormUpdateStatus;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Asus
@@ -12,9 +22,20 @@ package administrator;
 public class FormDeleteReservation extends javax.swing.JFrame {
 
     /** Creates new form FormDeleteReservation */
+     Socket s;
+    BufferedReader in;
+    DataOutputStream out;
+    String message;
+    public int restoIdCheck;
     public FormDeleteReservation() {
-        initComponents();
-        this.setLocationRelativeTo(null);
+        try {
+            initComponents();
+            s = new Socket("localhost", 3233);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new DataOutputStream(s.getOutputStream());
+            this.setLocationRelativeTo(null);
+        } catch (Exception e) {
+        }
     }
 
     /** This method is called from within the constructor to
@@ -27,14 +48,12 @@ public class FormDeleteReservation extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtOwnerName = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtRestName = new javax.swing.JTextField();
+        txtBookingDate = new javax.swing.JTextField();
         btnDelete = new javax.swing.JButton();
-        txtRestName1 = new javax.swing.JTextField();
+        txtCustName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtIDdelete = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -45,13 +64,7 @@ public class FormDeleteReservation extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
 
-        txtOwnerName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel6.setText("Restaurant Name :");
-        jLabel6.setToolTipText("");
-
-        txtRestName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBookingDate.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -62,7 +75,7 @@ public class FormDeleteReservation extends javax.swing.JFrame {
             }
         });
 
-        txtRestName1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtCustName.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Customer Name :");
@@ -72,8 +85,8 @@ public class FormDeleteReservation extends javax.swing.JFrame {
         jLabel12.setText("ID :");
         jLabel12.setToolTipText("");
 
-        txtID.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtID.setEnabled(false);
+        txtIDdelete.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtIDdelete.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Booking Date :");
@@ -132,27 +145,23 @@ public class FormDeleteReservation extends javax.swing.JFrame {
                         .addGap(109, 109, 109)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtRestName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtIDdelete, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtRestName1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCustName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancel)))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,19 +170,15 @@ public class FormDeleteReservation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIDdelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBookingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtRestName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(txtRestName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCustName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete)
@@ -196,36 +201,24 @@ public class FormDeleteReservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        //        String owner =txtOwnerName.getText();
-        //        String Restaurant=txtRestName.getText();
-        //        int Table=Integer.parseInt(txtAmountTable.getText());
-        //        boolean PreOrder=false;
-        //        String username=txtUsername.getText();
-        //        String Password=txtPassword.getText();
-        //        String RePassword=txtRePassword.getText();
-        //        String address=txtAddress.getText();
-        //        String PhoneNumber=txtPhoneNumber.getText();
-        //        if(rdnYes.isSelected())
-        //        {
-            //            PreOrder=true;
-            //        }
-        //        if(RePassword.equals(Password))
-        //        {
-            //            try {
-                //                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "\n");
-                //                message=in.readLine();
-                //                if(message.equals("BERHASIL_REGISTER"))
-                //                {
-                    //                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    //                }
-                //            } catch (IOException ex) {
-                //                Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
-                //            }
-            //        }
-        //        else
-        //        {
-            //            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
-            //        }
+        try {
+            out.writeBytes("DELETE_RESERVATION_RESTO;" + txtIDdelete.getText() +"," + txtBookingDate.getText() +"," +txtCustName.getText() +"\n");
+            message=in.readLine();
+            
+            if(message.equals("DELETE_RESERVATION"))
+            {
+                JOptionPane.showMessageDialog(this, "Delete success.");
+                this.dispose();
+                Restaurant.FormListReservation frm=new Restaurant.FormListReservation(restoIdCheck);
+                frm.setVisible(true);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Delete Failed.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormUpdateStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -274,15 +267,13 @@ public class FormDeleteReservation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtOwnerName;
-    private javax.swing.JTextField txtRestName;
-    private javax.swing.JTextField txtRestName1;
+    public javax.swing.JTextField txtBookingDate;
+    public javax.swing.JTextField txtCustName;
+    public javax.swing.JTextField txtIDdelete;
     // End of variables declaration//GEN-END:variables
 
 }
