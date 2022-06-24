@@ -257,14 +257,14 @@ public class HandleRequest extends Thread {
                 this.SendMessage(menuDelete.deleteData());
                 break;
             case "UPDATE_STATUS":
-                String statusBaru="DONE";
-                Reservation updateRsv=new Reservation();
-                updateRsv.updateDataStatus(Integer.valueOf(values[0]),statusBaru);
+                String statusBaru = "DONE";
+                Reservation updateRsv = new Reservation();
+                updateRsv.updateDataStatus(Integer.valueOf(values[0]), statusBaru);
                 this.SendMessage("UPDATE_STATUS_BERHASIL");
                 break;
-             case "DELETE_RESERVATION_RESTO":
-                
-                Reservation deleteRsv= new Reservation();
+            case "DELETE_RESERVATION_RESTO":
+
+                Reservation deleteRsv = new Reservation();
                 deleteRsv.deleteDataByID(Integer.valueOf(values[0]));
                 this.SendMessage("DELETE_RESERVATION");
                 break;
@@ -354,8 +354,17 @@ public class HandleRequest extends Thread {
 
                 Preorder insPreorder = new Preorder();
                 String result = insPreorder.insertData(reservationId, Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+                if(!result.equals("INSERT PREORDER SUCCESS")){
+                    result = insPreorder.updateDataMenu(reservationId, Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+                }
+                int totalPriceMenu = Integer.parseInt(values[2]);
+                String resultUpdatePrice = reservation.updateTotalPrice(reservationId, totalPriceMenu);
+                if (resultUpdatePrice.equals("UPDATE TOTAL PRICE SUCCESS")) {
+                    this.SendMessage(result);
+                } else {
+                    this.SendMessage("UPDATE TOTAL PRICE FAILED");
+                }
                 System.out.println(result);
-                this.SendMessage(result);
             } catch (Exception ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
