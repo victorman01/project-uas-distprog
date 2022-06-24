@@ -96,26 +96,6 @@ public class Preorder {
         return "INSERT PREORDER FAILED!";
     }
 
-    public String updateDataMenu(int reservasiId, int menuId, int amount) {
-        try {
-            if (!conn.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE preorders "
-                        + "SET amount = amount + ? WHERE  reservasis_id = ? AND menus_id = ?");
-
-                sql.setInt(1, amount);
-                sql.setInt(2, reservasiId);
-                sql.setInt(3, menuId);
-
-                sql.executeUpdate();
-                sql.close();
-                return "INSERT PREORDER SUCCESS";
-            }
-        } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
-        }
-        return "INSERT PREORDER FAILED!";
-    }
-
     public void updateData() {
         try {
             if (!conn.isClosed()) {

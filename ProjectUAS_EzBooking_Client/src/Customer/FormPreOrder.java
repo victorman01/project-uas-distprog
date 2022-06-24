@@ -36,7 +36,6 @@ public class FormPreOrder extends javax.swing.JFrame {
     int menuId = 0;
     String menuName;
     String[] listPreorder;
-    int price = 0;
 
     public FormPreOrder(int restoId) {
         initComponents();
@@ -57,6 +56,8 @@ public class FormPreOrder extends javax.swing.JFrame {
                 cbMenu.addItem(new ComboItem(value[0], value[1]));
             }
 
+            SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 100.0, 1.0);
+            numAmount.setModel(model1);
 
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,13 +80,13 @@ public class FormPreOrder extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDetail = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
+        numAmount = new javax.swing.JSpinner();
         btnAdd = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
-        numAmount = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,6 +116,9 @@ public class FormPreOrder extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Amount :");
         jLabel7.setToolTipText("");
+
+        numAmount.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        numAmount.setName(""); // NOI18N
 
         btnAdd.setBackground(new java.awt.Color(255, 255, 255));
         btnAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -174,14 +178,6 @@ public class FormPreOrder extends javax.swing.JFrame {
             }
         });
 
-        numAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        numAmount.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        numAmount.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                numAmountStateChanged(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -205,14 +201,15 @@ public class FormPreOrder extends javax.swing.JFrame {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel7))
                                 .addGap(10, 10, 10)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnAdd)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCancel))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(numAmount))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(numAmount)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                .addComponent(txtPrice)))))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,13 +259,12 @@ public class FormPreOrder extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            int amountMenu = Integer.parseInt(numAmount.getValue().toString());
-            out.writeBytes("ADD_PREORDER;" + menuId + "," + amountMenu  + ","+ txtPrice.getText() + "\n");
+            out.writeBytes("ADD_PREORDER;" + menuId + "," + numAmount.getValue() + "\n");
             String pesan = in.readLine();
             if (pesan.contains("INSERT PREORDER SUCCESS")) {
                 JOptionPane.showMessageDialog(this, "Order Success!");
             } else {
-                JOptionPane.showMessageDialog(this, "Order Failed!");
+                JOptionPane.showMessageDialog(this, "Order Failed! You've booked the same menu before.");
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -287,12 +283,7 @@ public class FormPreOrder extends javax.swing.JFrame {
             // Menampilkan harga dan detail
             String[] menu = listPreorder[index].split(",");
             txtDetail.setText(menu[3]);
-//            int num = Integer.parseInt(numAmount.getValue().toString());
-//            int total = Integer.parseInt(menu[2])*num;
-            price = Integer.parseInt(menu[2]);
-            int num = Integer.parseInt(numAmount.getValue().toString());
-            int total = price * num;
-            txtPrice.setText(String.valueOf(total));
+            txtPrice.setText(menu[2]);
         }
 
     }//GEN-LAST:event_cbMenuActionPerformed
@@ -300,13 +291,6 @@ public class FormPreOrder extends javax.swing.JFrame {
     private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPriceActionPerformed
-
-    private void numAmountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numAmountStateChanged
-        // TODO add your handling code here:
-        int num = Integer.parseInt(numAmount.getValue().toString());
-        int total = price * num;
-        txtPrice.setText(String.valueOf(total));
-    }//GEN-LAST:event_numAmountStateChanged
 
     /**
      * @param args the command line arguments

@@ -52,6 +52,12 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblRegister" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="96" pref="96" max="-2" attributes="0"/>
+                          <Component id="btnLogin" min="-2" pref="102" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="btnCancel" min="-2" pref="102" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                           <Component id="cbShowPassword" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -61,18 +67,13 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnLogin" min="-2" pref="102" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btnCancel" min="-2" pref="102" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="txtUsername" pref="250" max="32767" attributes="0"/>
                                   <Component id="txtPassword" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -183,7 +184,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="115" max="32767" attributes="0"/>
+                      <EmptySpace pref="112" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
