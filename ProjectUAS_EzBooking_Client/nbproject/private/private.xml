@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/MainForm/FormRegisterCustomer.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/MainForm/FormRegisterRestaurant.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Customer/FormPreOrder.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/MainForm/FormLogin.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Restaurant/FormUpdateMenu.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Customer/FormListReservation.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Restaurant/FormDashboardRestaurant.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Restaurant/FormListReservation.java</file>
-            <file>file:/E:/Kuliah/Semester%204/Distributed%20Programming%20(DisProg)/project-uas-distprog/ProjectUAS_EzBooking_Client/src/Customer/FormReservation.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
