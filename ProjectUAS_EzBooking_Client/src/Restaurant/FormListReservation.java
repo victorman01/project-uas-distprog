@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -25,15 +26,13 @@ public class FormListReservation extends javax.swing.JFrame {
     /**
      * Creates new form FormListReservation
      */
-    
     Socket s;
     BufferedReader in;
     DataOutputStream out;
     String message;
     String check;
     int restoID;
-    
-    
+
     public FormListReservation(int restoId) {
         initComponents();
         try {
@@ -41,27 +40,30 @@ public class FormListReservation extends javax.swing.JFrame {
             s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
-            
+
             out.writeBytes("SHOW_LIST_RESTAURANT_RESERVATION; \n");
             message = in.readLine();
 
-            String[] amountCustResv = message.split("/");
+            if (!(message.isEmpty())) {
+                String[] amountCustResv = message.split("/");
 
-            String[] colNames = {"ID", "Booking Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Price"};
-            DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
+                String[] colNames = {"ID", "Booking Date", "Number of People", "Number of Table(s)", "Customer", "Status", "Total Price"};
+                DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
 
-            for (int i = 0; i < amountCustResv.length; i++) {
-                String[] valueMenu = amountCustResv[i].split(",");
-                String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[5], valueMenu[6],valueMenu[7]};
+                for (int i = 0; i < amountCustResv.length; i++) {
+                    String[] valueMenu = amountCustResv[i].split(",");
+                    String[] show = {valueMenu[0], valueMenu[1], valueMenu[2], valueMenu[3], valueMenu[5], valueMenu[6], valueMenu[7]};
 
-                tblModel.addRow(show);
+                    tblModel.addRow(show);
+                }
+
+                tableReservation.setModel(tblModel);
+                this.setLocationRelativeTo(null);
+                this.setLocationRelativeTo(null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Reservasi Is empty");
             }
-            
-            tableReservation.setModel(tblModel);
-            this.setLocationRelativeTo(null);
-            this.setLocationRelativeTo(null);
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -195,20 +197,19 @@ public class FormListReservation extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void tableReservationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservationMouseClicked
-        FormUpdateStatus frmStatus= new FormUpdateStatus();
-        frmStatus.restoIdCheck=restoID;
-        FormDeleteReservation frmDelete= new FormDeleteReservation();
-        frmDelete.restoIdCheck=restoID;
-        
-        
-        int index=tableReservation.getSelectedRow();
-        TableModel tbl= tableReservation.getModel();
-        
-        frmStatus.txtID1.setText(tbl.getValueAt(index,0).toString());
+        FormUpdateStatus frmStatus = new FormUpdateStatus();
+        frmStatus.restoIdCheck = restoID;
+        FormDeleteReservation frmDelete = new FormDeleteReservation();
+        frmDelete.restoIdCheck = restoID;
+
+        int index = tableReservation.getSelectedRow();
+        TableModel tbl = tableReservation.getModel();
+
+        frmStatus.txtID1.setText(tbl.getValueAt(index, 0).toString());
         frmStatus.txtID.setText(tbl.getValueAt(index, 4).toString());
         frmStatus.txtName.setText(tbl.getValueAt(index, 5).toString());
-        frmStatus.date=tbl.getValueAt(index, 1).toString();
-        
+        frmStatus.date = tbl.getValueAt(index, 1).toString();
+
         frmDelete.txtIDdelete.setText(tbl.getValueAt(index, 0).toString());
         frmDelete.txtCustName.setText(tbl.getValueAt(index, 4).toString());
         frmDelete.txtBookingDate.setText(tbl.getValueAt(index, 1).toString());
