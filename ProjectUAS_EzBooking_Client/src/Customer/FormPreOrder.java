@@ -57,7 +57,6 @@ public class FormPreOrder extends javax.swing.JFrame {
                 cbMenu.addItem(new ComboItem(value[0], value[1]));
             }
 
-
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -263,13 +262,18 @@ public class FormPreOrder extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
             int amountMenu = Integer.parseInt(numAmount.getValue().toString());
-            out.writeBytes("ADD_PREORDER;" + menuId + "," + amountMenu  + ","+ txtPrice.getText() + "\n");
-            String pesan = in.readLine();
-            if (pesan.contains("INSERT PREORDER SUCCESS")) {
-                JOptionPane.showMessageDialog(this, "Order Success!");
+            if (amountMenu != 0) {
+                out.writeBytes("ADD_PREORDER;" + menuId + "," + amountMenu + "," + txtPrice.getText() + "\n");
+                String pesan = in.readLine();
+                if (pesan.contains("INSERT PREORDER SUCCESS")) {
+                    JOptionPane.showMessageDialog(this, "Order Success!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Order Failed!");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Order Failed!");
+                JOptionPane.showMessageDialog(this, "Amount be more than 0");
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Alvin Fernando
  */
 public class FormListReservation extends javax.swing.JFrame {
-    
+
     Socket s;
     BufferedReader in;
     DataOutputStream out;
@@ -37,10 +38,10 @@ public class FormListReservation extends javax.swing.JFrame {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             customerId = customerID;
-            out.writeBytes("SHOW_LIST_COSTUMER_RESERVATION;"+customerId+"\n");
+            out.writeBytes("SHOW_LIST_COSTUMER_RESERVATION;" + customerId + "\n");
             message = in.readLine();
-            
-            String[] amountCustResv = message.split("/");
+            if (!(message.isEmpty())) {
+                String[] amountCustResv = message.split("/");
 
             String[] colNames = {"Booking Date", "Number of People", "Number of Table(s)", "Retaurant's Name","Status" ,"Total Price"};
             DefaultTableModel tblModel = new DefaultTableModel(colNames, 0);
@@ -53,6 +54,12 @@ public class FormListReservation extends javax.swing.JFrame {
             }
             tableReservation.setModel(tblModel);
             this.setLocationRelativeTo(null);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Reservasi Is empty");
+            }
+
         } catch (IOException ex) {
             Logger.getLogger(FormListReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
