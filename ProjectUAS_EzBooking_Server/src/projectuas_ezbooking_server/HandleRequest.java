@@ -178,7 +178,7 @@ public class HandleRequest extends Thread {
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
                 Reservation insReservation = new Reservation(sqlDate, Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[5], Float.parseFloat(values[6]));
-                insReservation.insertData(Integer.parseInt(values[4]), Integer.parseInt(values[3]));
+                insReservation.insertData(Integer.parseInt(values[3]), Integer.parseInt(values[4]));
             } catch (ParseException ex) {
                 Logger.getLogger(HandleRequest.class.getName()).log(Level.SEVERE, null, ex);
             }
