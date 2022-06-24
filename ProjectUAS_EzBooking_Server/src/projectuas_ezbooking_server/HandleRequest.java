@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Administrator;
+import model.Chat;
 import model.Customer;
 import model.Menu;
 import model.Preorder;
@@ -38,6 +39,7 @@ public class HandleRequest extends Thread {
     Customer customer;
     Administrator administrator;
     Reservation reservation;
+    Chat chat;
 
     public HandleRequest(MainServer parent, Socket s) {
         this.parent = parent;
@@ -45,6 +47,7 @@ public class HandleRequest extends Thread {
         this.restoran = new Restaurant();
         this.customer = new Customer();
         this.administrator = new Administrator();
+        this.chat = new Chat();
 
         try {
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -148,6 +151,33 @@ public class HandleRequest extends Thread {
                 this.SendMessage("BERHASIL_ADD_MENU");
 
                 break;
+
+            case "INIT_CHAT":
+                int idRestoran = 0;
+                int idCustomer = 0;
+                String help = "";
+                if (values[0] == "Restaurant") {
+                    help = restoran.getNamaResto();
+                    idCustomer = customer.getIdCus(values[1]);
+                } else {
+                    help = customer.getNamaCus();
+                    idRestoran = restoran.getIdRes(values[1]);
+                }
+                String listmsg = chat.readChat(idRestoran, idCustomer, values[0], values[1]);
+                this.SendMessage(help + "//" +listmsg);
+                break;
+
+//            case "INSERT_CHAT":
+//
+//                int idRestoran = 0;
+//                int idCustomer = 0;
+//                idRestoran = restoran.getIdRes(values[2]);
+//                idCustomer = customer.getIdCus(values[3]);
+//
+//                //int cusID, int resID, String sender, String reviever;
+//                String listmsg = chat.readChat(idRestoran, idCustomer, values[0], values[1]);
+//                this.SendMessage(listmsg);
+//                break;
 
             case "INIT_RESERVATION":
                 System.out.println(value);
@@ -257,14 +287,14 @@ public class HandleRequest extends Thread {
                 this.SendMessage(menuDelete.deleteData());
                 break;
             case "UPDATE_STATUS":
-                String statusBaru="DONE";
-                Reservation updateRsv=new Reservation();
-                updateRsv.updateDataStatus(Integer.valueOf(values[0]),statusBaru);
+                String statusBaru = "DONE";
+                Reservation updateRsv = new Reservation();
+                updateRsv.updateDataStatus(Integer.valueOf(values[0]), statusBaru);
                 this.SendMessage("UPDATE_STATUS_BERHASIL");
                 break;
-             case "DELETE_RESERVATION_RESTO":
-                
-                Reservation deleteRsv= new Reservation();
+            case "DELETE_RESERVATION_RESTO":
+
+                Reservation deleteRsv = new Reservation();
                 deleteRsv.deleteDataByID(Integer.valueOf(values[0]));
                 this.SendMessage("DELETE_RESERVATION");
                 break;
@@ -277,7 +307,7 @@ public class HandleRequest extends Thread {
             case "TAKE_USR_CUSTOMER":
                 Customer usrCus = new Customer();
                 usrCus = usrCus.TakeCustomer(values[0], values[1]);
-                this.SendMessage(usrCus.getId() + "," + usrCus.getUsername() + "," + usrCus.getNama() + "," + usrCus.getAlamat() + "," + usrCus.getEmail());
+                this.SendMessage(usrCus.getId() + "," + usrCus.getUsername() + "," + usrCus.getNama() + "," + usrCus.getAlamat() + "," + usrCus.getEmail() + "," + usrCus.getPassword());
                 break;
 
             case "TAKE_USR_RESTAURANT":
