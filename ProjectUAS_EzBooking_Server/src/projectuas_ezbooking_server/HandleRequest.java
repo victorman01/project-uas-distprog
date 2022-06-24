@@ -324,8 +324,8 @@ public class HandleRequest extends Thread {
 
             case "DELETE_CUSTOMER":
                 Customer cst = new Customer();
-                cst.deleteData(values[2]);
-                this.SendMessage("DELETE_SUCCESS");
+                String pesan = cst.deleteData(values[2]);
+                this.SendMessage(pesan);
                 break;
 
             case "SHOW_LIST_CUSTOMER":

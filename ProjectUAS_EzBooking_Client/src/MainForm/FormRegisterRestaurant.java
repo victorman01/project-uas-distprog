@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 public class FormRegisterRestaurant extends javax.swing.JFrame {
 
     /**
@@ -25,17 +26,18 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String message;
+
     public FormRegisterRestaurant() {
         initComponents();
         try {
-            s = new Socket("localhost",3233);
+            s = new Socket("localhost", 3233);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new DataOutputStream(s.getOutputStream());
             this.setLocationRelativeTo(null);
         } catch (IOException ex) {
             Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
     }
 
     /**
@@ -85,6 +87,11 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         txtRePassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         txtPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtPhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPhoneNumberKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Owner Name :");
@@ -116,6 +123,11 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         txtUsername.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         txtAmountTable.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtAmountTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAmountTableKeyTyped(evt);
+            }
+        });
 
         rdnYes.setBackground(new java.awt.Color(255, 202, 3));
         rdnYes.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -307,39 +319,42 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        String owner =txtOwnerName.getText();
-        String Restaurant=txtRestName.getText();
-        int Table=Integer.parseInt(txtAmountTable.getText());
-        boolean PreOrder=false;
-        String username=txtUsername.getText();
-        String Password=txtPassword.getText();
-        String RePassword=txtRePassword.getText();
-        String address=txtAddress.getText();
-        String PhoneNumber=txtPhoneNumber.getText();
-        float reservationPrice= (float) spinnerHargaReservasi.getValue();
-        if(rdnYes.isSelected())
-        {
-            PreOrder=true;
+        if (txtOwnerName.getText().equals("") || txtRestName.getText().equals("") || txtAmountTable.getText().equals("")
+                || txtAmountTable.getText().matches("-?\\d+(\\.\\d+)?") || txtUsername.getText().equals("") || txtPassword.equals("")
+                || txtRePassword.getText().equals("") || txtAddress.getText().equals("") || txtPhoneNumber.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Make Sure That All Requiredments is Fulfilled", "WARNING", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        if(RePassword.equals(Password))
-        {
-            try {
-                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," +PhoneNumber+ "," + reservationPrice +"\n");
-                message=in.readLine();
-                if(message.equals("BERHASIL_REGISTER"))
-                {
-                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-//                    
 
+        String owner = txtOwnerName.getText();
+        String Restaurant = txtRestName.getText();
+        int Table = Integer.parseInt(txtAmountTable.getText());
+        boolean PreOrder = false;
+        String username = txtUsername.getText();
+        String Password = txtPassword.getText();
+        String RePassword = txtRePassword.getText();
+        String address = txtAddress.getText();
+        String PhoneNumber = txtPhoneNumber.getText();
+        float reservationPrice = (float) spinnerHargaReservasi.getValue();
+
+        if (rdnYes.isSelected()) {
+            PreOrder = true;
+        }
+        if (RePassword.equals(Password)) {
+            try {
+                out.writeBytes("REGISTER_RESTO;" + owner + "," + Restaurant + "," + Table + "," + PreOrder + "," + username + "," + Password + "," + address + "," + PhoneNumber + "," + reservationPrice + "\n");
+                message = in.readLine();
+                if (message.equals("BERHASIL_REGISTER")) {
+                    JOptionPane.showMessageDialog(this, "Register Success!", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    FormDashboard frm = new FormDashboard();
+                    frm.setVisible(true);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(FormRegisterRestaurant.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Re-password Should be Equal With Password!", "INFO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
@@ -348,9 +363,23 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void txtAmountTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountTableKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAmountTableKeyTyped
+
+    private void txtPhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPhoneNumberKeyTyped
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -209,7 +209,7 @@ public class FormDeleteCustomers extends javax.swing.JFrame {
                 FormListCustomers frm = new FormListCustomers();
                 frm.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Delete Customer Failed.");
+                JOptionPane.showMessageDialog(this, "Delete Customer Failed. Customer Has Any Reservation.");
             }
         } catch (Exception e) {
             System.out.println("Error in Delete Menu");

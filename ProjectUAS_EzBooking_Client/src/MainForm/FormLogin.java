@@ -229,12 +229,12 @@ public class FormLogin extends javax.swing.JFrame {
                         System.out.println(message);
 
                         if (message.contains("BERHASIL_LOGIN_RESTAURANT")) {
-                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome, " + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
                             FormDashboardRestaurant frm = new FormDashboardRestaurant(username, password);
                             this.dispose();
                             frm.setVisible(true);
                         } else if (message.equals("GAGAL_LOGIN_RESTAURANT")) {
-                            JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is wrong", "INFO", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Login Failed, Your Username or Password is Wrong", "INFO", JOptionPane.ERROR_MESSAGE);
                             txtUsername.requestFocus();
                         }
                     } catch (IOException ex) {
@@ -242,7 +242,7 @@ public class FormLogin extends javax.swing.JFrame {
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Username or Password can not be empty", "INFO", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username or Password Can't be Empty", "INFO", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -256,7 +256,7 @@ public class FormLogin extends javax.swing.JFrame {
                         message = in.readLine();
 
                         if (message.equals("BERHASIL_LOGIN_CUSTOMER")) {
-                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome, " + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
                             FormDashboardCustomer form = new FormDashboardCustomer(username, password);
                             this.dispose();
                             form.setVisible(true);
@@ -288,7 +288,7 @@ public class FormLogin extends javax.swing.JFrame {
                         }
 
                         if (message.equals("BERHASIL_LOGIN_ADMIN")) {
-                            JOptionPane.showMessageDialog(this, "Login Success. Welcome," + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(this, "Login Success. Welcome, " + username, "INFO", JOptionPane.INFORMATION_MESSAGE);
                             FormDashboardAdministrator frm = new FormDashboardAdministrator(username, password);
                             this.dispose();
                             frm.setVisible(true);
@@ -314,12 +314,12 @@ public class FormLogin extends javax.swing.JFrame {
     private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
         if (check.equals("restaurant")) {
             FormRegisterRestaurant frm = new FormRegisterRestaurant();
+            this.dispose();
             frm.setVisible(true);
-            //this.dispose();
         } else if (check.equals("customer")) {
             FormRegisterCustomer frm = new FormRegisterCustomer();
+            this.dispose();
             frm.setVisible(true);
-            //this.dispose();
         }
     }//GEN-LAST:event_lblRegisterMouseClicked
 
@@ -331,8 +331,8 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void cbShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShowPasswordActionPerformed
         if (cbShowPassword.isSelected()) {
-            txtPassword.setEchoChar((char)0);
-        }else{
+            txtPassword.setEchoChar((char) 0);
+        } else {
             txtPassword.setEchoChar('*');
         }
     }//GEN-LAST:event_cbShowPasswordActionPerformed

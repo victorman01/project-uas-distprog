@@ -94,6 +94,11 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
         jLabel6.setToolTipText("");
 
         txtTelephone.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtTelephone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelephoneKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Email :");
@@ -177,9 +182,7 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(254, 254, 254))
+                        .addComponent(jLabel6)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(91, 91, 91)
                             .addComponent(txtTelephone, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -275,32 +278,38 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
+        if (txtName.getText().equals("") || txtTelephone.getText().equals("") || txtEmail.getText().equals("") || txtUsername.getText().equals("")
+                || txtPassword.getText().equals("") || txtRePassword.getText().equals("") || txtAddress.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Make Sure That All Requiredments is Fulfilled", "INFO", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         String name = txtName.getText();
         String telephone = txtTelephone.getText();
         String email = txtEmail.getText();
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         String rePassword = txtRePassword.getText();
-        String addresss=txtAddress.getText();
+        String addresss = txtAddress.getText();
         String alamat = "";
 
         if (rePassword.equals(password)) {
             try {
-                out.writeBytes("REGISTER_CUSTOMER;" + username + "," + password + "," + name + "," + telephone + "," + email + "," + addresss +"\n");
+                out.writeBytes("REGISTER_CUSTOMER;" + username + "," + password + "," + name + "," + telephone + "," + email + "," + addresss + "\n");
                 message = in.readLine();
                 if (message.equals("BERHASIL_REGISTER")) {
-                    JOptionPane.showMessageDialog(this, "Berhasil Register silahkan login", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Register Success!", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     this.setVisible(false);
-                    FormLogin frm= new FormLogin();
+                    FormDashboard frm = new FormDashboard();
                     frm.setVisible(true);
-                    
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(FormRegisterCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Kolom Password harus sama dengan re password", "INFO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Re-password Should be Equal With Password!", "INFO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -309,9 +318,16 @@ public class FormRegisterCustomer extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void txtTelephoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelephoneKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTelephoneKeyTyped
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

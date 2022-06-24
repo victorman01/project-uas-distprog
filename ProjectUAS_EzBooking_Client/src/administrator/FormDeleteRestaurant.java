@@ -207,7 +207,7 @@ public class FormDeleteRestaurant extends javax.swing.JFrame {
             if (message.equals("DELETE_SUCCESS")) {
                 JOptionPane.showMessageDialog(this, "Delete Restaurant Success.");
             } else {
-                JOptionPane.showMessageDialog(this, "Delete Restaurant Failed.");
+                JOptionPane.showMessageDialog(this, "Delete Restaurant Failed. Restaurant Has Any Reservation.");
             }
         } catch (Exception e) {
             System.out.println("Error in Delete Menu");

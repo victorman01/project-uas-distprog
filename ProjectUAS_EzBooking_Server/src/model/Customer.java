@@ -169,18 +169,20 @@ public class Customer {
         }
     }
 
-    public void deleteData(String username) {
+    public String deleteData(String username) {
         try {
             if (!connect.isClosed()) {
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE  FROM customers "
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE FROM customers "
                         + "WHERE username =?" );
                 sql.setString(1, username);
                 sql.executeUpdate();
                 sql.close();
+                return "DELETE_SUCCESS";
             }
         } catch (SQLException e) {
             System.out.println("Error" + e.getMessage());
         }
+        return "DELETE_FAILED";
     }
     
     public boolean CheckLogin(String username, String password) {
