@@ -192,6 +192,34 @@ public class Reservation {
             System.out.println("Error" + e.getMessage());
         }
     }
+    public void updateDataStatus(int idBaru,String statusbaru) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE reservasis "
+                        + "SET  status = ?" + "Where id=?");
+                
+                sql.setString(1, statusbaru);
+                sql.setInt(2,idBaru);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
+     public void deleteDataByID(int id1) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM reservasis "
+                        + "WHERE id = ?");
+                sql.setInt(1, id1);
+                sql.executeUpdate();
+                sql.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
 
     public void deleteData() {
         try {

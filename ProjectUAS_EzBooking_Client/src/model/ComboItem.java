@@ -11,10 +11,21 @@ package model;
 public class ComboItem{
     private String value;
     private String label;
+    private String preOrderChecker;
 
     public ComboItem(String value, String label) {
         this.value = value;
         this.label = label;
+    }
+    
+    public ComboItem(String value, String label, String PreOrderChecker) {
+        this.value = value;
+        this.label = label;
+        this.preOrderChecker = PreOrderChecker;
+    }
+
+    public String getPreOrderChecker() {
+        return preOrderChecker;
     }
 
     public String getValue() {

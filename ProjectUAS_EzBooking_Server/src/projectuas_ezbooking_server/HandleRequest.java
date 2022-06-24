@@ -150,8 +150,9 @@ public class HandleRequest extends Thread {
                 break;
 
             case "INIT_RESERVATION":
-                System.out.println(values[0]);
+                System.out.println(value);
                 String listDataResto = restoran.viewListData();
+                System.out.println(listDataResto);
                 this.SendMessage(listDataResto);
                 break;
 
@@ -254,6 +255,18 @@ public class HandleRequest extends Thread {
             case "DELETE_MENU":
                 Menu menuDelete = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuDelete.deleteData());
+                break;
+            case "UPDATE_STATUS":
+                String statusBaru="DONE";
+                Reservation updateRsv=new Reservation();
+                updateRsv.updateDataStatus(Integer.valueOf(values[0]),statusBaru);
+                this.SendMessage("UPDATE_STATUS_BERHASIL");
+                break;
+             case "DELETE_RESERVATION_RESTO":
+                
+                Reservation deleteRsv= new Reservation();
+                deleteRsv.deleteDataByID(Integer.valueOf(values[0]));
+                this.SendMessage("DELETE_RESERVATION");
                 break;
 
             case "DELETE_RESTO":

@@ -5,6 +5,7 @@
 package Restaurant;
 
 import MainForm.FormRegisterRestaurant;
+import administrator.FormDeleteReservation;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -107,6 +109,11 @@ public class FormListReservation extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableReservation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableReservationMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableReservation);
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
@@ -186,6 +193,28 @@ public class FormListReservation extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void tableReservationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservationMouseClicked
+        FormUpdateStatus frmStatus= new FormUpdateStatus();
+        frmStatus.restoIdCheck=restoID;
+        FormDeleteReservation frmDelete= new FormDeleteReservation();
+        frmDelete.restoIdCheck=restoID;
+        
+        
+        int index=tableReservation.getSelectedRow();
+        TableModel tbl= tableReservation.getModel();
+        
+        frmStatus.txtID1.setText(tbl.getValueAt(index,0).toString());
+        frmStatus.txtID.setText(tbl.getValueAt(index, 4).toString());
+        frmStatus.txtName.setText(tbl.getValueAt(index, 5).toString());
+        frmStatus.date=tbl.getValueAt(index, 1).toString();
+        
+        frmDelete.txtIDdelete.setText(tbl.getValueAt(index, 0).toString());
+        frmDelete.txtCustName.setText(tbl.getValueAt(index, 4).toString());
+        frmDelete.txtBookingDate.setText(tbl.getValueAt(index, 1).toString());
+        frmStatus.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tableReservationMouseClicked
 
     /**
      * @param args the command line arguments

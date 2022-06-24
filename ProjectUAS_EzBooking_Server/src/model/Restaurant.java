@@ -371,7 +371,7 @@ public class Restaurant {
                         this.result.getString("address"), this.result.getString("phone_number"),
                         this.result.getFloat("price_reservation"));
 
-                listData += resto.id + "/" + resto.nama + ",";
+                listData += resto.id + "/" + resto.nama + "/" + resto.preOrder + ",";
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -4,7 +4,6 @@
  */
 package Customer;
 
-import MainForm.FormRegisterRestaurant;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -35,6 +34,7 @@ public class FormReservation extends javax.swing.JFrame {
     String restoName;
     int restoId = 0;
     int customerId = 0;
+    String checkPreOrder = "";
 
     public FormReservation(int customerID) {
         initComponents();
@@ -52,12 +52,8 @@ public class FormReservation extends javax.swing.JFrame {
 
             for (int i = 0; i < valueResto.length; i++) {
                 String[] value = valueResto[i].split("/");
-                cbRestaurant.addItem(new ComboItem(value[0], value[1]));
+                cbRestaurant.addItem(new ComboItem(value[0], value[1], value[2]));
             }
-            btnFoodOrder.setEnabled(false);
-
-            SpinnerNumberModel model1 = new SpinnerNumberModel(1.0, 1.0, 999.0, 1.0);
-            numPeople.setModel(model1);
 
         } catch (IOException ex) {
             Logger.getLogger(FormReservation.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,33 +70,23 @@ public class FormReservation extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnFoodOrder = new javax.swing.JButton();
         btnBook = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         cbRestaurant = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        numPeople = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         dateBooking = new com.toedter.calendar.JDateChooser();
         numTable = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
+        numPeople = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 202, 3));
         jPanel1.setForeground(new java.awt.Color(255, 202, 3));
-
-        btnFoodOrder.setBackground(new java.awt.Color(255, 255, 255));
-        btnFoodOrder.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnFoodOrder.setText("FOODS ORDER");
-        btnFoodOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFoodOrderActionPerformed(evt);
-            }
-        });
 
         btnBook.setBackground(new java.awt.Color(255, 255, 255));
         btnBook.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -129,14 +115,6 @@ public class FormReservation extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Number of Peoples:");
         jLabel7.setToolTipText("");
-
-        numPeople.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        numPeople.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        numPeople.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                numPeopleStateChanged(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -180,6 +158,14 @@ public class FormReservation extends javax.swing.JFrame {
             }
         });
 
+        numPeople.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        numPeople.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        numPeople.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                numPeopleStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -208,14 +194,12 @@ public class FormReservation extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnFoodOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCancel))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(numPeople)))))
                 .addContainerGap())
         );
@@ -242,9 +226,8 @@ public class FormReservation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBook)
-                    .addComponent(btnFoodOrder)
                     .addComponent(btnCancel))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -260,11 +243,6 @@ public class FormReservation extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnFoodOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFoodOrderActionPerformed
-        FormPreOrder form = new FormPreOrder(restoId);
-        form.setVisible(true);
-    }//GEN-LAST:event_btnFoodOrderActionPerformed
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         try {
@@ -300,10 +278,21 @@ public class FormReservation extends javax.swing.JFrame {
                             //insert data kalo tablenya tersedia
                             out.writeBytes("INSERT_RESERVATION;" + stringDateServer + "," + numPeople.getValue().toString() + "," + numTable.getValue().toString() + "," + restoId + "," + customerId + ",pending," + messages[1] + "\n");
                             JOptionPane.showMessageDialog(this, "Reservation is successfully created!");
+                            if (checkPreOrder.contains("true")) {
+                                JOptionPane.showConfirmDialog(this, restoName + " offer a Pre-Order, do you want to pre-order a menu ?", "Pre-Order", JOptionPane.YES_NO_OPTION);
+                                if (answer == JOptionPane.YES_OPTION){
+                                    FormPreOrder form = new FormPreOrder(restoId);
+                                    form.setVisible(true);
+                                }else if(answer == JOptionPane.NO_OPTION){
+                                    this.setVisible(false);
+                                    this.dispose();
+                                }
+                            }
+                            this.setVisible(false);
+                            this.dispose();
                         } else {
                             JOptionPane.showMessageDialog(this, "Sorry, the table(s) in this restaurant is running out");
                         }
-                        btnFoodOrder.setEnabled(true);
                     }
                 }
             } else {
@@ -322,6 +311,7 @@ public class FormReservation extends javax.swing.JFrame {
             int selectedRestoID = Integer.parseInt(selectedItem.getValue());
             restoId = selectedRestoID;
             restoName = selectedItem.getLabel();
+            checkPreOrder = selectedItem.getPreOrderChecker();
         }
 
     }//GEN-LAST:event_cbRestaurantActionPerformed
@@ -332,10 +322,8 @@ public class FormReservation extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void numPeopleStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_numPeopleStateChanged
-        // TODO add your handling code here:
-        int numOfPeople = Integer.parseInt(numPeople.getValue().toString());
-        int numOfTables = (int) Math.ceil(numOfPeople / 4.0);
-        numTable.setValue(numOfTables);
+        int numTables = (int) Math.ceil(Integer.parseInt(numPeople.getValue().toString()) / 4.0);
+        numTable.setValue(numTables);
     }//GEN-LAST:event_numPeopleStateChanged
 
     /**
@@ -376,7 +364,6 @@ public class FormReservation extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBook;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnFoodOrder;
     private javax.swing.JComboBox<Object> cbRestaurant;
     private com.toedter.calendar.JDateChooser dateBooking;
     private javax.swing.JLabel jLabel1;
