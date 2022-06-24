@@ -145,7 +145,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         lblDate.setText("EEEE, dd:MM:yyyy");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Alvin Fernando\\Downloads\\Logo EZ Reservation.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("E:\\Kuliah\\Semester 4\\Distributed Programming (DisProg)\\project-uas-distprog\\Logo EZ Reservation.png")); // NOI18N
         jLabel3.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

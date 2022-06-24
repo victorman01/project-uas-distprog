@@ -132,12 +132,22 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
         rdnYes.setBackground(new java.awt.Color(255, 202, 3));
         rdnYes.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         rdnYes.setText("Yes");
+        rdnYes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdnYesActionPerformed(evt);
+            }
+        });
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         rdnNo.setBackground(new java.awt.Color(255, 202, 3));
         rdnNo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         rdnNo.setText("No");
+        rdnNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdnNoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Re-Password :");
@@ -319,8 +329,7 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        if (txtOwnerName.getText().equals("") || txtRestName.getText().equals("") || txtAmountTable.getText().equals("")
-                || txtAmountTable.getText().matches("-?\\d+(\\.\\d+)?") || txtUsername.getText().equals("") || txtPassword.equals("")
+        if (txtOwnerName.getText().equals("") || txtRestName.getText().equals("") || txtAmountTable.getText().equals("") || txtUsername.getText().equals("") || txtPassword.equals("")
                 || txtRePassword.getText().equals("") || txtAddress.getText().equals("") || txtPhoneNumber.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Make Sure That All Requiredments is Fulfilled", "WARNING", JOptionPane.WARNING_MESSAGE);
             return;
@@ -376,6 +385,14 @@ public class FormRegisterRestaurant extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPhoneNumberKeyTyped
+
+    private void rdnYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdnYesActionPerformed
+        rdnNo.setSelected(false);
+    }//GEN-LAST:event_rdnYesActionPerformed
+
+    private void rdnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdnNoActionPerformed
+        rdnYes.setSelected(false);
+    }//GEN-LAST:event_rdnNoActionPerformed
 
     /**
          * @param args the command line arguments
