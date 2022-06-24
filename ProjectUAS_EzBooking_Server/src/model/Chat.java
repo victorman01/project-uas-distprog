@@ -152,6 +152,7 @@ public class Chat {
             System.out.println("Error" + e.getMessage());
         }
     }
+    
 //    public void updateData() {
 //        try {
 //            if (!conn.isClosed()) {
