@@ -38,7 +38,6 @@ public class HandleRequest extends Thread {
     Customer customer;
     Administrator administrator;
     Reservation reservation;
-    String statusBaru="DONE";
 
     public HandleRequest(MainServer parent, Socket s) {
         this.parent = parent;
@@ -251,19 +250,6 @@ public class HandleRequest extends Thread {
                 Menu menuUpdate = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);
                 this.SendMessage(menuUpdate.updateData());
                 break;
-            case "UPDATE_STATUS":
-                
-                Reservation updateRsv=new Reservation();
-                updateRsv.updateDataStatus(Integer.valueOf(values[0]),statusBaru);
-                this.SendMessage("UPDATE_STATUS_BERHASIL");
-                break;
-            case "DELETE_RESERVATION_RESTO":
-                
-                Reservation deleteRsv= new Reservation();
-                deleteRsv.deleteData(Integer.valueOf(values[0]));
-                this.SendMessage("DELETE_RESERVATION");
-                break;
-            
 
             case "DELETE_MENU":
                 Menu menuDelete = new Menu(Integer.valueOf(values[0]), values[1], Integer.valueOf(values[2]), values[3], rest);

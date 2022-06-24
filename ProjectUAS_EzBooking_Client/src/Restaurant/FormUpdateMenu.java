@@ -23,7 +23,6 @@ public class FormUpdateMenu extends javax.swing.JFrame {
     BufferedReader in;
     DataOutputStream out;
     String message;
-    
 
     public FormUpdateMenu() {
         try {
