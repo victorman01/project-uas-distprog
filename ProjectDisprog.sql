@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 24, 2022 at 10:49 AM
+-- Generation Time: Jun 24, 2022 at 06:54 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.29
 
@@ -43,7 +43,7 @@ CREATE TABLE `administrators` (
 CREATE TABLE `chats` (
   `id` int(11) NOT NULL,
   `chat` varchar(500) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `sender` varchar(10) NOT NULL,
   `reciever` varchar(10) NOT NULL,
   `status` tinyint(4) NOT NULL,
@@ -124,8 +124,7 @@ CREATE TABLE `restaurants` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
-  `phone_number` varchar(45) NOT NULL,
-  `price_reservation` float NOT NULL
+  `phone_number` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

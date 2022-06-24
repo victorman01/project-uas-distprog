@@ -319,21 +319,42 @@ public class Restaurant {
         }
         return "DELETE_FAILED";
     }
-
-    public String Profit(int id) {
-        String jumlah = "";
+    public String Profit(int id)
+    {
+        String jumlah="";
         try {
             stat = (java.sql.Statement) conn.createStatement();
             this.result = stat.executeQuery("select SUM(total_price) as total from reservasis where restorants_id=" + id);
             while (this.result.next()) {
-
-                jumlah += this.result.getInt("total");
+                
+                jumlah+=this.result.getInt("total"); 
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return jumlah;
+        
+    }
 
+    public Restaurant DataRestoran(int id) {
+        Restaurant resto = new Restaurant();
+        try {
+            stat = (java.sql.Statement) conn.createStatement();
+            this.result = stat.executeQuery("select * from restaurants where id = " + id);
+            while (this.result.next()) {
+                resto = new Restaurant(this.result.getInt("id"),
+                        this.result.getString("owner"), this.result.getString("name"),
+                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
+                        this.result.getString("username"), this.result.getString("password"),
+                        this.result.getString("address"), this.result.getString("phone_number"),
+                        this.result.getFloat("price_reservation"));
+
+                return resto;
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return resto;
     }
 
     public String viewListData() {
@@ -358,26 +379,6 @@ public class Restaurant {
         return listData;
 
     }
-    public Restaurant DataRestoran(int id) {
-        Restaurant resto = new Restaurant();
-        try {
-            stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select * from restaurants where id = " + id);
-            while (this.result.next()) {
-                resto = new Restaurant(this.result.getInt("id"),
-                        this.result.getString("owner"), this.result.getString("name"),
-                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
-                        this.result.getString("username"), this.result.getString("password"),
-                        this.result.getString("address"), this.result.getString("phone_number"),
-                        this.result.getFloat("price_reservation"));
-
-                return resto;
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return resto;
-    }
 
     public String viewListDataAdmin() {
         String listData = "";
@@ -400,75 +401,6 @@ public class Restaurant {
             System.out.println(ex.getMessage());
         }
         return listData;
-    }
-
-    public String getNamaResto() {
-        String listData = "";
-        try {
-            stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select * from restaurants where username");
-            while (this.result.next()) {
-
-                Restaurant resto = new Restaurant(this.result.getInt("id"),
-                        this.result.getString("owner"), this.result.getString("name"),
-                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
-                        this.result.getString("username"), this.result.getString("password"),
-                        this.result.getString("address"), this.result.getString("phone_number"),
-                        this.result.getFloat("price_reservation"));
-
-                listData += resto.id + "," + resto.pemilik + "," + resto.nama + "," + resto.jumlahMeja + "," + resto.preOrder
-                        + "," + resto.alamat + "," + resto.no_telepon + "," + resto.username + "," + resto.harga_reservasi + "/";
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return listData;
-    }
-
-//    public String getNamaResto(String user) {
-//        String listData = "";
-//        try {
-//            stat = (java.sql.Statement) conn.createStatement();
-//            this.result = stat.executeQuery("select * from restaurants where username = '" + user + "'");
-//            while (this.result.next()) {
-//
-//                Restaurant resto = new Restaurant(this.result.getInt("id"),
-//                        this.result.getString("owner"), this.result.getString("name"),
-//                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
-//                        this.result.getString("username"), this.result.getString("password"),
-//                        this.result.getString("address"), this.result.getString("phone_number"),
-//                        this.result.getFloat("price_reservation"));
-//
-//                listData += resto.id + "," + resto.pemilik + "," + resto.nama + "," + resto.jumlahMeja + "," + resto.preOrder
-//                        + "," + resto.alamat + "," + resto.no_telepon + "," + resto.username + "," + resto.harga_reservasi + "/";
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return listData;
-//    }
-
-    public int getIdRes(String user) {
-        int hasil = 0;
-        try {
-            stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select * from restaurants nama = '" + user + "'");
-            while (this.result.next()) {
-
-                Restaurant resto = new Restaurant(this.result.getInt("id"),
-                        this.result.getString("owner"), this.result.getString("name"),
-                        this.result.getInt("number_of_tables"), this.result.getBoolean("preorder"),
-                        this.result.getString("username"), this.result.getString("password"),
-                        this.result.getString("address"), this.result.getString("phone_number"),
-                        this.result.getFloat("price_reservation"));
-
-                hasil += resto.id;
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return hasil;
-
     }
 
     public Restaurant TakeUsr(String username, String password) {

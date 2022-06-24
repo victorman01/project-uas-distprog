@@ -13,9 +13,6 @@ public class ComboItem{
     private String label;
     private String preOrderChecker;
 
-    public ComboItem(String value){
-        this.value = value;
-    }
     public ComboItem(String value, String label) {
         this.value = value;
         this.label = label;

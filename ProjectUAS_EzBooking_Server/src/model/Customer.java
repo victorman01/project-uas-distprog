@@ -104,7 +104,7 @@ public class Customer {
         this.nama = nama;
         this.alamat = alamat;
         this.email = email;
-        this.address = address;
+        this.address=address;
         getConnection();
     }
 
@@ -115,9 +115,10 @@ public class Customer {
         this.nama = nama;
         this.alamat = alamat;
         this.email = email;
-        this.address = address;
+        this.address=address;
         getConnection();
     }
+   
 
     public Connection getConnection() {
         try {
@@ -172,7 +173,7 @@ public class Customer {
         try {
             if (!connect.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement("DELETE  FROM customers "
-                        + "WHERE username =?");
+                        + "WHERE username =?" );
                 sql.setString(1, username);
                 sql.executeUpdate();
                 sql.close();
@@ -181,7 +182,7 @@ public class Customer {
             System.out.println("Error" + e.getMessage());
         }
     }
-
+    
     public boolean CheckLogin(String username, String password) {
         try {
             if (!conn.isClosed()) {
@@ -200,7 +201,7 @@ public class Customer {
         return false;
     }
 
-    public Customer TakeCustomer(String username, String password) {
+    public Customer TakeCustomer(String username,String password) {
         Customer usr = null;
         try {
             if (!conn.isClosed()) {
@@ -209,7 +210,7 @@ public class Customer {
                 sql.setString(2, password);
                 result = sql.executeQuery();
                 if (result.next()) {
-                    usr = new Customer(result.getInt("id"), result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"), result.getString("address"));
+                    usr = new Customer(result.getInt("id"),result.getString("username"), result.getString("password"), result.getString("name"), result.getString("address"), result.getString("email"), result.getString("address"));
                     return usr;
                 }
             }
@@ -219,7 +220,7 @@ public class Customer {
         }
         return usr;
     }
-
+    
     public Customer TakeCustomerById(int customerId) {
         Customer usr = null;
         try {
@@ -237,64 +238,28 @@ public class Customer {
         }
         return usr;
     }
-
-    public String viewListDataCust() {
-        String listCust = "";
+    
+    public String viewListDataCust()
+    {
+        String listCust="";
         try {
             stat = (java.sql.Statement) conn.createStatement();
             this.result = stat.executeQuery("select * from customers");
             while (this.result.next()) {
 
-                Customer customer = new Customer(this.result.getInt("id"), this.result.getString("username"), this.result.getString("password"), this.result.getString("name"),
-                        this.result.getString("address"), this.result.getString("email"), this.result.getString("address"));
+                Customer customer = new Customer(this.result.getInt("id"),this.result.getString("username"),this.result.getString("password"),this.result.getString("name"),
+                this.result.getString("address"),this.result.getString("email"), this.result.getString("address"));
 
-                listCust += String.valueOf(customer.getId()) + "," + customer.username + "," + customer.nama
-                        + "," + customer.getAlamat() + "," + customer.getEmail() + "/";
+                listCust += String.valueOf(customer.getId()) + "," + customer.username + "," + customer.nama 
+                        + "," + customer.getAlamat()+ "," + customer.getEmail() + "/";
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return listCust;
-
+        
     }
-
-    public String getNamaCus() {
-        String listCust = "";
-        try {
-            stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select * from customers where username");
-            while (this.result.next()) {
-
-                Customer customer = new Customer(this.result.getInt("id"), this.result.getString("username"), this.result.getString("password"), this.result.getString("name"),
-                        this.result.getString("address"), this.result.getString("email"), this.result.getString("address"));
-
-                listCust += customer.getNama();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return listCust;
-
-    }
-    public int getIdCus(String user) {
-        int hasil = 0;
-        try {
-            stat = (java.sql.Statement) conn.createStatement();
-            this.result = stat.executeQuery("select * from customers where username = '"+user+"'");
-            while (this.result.next()) {
-
-                Customer customer = new Customer(this.result.getInt("id"), this.result.getString("username"), this.result.getString("password"), this.result.getString("name"),
-                        this.result.getString("address"), this.result.getString("email"), this.result.getString("address"));
-
-                hasil += customer.getId();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        return hasil;
-
-    }
-
+    
     public String countData() {
         String count = "";
         try {

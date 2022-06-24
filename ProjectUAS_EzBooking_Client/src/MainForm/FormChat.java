@@ -4,14 +4,6 @@
  */
 package MainForm;
 
-import Customer.FormDashboardCustomer;
-import Restaurant.FormDashboardRestaurant;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import model.ComboItem;
-
 /**
  *
  * @author Jeremy
@@ -21,44 +13,7 @@ public class FormChat extends javax.swing.JFrame {
     /**
      * Creates new form FormChat
      */
-    Socket s;
-    BufferedReader in;
-    DataOutputStream out;
-
-    public FormChat(String user, String password, String senderChat, String recieverChat) {
-        initComponents();
-        try {
-            s = new Socket("localhost", 3233);
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new DataOutputStream(s.getOutputStream());
-            out.writeBytes("INIT_CHAT;" + recieverChat + "," + user + "\n");
-
-            this.setLocationRelativeTo(null);
-            if (senderChat == "Restaurant") {
-                this.user = user;
-                this.pass = password;
-                this.sender = senderChat;
-                this.reciever = recieverChat;
-            } else if (senderChat == "Customer") {
-                this.user = user;
-                this.pass = password;
-                this.sender = senderChat;
-                this.reciever = recieverChat;
-            }
-            message = in.readLine();
-            String[] values = message.split("//");
-
-            txtAreaChat.append(values[1]);
-            cbTo.addItem(new ComboItem(values[0]));
-
-        } catch (Exception e) {
-            System.out.println("ERROR, " + e.getMessage());
-        }
-    }
-
-    String user, pass, sender, reciever, message, userReciv, pesan;
-
-    private FormChat() {
+    public FormChat() {
         initComponents();
     }
 
@@ -81,8 +36,8 @@ public class FormChat extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         btnSend = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        lblStatus = new javax.swing.JLabel();
-        cbTo = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        cbRestaurant1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -132,19 +87,19 @@ public class FormChat extends javax.swing.JFrame {
         jLabel15.setText("STATUS :");
         jLabel15.setToolTipText("");
 
-        lblStatus.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lblStatus.setText("Sent");
-        lblStatus.setToolTipText("");
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel16.setText("Sent");
+        jLabel16.setToolTipText("");
 
-        cbTo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        cbTo.addActionListener(new java.awt.event.ActionListener() {
+        cbRestaurant1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbRestaurant1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbToActionPerformed(evt);
+                cbRestaurant1ActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel5.setText("TO :");
+        jLabel5.setText("Restaurant:");
         jLabel5.setToolTipText("");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -158,20 +113,20 @@ public class FormChat extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblStatus)
+                        .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExit))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(txtChat, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbTo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(txtChat, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(19, 19, 19)
+                            .addComponent(cbRestaurant1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -179,7 +134,7 @@ public class FormChat extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbRestaurant1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -194,7 +149,7 @@ public class FormChat extends javax.swing.JFrame {
                         .addGap(2, 2, 2)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -205,12 +160,13 @@ public class FormChat extends javax.swing.JFrame {
             .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblCust)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(147, 147, 147))
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(lblCust)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,40 +194,24 @@ public class FormChat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
         this.dispose();
-        FormDashboardRestaurant frm = null;
-        FormDashboardCustomer frm1 = null;
-        if (sender == "Restaurant") {
-            frm = new FormDashboardRestaurant(user, pass);
-            frm.setVisible(true);
-        } else if (sender == "Customer") {
-            frm1 = new FormDashboardCustomer(user, pass);
-            frm1.setVisible(true);
-        }
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        try {
-            message = txtChat.getText();
-            if (sender == "Restaurant" && reciever == "Customer") {
-                out.writeBytes("INSERT_CHAT;" + sender + "," + reciever + "," + user + "," + userReciv + "\n");
-            } else {
-                out.writeBytes("INSERT_CHAT;" + sender + "," + reciever + "," + user + "," + userReciv + "\n");
-            }
-            pesan = in.readLine();
-            txtAreaChat.append(pesan);
-        } catch (Exception e) {
-        }
 
     }//GEN-LAST:event_btnSendActionPerformed
 
-    private void cbToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbToActionPerformed
-        // Ngambil value dari combobox
-        ComboItem selectedItem = (ComboItem) cbTo.getSelectedItem();
-        if (selectedItem != null) {
-            userReciv = selectedItem.getValue();
-        }
-    }//GEN-LAST:event_cbToActionPerformed
+    private void cbRestaurant1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRestaurant1ActionPerformed
+//        // Ngambil value dari combobox
+//        ComboItem selectedItem = (ComboItem) cbRestaurant.getSelectedItem();
+//        if (selectedItem != null) {
+//            int selectedRestoID = Integer.parseInt(selectedItem.getValue());
+//            restoId = selectedRestoID;
+//            restoName = selectedItem.getLabel();
+//            checkPreOrder = selectedItem.getPreOrderChecker();
+//        }
+    }//GEN-LAST:event_cbRestaurant1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,15 +251,16 @@ public class FormChat extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSend;
-    private javax.swing.JComboBox<Object> cbTo;
+    private javax.swing.JComboBox<Object> cbRestaurant;
+    private javax.swing.JComboBox<Object> cbRestaurant1;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblCust;
-    private javax.swing.JLabel lblStatus;
     private javax.swing.JTextArea txtAreaChat;
     private javax.swing.JTextField txtChat;
     // End of variables declaration//GEN-END:variables
