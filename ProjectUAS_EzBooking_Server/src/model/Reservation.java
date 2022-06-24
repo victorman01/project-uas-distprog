@@ -175,7 +175,7 @@ public class Reservation {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE reservasis "
-                        + "SET booking_date = ?, number_of_peoples = ?, number_of_tables = ?, status = ?, total_price = ?"
+                        + "SET booking_date = ?, number_of_peoples = ?, number_of_tables = ?, status = ?, total_price = ? "
                         + "WHERE id = ? ");
 
                 sql.setDate(1, this.bookingDate);
@@ -192,14 +192,35 @@ public class Reservation {
             System.out.println("Error" + e.getMessage());
         }
     }
-    public void updateDataStatus(int idBaru,String statusbaru) {
+
+    public String updateTotalPrice(int idReservation, int totalPrice) {
+        try {
+            if (!conn.isClosed()) {
+                PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE reservasis "
+                        + "SET total_price = total_price + ? "
+                        + "WHERE id = ? ");
+
+                sql.setInt(1, totalPrice);
+                sql.setInt(2, idReservation);
+
+                sql.executeUpdate();
+                sql.close();
+                return "UPDATE TOTAL PRICE SUCCESS";
+            }
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+        return "UPDATE TOTAL PRICE FAILED";
+    }
+
+    public void updateDataStatus(int idBaru, String statusbaru) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("UPDATE reservasis "
                         + "SET  status = ?" + "Where id=?");
-                
+
                 sql.setString(1, statusbaru);
-                sql.setInt(2,idBaru);
+                sql.setInt(2, idBaru);
                 sql.executeUpdate();
                 sql.close();
             }
@@ -207,7 +228,8 @@ public class Reservation {
             System.out.println("Error" + e.getMessage());
         }
     }
-     public void deleteDataByID(int id1) {
+
+    public void deleteDataByID(int id1) {
         try {
             if (!conn.isClosed()) {
                 PreparedStatement sql = (PreparedStatement) conn.prepareStatement("DELETE FROM reservasis "

@@ -85,7 +85,6 @@ public class FormLogin extends javax.swing.JFrame {
         lblTitleRegister.setText("Don't have any account?");
 
         lblRegister.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblRegister.setForeground(java.awt.Color.black);
         lblRegister.setText("Register");
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -114,7 +113,7 @@ public class FormLogin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(101, 101, 101)
                 .addComponent(jLabel1)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,9 +134,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        cbShowPassword.setForeground(java.awt.Color.black);
         cbShowPassword.setText("Show Password");
-        cbShowPassword.setSize(new java.awt.Dimension(93, 30));
         cbShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbShowPasswordActionPerformed(evt);
@@ -156,11 +153,6 @@ public class FormLogin extends javax.swing.JFrame {
                         .addComponent(lblTitleRegister)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblRegister))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(cbShowPassword)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -169,9 +161,13 @@ public class FormLogin extends javax.swing.JFrame {
                                 .addComponent(jLabel2))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                 .addComponent(txtPassword)))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
