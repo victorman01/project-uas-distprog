@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jun 24, 2022 at 06:54 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.29
+-- Host: 127.0.0.1
+-- Generation Time: Jun 22, 2022 at 12:45 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,22 +34,15 @@ CREATE TABLE `administrators` (
   `name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `chats`
+-- Dumping data for table `administrators`
 --
 
-CREATE TABLE `chats` (
-  `id` int(11) NOT NULL,
-  `chat` varchar(500) NOT NULL,
-  `date` datetime NOT NULL,
-  `sender` varchar(10) NOT NULL,
-  `reciever` varchar(10) NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `customers_id` int(11) NOT NULL,
-  `restaurants_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `administrators` (`id`, `username`, `password`, `name`) VALUES
+(1, 'jeremy123', 'jeremy123', 'jeremy'),
+(2, 'alvin123', 'alvin123', 'alvin'),
+(3, 'ikhsan12', 'ikhsan12', 'M. ikhsan'),
+(4, 'fernando1234', 'fernando1234', 'fernandoss');
 
 -- --------------------------------------------------------
 
@@ -66,6 +59,14 @@ CREATE TABLE `customers` (
   `email` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `username`, `password`, `name`, `address`, `email`) VALUES
+(1, 'alvin', 'alvin', 'alvin', 'sidodadi', 'alvin@gmail.com'),
+(2, 'fernando', 'fernando', 'fernando', 'baru 12', 'fernando@gmai.com');
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +80,15 @@ CREATE TABLE `menus` (
   `detail` varchar(245) NOT NULL,
   `restorants_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `name`, `price`, `detail`, `restorants_id`) VALUES
+(1, 'Ayam', 10000, 'Bisa dada atau paha ya kawan', 1),
+(2, 'Bebek', 12000, 'Bisa ayam atau dada', 1),
+(4, 'Sate Ayam', 20000, 'Isi 10 tusuk', 2);
 
 -- --------------------------------------------------------
 
@@ -106,8 +116,27 @@ CREATE TABLE `reservasis` (
   `restorants_id` int(11) NOT NULL,
   `customers_id` int(11) NOT NULL,
   `status` varchar(45) NOT NULL,
-  `total_price` int(11) NOT NULL
+  `total_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservasis`
+--
+
+INSERT INTO `reservasis` (`id`, `booking_date`, `number_of_peoples`, `number_of_tables`, `restorants_id`, `customers_id`, `status`, `total_price`) VALUES
+(1, '2022-06-24', 16, 4, 1, 1, 'pending', 734400),
+(2, '2022-06-07', 20, 5, 1, 1, 'pending', 918000),
+(3, '2022-06-30', 20, 5, 1, 1, 'pending', 918000),
+(4, '2022-06-24', 8, 2, 1, 1, 'pending', 367200),
+(5, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(6, '2022-06-24', 2, 1, 1, 2, 'pending', 21000),
+(7, '2022-06-23', 2, 1, 1, 2, 'pending', 21000),
+(8, '2022-06-17', 2, 1, 1, 1, 'pending', 142800),
+(9, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(10, '2022-06-16', 2, 1, 1, 1, 'pending', 142800),
+(11, '2022-06-23', 2, 1, 1, 1, 'pending', 142800),
+(12, '2022-06-01', 2, 1, 1, 1, 'pending', 142800),
+(13, '2022-06-23', 2, 1, 1, 1, 'pending', 142800);
 
 -- --------------------------------------------------------
 
@@ -124,8 +153,17 @@ CREATE TABLE `restaurants` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
-  `phone_number` varchar(45) NOT NULL
+  `phone_number` varchar(45) NOT NULL,
+  `price_reservation` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `restaurants`
+--
+
+INSERT INTO `restaurants` (`id`, `owner`, `name`, `number_of_tables`, `preorder`, `username`, `password`, `address`, `phone_number`, `price_reservation`) VALUES
+(1, 'Yantos', 'Yanto Restos', 10, 1, 'yanto', 'yanto', 'jln yanto', '122121123', 102000),
+(2, 'Bagas', 'Bagas Resto', 10, 0, 'bagas', 'bagas', 'jalan bagas 111', '132131231', 15000);
 
 --
 -- Indexes for dumped tables
@@ -136,14 +174,6 @@ CREATE TABLE `restaurants` (
 --
 ALTER TABLE `administrators`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `chats`
---
-ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_chats_customers1_idx` (`customers_id`),
-  ADD KEY `fk_chats_restaurants1_idx` (`restaurants_id`);
 
 --
 -- Indexes for table `customers`
@@ -188,48 +218,35 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `administrators`
 --
 ALTER TABLE `administrators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `chats`
---
-ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `reservasis`
 --
 ALTER TABLE `reservasis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `chats`
---
-ALTER TABLE `chats`
-  ADD CONSTRAINT `fk_chats_customers1` FOREIGN KEY (`customers_id`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_chats_restaurants1` FOREIGN KEY (`restaurants_id`) REFERENCES `restaurants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `menus`
